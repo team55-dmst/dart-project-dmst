@@ -19,7 +19,7 @@
             margin-bottom: 15px;
             align-items: flex-start;
         }
- 
+
         .menu-group {
             display: flex;
             flex-direction: column;
@@ -38,9 +38,9 @@
             text-align: center;
             border-radius: 3px;
         }
- 
+
         .main-btn:hover { background-color: #e2e2e2; }
- 
+
         /* Κρύβουμε τα εσωτερικά κουμπιά και τα checkboxes */
        .sub-buttons {
             display: none; /* Παραμένει κρυφό μέχρι να πατηθεί το κουμπί */
@@ -60,7 +60,7 @@
             gap: 15px;            /* Απόσταση μεταξύ των επιλογών */
             z-index: 1000;        /* Να είναι πάνω από ΟΛΑ τα στοιχεία */
         }
-        
+
         /* Στυλ για τα κουμπιά μέσα στο παράθυρο για να είναι πιο όμορφα */
         .sub-buttons .sub-btn {
             padding: 15px;
@@ -69,19 +69,34 @@
             border: 1px solid #4a90e2;
             transition: 0.3s;     /* Ομαλό εφέ στο hover */
         }
-        
+
         .sub-buttons .sub-btn:hover {
             background-color: #4a90e2;
             color: white;
         }
+
+                /* Ειδικό στυλ για το κουμπί Πίσω */
+        .back-btn {
+            background-color: #fff0f0 !important; /* Ελαφρύ κόκκινο φόντο */
+            color: #dc3545 !important;            /* Κόκκινα γράμματα */
+            border-color: #dc3545 !important;     /* Κόκκινο περίγραμμα */
+            text-align: center;
+            display: block;
+        }
+
+        .back-btn:hover {
+            background-color: #dc3545 !important; /* Γίνεται όλο κόκκινο στο hover */
+            color: white !important;
+        }
+
         .toggle-input { display: none; }
- 
+
         /* Λογική εμφάνισης: Όταν πατηθεί το checkbox, δείξε τα sub-buttons */
         #toggle1:checked ~ .sub-buttons,
         #toggle2:checked ~ .sub-buttons {
             display: flex;
         }
- 
+
         /* Αλλαγή χρώματος στο κεντρικό κουμπί όταν είναι ενεργό */
         #toggle1:checked + .main-btn,
         #toggle2:checked + .main-btn {
@@ -89,7 +104,7 @@
             color: white;
             border-color: #2a6dbd;
         }
- 
+
         .sub-btn {
             background-color: white;
             border: 1px solid #4a90e2;
@@ -99,7 +114,7 @@
             cursor: pointer;
             border-radius: 3px;
         }
- 
+
         .sub-btn:hover { background-color: #f0f7ff; }
         .excel-window {
             background-color: white;
@@ -192,28 +207,31 @@
 
     <h2>Βασική Οθόνη Συστήματος - Λίστα Προσφορών</h2>
     <h2>Βασική Οθόνη Συστήματος</h2>
- 
+
     <div class="controls-container">
-       
+
         <div class="menu-group">
             <input type="checkbox" id="toggle1" class="toggle-input">
             <label for="toggle1" class="main-btn">Δημιουργία Νέας Προσφοράς</label>
             <div class="sub-buttons">
                 <button class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</button>
                 <button class="sub-btn">Δημιουργία Παρόμοιας Προσφοράς</button>
+                <label for="toggle1" class="sub-btn back-btn">Πίσω</label>
             </div>
         </div>
- 
+
         <div class="menu-group">
             <input type="checkbox" id="toggle2" class="toggle-input">
             <label for="toggle2" class="main-btn">Τροποποίηση προσφοράς</label>
             <div class="sub-buttons">
                 <button class="sub-btn">Ατομική Τροποποίηση</button>
                 <button class="sub-btn">Μαζική Τροποποίηση</button>
+                <label for="toggle2" class="sub-btn back-btn">Πίσω</label>
             </div>
         </div>
- 
+
     </div>
+
     <div class="excel-window">
         <input type="radio" id="tab1" name="excel-tabs" checked>
         <input type="radio" id="tab2" name="excel-tabs">
