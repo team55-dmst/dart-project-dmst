@@ -13,7 +13,94 @@
             flex-direction: column;
             height: 92vh;
         }
-
+              .controls-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+ 
+        .menu-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative; /* Η άγκυρα για το παράθυρο */
+        }
+        /* Κουμπιά που μοιάζουν με εργαλεία Excel */
+        .main-btn {
+            background-color: #f3f3f3;
+            border: 1px solid #999;
+            padding: 8px 15px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            border-radius: 3px;
+        }
+ 
+        .main-btn:hover { background-color: #e2e2e2; }
+ 
+        /* Κρύβουμε τα εσωτερικά κουμπιά και τα checkboxes */
+       .sub-buttons {
+            display: none; /* Παραμένει κρυφό μέχρι να πατηθεί το κουμπί */
+            /* Μετατροπή σε Κεντρικό Παράθυρο (Modal) */
+            position: fixed;      /* Κλειδώνει σε σταθερή θέση στην οθόνη */
+            top: 50%;             /* 50% από την κορυφή */
+            left: 50%;            /* 50% από αριστερά */
+            transform: translate(-50%, -50%); /* Τέλειο κεντράρισμα */
+            /* Εμφάνιση και Στυλ */
+            background-color: white;
+            padding: 30px;        /* Περισσότερος εσωτερικός χώρος */
+            min-width: 400px;     /* Μεγαλύτερο πλάτος */
+            border: none;         /* Κατάργηση παλιού περιγράμματος */
+            border-radius: 20px;  /* Στρογγυλεμένες γωνίες (όχι αιχμηρές) */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); /* Βαθιά σκιά για ρεαλισμό */
+            flex-direction: column;
+            gap: 15px;            /* Απόσταση μεταξύ των επιλογών */
+            z-index: 1000;        /* Να είναι πάνω από ΟΛΑ τα στοιχεία */
+        }
+        
+        /* Στυλ για τα κουμπιά μέσα στο παράθυρο για να είναι πιο όμορφα */
+        .sub-buttons .sub-btn {
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 12px;  /* Στρογγυλεμένα κουμπιά */
+            border: 1px solid #4a90e2;
+            transition: 0.3s;     /* Ομαλό εφέ στο hover */
+        }
+        
+        .sub-buttons .sub-btn:hover {
+            background-color: #4a90e2;
+            color: white;
+        }
+        .toggle-input { display: none; }
+ 
+        /* Λογική εμφάνισης: Όταν πατηθεί το checkbox, δείξε τα sub-buttons */
+        #toggle1:checked ~ .sub-buttons,
+        #toggle2:checked ~ .sub-buttons {
+            display: flex;
+        }
+ 
+        /* Αλλαγή χρώματος στο κεντρικό κουμπί όταν είναι ενεργό */
+        #toggle1:checked + .main-btn,
+        #toggle2:checked + .main-btn {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #2a6dbd;
+        }
+ 
+        .sub-btn {
+            background-color: white;
+            border: 1px solid #4a90e2;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: #4a90e2;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+ 
+        .sub-btn:hover { background-color: #f0f7ff; }
         .excel-window {
             background-color: white;
             border: 1px solid #000000;
@@ -104,11 +191,32 @@
 <body>
 
     <h2>Βασική Οθόνη Συστήματος - Λίστα Προσφορών</h2>
-
+    <h2>Βασική Οθόνη Συστήματος</h2>
+ 
+    <div class="controls-container">
+       
+        <div class="menu-group">
+            <input type="checkbox" id="toggle1" class="toggle-input">
+            <label for="toggle1" class="main-btn">Δημιουργία Νέας Προσφοράς</label>
+            <div class="sub-buttons">
+                <button class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</button>
+                <button class="sub-btn">Δημιουργία Παρόμοιας Προσφοράς</button>
+            </div>
+        </div>
+ 
+        <div class="menu-group">
+            <input type="checkbox" id="toggle2" class="toggle-input">
+            <label for="toggle2" class="main-btn">Τροποποίηση προσφοράς</label>
+            <div class="sub-buttons">
+                <button class="sub-btn">Ατομική Τροποποίηση</button>
+                <button class="sub-btn">Μαζική Τροποποίηση</button>
+            </div>
+        </div>
+ 
+    </div>
     <div class="excel-window">
         <input type="radio" id="tab1" name="excel-tabs" checked>
         <input type="radio" id="tab2" name="excel-tabs">
-
         <div class="table-container">
             <table id="table-active">
                 <thead>
