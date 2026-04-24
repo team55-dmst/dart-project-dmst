@@ -277,6 +277,49 @@
         }
 
         h2 { color: white; margin-top: 0; }
+
+        .nested-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            min-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1500;
+        }
+        #original-options-toggle:checked ~ .nested-window {
+            display: flex;
+        }
+        /* Το παράθυρο του DART */
+        .dart-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f0f7ff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            z-index: 3000;
+            width: 450px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        #dart-toggle:checked ~ .dart-window { display: block; }
+
+        /* Στυλ Φόρμας DART */
+        .dart-form-group { margin-bottom: 12px; text-align: left; }
+        .dart-form-group label { display: block; font-size: 12px; font-weight: 600; color: #4a90e2; margin-bottom: 4px; }
+        .dart-form-group input, .dart-form-group select {
+            width: 100%; padding: 8px; border: 1px solid #b1d1f0; border-radius: 6px; box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -291,30 +334,104 @@
             <label for="toggle1" class="main-btn">Δημιουργία Νέας Προσφοράς</label>
 
             <div class="sub-buttons">
-                <label for="upload-toggle" class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</label>
-
-                <input type="checkbox" id="upload-toggle" class="toggle-input">
-
-                <div class="upload-window">
-                    <h3>Μεταφόρτωση Αρχείου Excel</h3>
-                    <div class="drop-zone">
-                        <span class="drop-icon">📁</span>
-                        <p>Σύρετε το αρχείο Excel εδώ ή κάντε κλικ</p>
-                        <input type="file" id="fileInput" accept=".xlsx, .xls" hidden>
-                    </div>
-                    <div class="upload-actions">
-                        <label class="main-btn" onclick="document.getElementById('fileInput').click()" style="cursor:pointer">
-                            Επιλογή Αρχείου
-                        </label>
-
-                        <label for="upload-toggle" class="back-btn">Ακύρωση</label>
-                    </div>
-                </div>
-
+                <input type="checkbox" id="original-options-toggle" class="toggle-input">
+                <label for="original-options-toggle" class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</label>
                 <button class="sub-btn">Δημιουργία Παρόμοιας Προσφοράς</button>
                 <label for="close-all" class="sub-btn back-btn">Πίσω</label>
+                <div class="nested-window">
+                    <input type="checkbox" id="dart-toggle" class="toggle-input">
+
+                    <label for="upload-toggle" class="sub-btn">Μέσω Excel</label>
+
+                    <label for="dart-toggle" class="sub-btn">Μέσω DART</label>
+
+                    <label for="original-options-toggle" class="sub-btn back-btn">Πίσω</label>
+
+                    <div class="dart-window">
+                        <h3 style="color: #4a90e2; margin-top: 0;">Εισαγωγή Στοιχείων DART</h3>
+
+                        <div class="dart-form-group">
+                            <label>Κωδικός προσφοράς</label>
+                            <input type="text" placeholder="π.χ. DIS-1013">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Κωδικός πελάτη</label>
+                            <input type="text" placeholder="π.χ. CUS-0000">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Τύπος πελάτη</label>
+                            <select>
+                                <option>Χονδρική</option>
+                                <option>Λιανική</option>
+                                <option>Τεχνική Εταιρεία</option>
+                                <option>Δημόσιο</option>
+                            </select>
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Περιοχή πελάτη</label>
+                            <input type="text" placeholder="π.χ. Αττική">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Κωδικός προϊόντος</label>
+                            <input type="text">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Είδος προϊόντος</label>
+                            <input type="text">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Ποσότητα</label>
+                            <input type="number">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Αρχική τιμή (€)</label>
+                            <input type="text">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Έκπτωση (%)</label>
+                            <input type="text">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Ημερομηνία έναρξης</label>
+                            <input type="date">
+                        </div>
+                        <div class="dart-form-group">
+                            <label>Ημερομηνία λήξης</label>
+                            <input type="date">
+                        </div>
+
+                        <button class="main-btn" style="width:100%; background-color:#4a90e2; color:white; border:none; padding:12px; border-radius:10px; margin-top:10px;">Αποθήκευση Προσφοράς</button>
+                        <label for="dart-toggle" class="sub-btn back-btn" style="margin-top:10px;">Ακύρωση</label>
+                    </div>
+                </div>
             </div>
+
+    </div> <input type="checkbox" id="upload-toggle" class="toggle-input">
+    <div class="upload-window">
+        <h3>Μεταφόρτωση Αρχείου Excel</h3>
+        <div class="drop-zone">
+            <span class="drop-icon">📁</span>
+            <p>Σύρετε το αρχείο Excel εδώ ή κάντε κλικ</p>
+            <input type="file" id="fileInput" accept=".xlsx, .xls" hidden>
         </div>
+        <div class="upload-actions">
+            <button class="main-btn" onclick="document.getElementById('fileInput').click()">Επιλογή Αρχείου</button>
+            <label
+                for="upload-toggle"
+                class="sub-btn back-btn"
+                style="color: red;
+                    cursor: pointer;
+                    display: block;
+                    text-align: center;
+                    background-color: #fff0f0;
+                    border: 1px solid #ffcccc;
+                    padding: 15px;
+                    border-radius: 15px;
+                    font-weight: bold;">
+                Πίσω
+            </label>
+        </div>
+    </div>
 
         <div class="menu-group">
             <input type="radio" id="toggle2" name="menu-toggle" class="toggle-input">
