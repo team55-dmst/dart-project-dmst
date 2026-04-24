@@ -199,6 +199,57 @@
             font-weight: bold;
             border-bottom: 3px solid #4a90e2;
         }
+        /* ΤΟ ΚΥΡΙΟΤΕΡΟ: Το παράθυρο ξεκινάει ΚΡΥΦΟ */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+        /* Πιο πλατύ και καθαρό παράθυρο */
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid #000;
+            width: 800px; /* Αυξημένο πλάτος */
+            text-align: center;
+            border-radius: 8px;
+        }
+        /* Στυλ για την προεπισκόπηση της γραμμής */
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11px;
+            overflow-x: auto;
+            display: block;
+        }
+        .preview-table th, .preview-table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            background: #f9f9f9;
+        }
+        /* Διάταξη λίστας σε 2 στήλες για να μη χάνονται οι λέξεις */
+        #columnsChecklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            text-align: left;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #eee;
+            background: #fafafa;
+        }
+
+        #columnsChecklist label {
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
         h2 { color: white; margin-top: 0; }
     </style>
@@ -209,13 +260,12 @@
     <h2>Βασική Οθόνη Συστήματος</h2>
 
     <div class="controls-container">
-
         <div class="menu-group">
             <input type="checkbox" id="toggle1" class="toggle-input">
             <label for="toggle1" class="main-btn">Δημιουργία Νέας Προσφοράς</label>
             <div class="sub-buttons">
                 <button class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</button>
-                <button class="sub-btn">Δημιουργία Παρόμοιας Προσφοράς</button>
+                <button class="sub-btn" onclick="openCloneModal()">Δημιουργία Παρόμοιας Προσφοράς</button>
                 <label for="toggle1" class="sub-btn back-btn">Πίσω</label>
             </div>
         </div>
@@ -305,6 +355,191 @@
             <label for="tab2" class="tab-label">Ανενεργές Προσφορές</label>
         </div>
     </div>
+<div id="cloneModal" class="modal">
+    <div class="modal-content">
+        <div id="step1">
+            <h3>Δημιουργία Παρόμοιας Προσφοράς</h3>
+            <p>Με βάση ποια προσφορά θέλεις να δομήσεις τη νέα προσφορά;</p>
+            <input type="text" id="sourceCode" placeholder="π.χ. DIS-1001">
+            <button onclick="checkOffer()" class="main-btn" style="background-color: #4a90e2; color:white;">Συνέχεια</button>
+            <button onclick="closeModal()" class="main-btn">Ακύρωση</button>
+        </div>
 
+        <div id="step2" style="display:none;">
+            <h3>Επιλογή Στηλών προς Μεταβολή</h3>
+            <p>Επιλέξτε τις στήλες που θέλετε να αλλάξετε:</p>
+            <div id="columnsChecklist" style="text-align:left; margin:10px 0;">
+                </div>
+            <button onclick="prepareForm()" class="main-btn" style="background-color: #4a90e2; color:white;">Συνέχεια</button>
+        </div>
+
+        <div id="step3" style="display:none;">
+            <h3>Εισαγωγή Νέων Δεδομένων</h3>
+            <div id="finalForm">
+                </div>
+            <button onclick="submitNewOffer()" class="main-btn" style="background-color: #28a745; color:white;">Ολοκλήρωση</button>
+            <button onclick="closeModal()" class="main-btn">Ακύρωση</button>
+        </div>
+    </div>
+</div>
+<script>
+    const columns = [
+        "Κωδικός προσφοράς", "Κωδικός πελάτη", "Τύπος πελάτη", "Περιοχή πελάτη", 
+        "Κωδικός προϊόντος", "Είδος προϊόντος", "Ποσότητα", "Αρχική τιμή", 
+        "Έκπτωση", "Τελική τιμή", "Ημερομηνία έναρξης", "Ημερομηνία λήξης"
+    ];
+
+    let sourceOfferData = {};
+
+    function openCloneModal() {
+        // Επαναφορά των βημάτων στην αρχική κατάσταση
+        document.getElementById('step1').style.display = 'block';
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'none';
+        document.getElementById('cloneModal').style.display = 'block';
+        document.getElementById('sourceCode').value = '';
+    }
+
+    function closeModal() {
+        document.getElementById('cloneModal').style.display = 'none';
+    }
+
+    function checkOffer() {
+        let inputCode = document.getElementById('sourceCode').value.trim().toUpperCase();
+        let found = false;
+        let foundRowHTML = ""; // Για να αποθηκεύσουμε το HTML της γραμμής
+
+        const rows = document.querySelectorAll("table tbody tr");
+
+        rows.forEach(row => {
+            if (row.cells[0].innerText.trim().toUpperCase() === inputCode) {
+                found = true;
+                foundRowHTML = row.innerHTML; // Παίρνουμε τα κελιά της γραμμής
+                for (let i = 0; i < columns.length; i++) {
+                    sourceOfferData[columns[i]] = row.cells[i].innerText.trim();
+                }
+            }
+        });
+
+        if (found) {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            
+            // Εμφάνιση της γραμμής που βρέθηκε
+            let previewHTML = `
+                <p style="font-weight:bold;">Βρέθηκε η προσφορά:</p>
+                <table class="preview-table">
+                    <thead><tr>${document.querySelector("thead tr").innerHTML}</tr></thead>
+                    <tbody><tr>${foundRowHTML}</tr></tbody>
+                </table>
+                <p>Επιλέξτε στήλες προς μεταβολή:</p>
+            `;
+            
+            let checklistHTML = '<div id="columnsChecklist" style="display:grid; grid-template-columns:1fr 1fr; text-align:left; gap:5px; background:#f4f4f4; padding:10px;">';
+            columns.forEach(col => {
+                let isId = (col === "Κωδικός προσφοράς");
+                checklistHTML += `
+                    <label style="font-size:12px;">
+                        <input type="checkbox" class="col-opt" value="${col}" ${isId ? 'checked disabled' : ''}> ${col}
+                    </label>`;
+            });
+            checklistHTML += '</div>';
+            
+            document.getElementById('step2').innerHTML = previewHTML + checklistHTML + 
+                `<br><button onclick="prepareForm()" class="main-btn" style="background:#4a90e2; color:white;">Συνέχεια</button>`;
+        } else {
+            alert("Ο κωδικός " + inputCode + " δεν υπάρχει.");
+        }
+    }
+    function prepareForm() {
+        // 1. Βρίσκουμε ποιες στήλες επέλεξε ο χρήστης
+        let selectedCols = [];
+        document.querySelectorAll('.col-opt').forEach(cb => {
+            // Παίρνουμε όσες είναι τσεκαρισμένες ΚΑΙ τον Κωδικό που είναι disabled
+            if (cb.checked || cb.disabled) {
+                selectedCols.push(cb.value);
+            }
+        });
+
+        // 2. Εμφανίζουμε το Step 3 και κρύβουμε το Step 2
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'block';
+
+        // 3. Δημιουργούμε τη φόρμα εισαγωγής
+        let formHTML = '<div style="max-height: 350px; overflow-y: auto; padding-right: 10px; border: 1px solid #eee; padding: 10px;">';
+        
+        columns.forEach(col => {
+            let isEditable = selectedCols.includes(col);
+            // Αν είναι editable το κελί είναι λευκό, αν όχι είναι γκρι (readonly)
+            formHTML += `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                    <span style="font-size: 13px; font-weight: bold; width: 45%; text-align: left;">${col}:</span>
+                    <input type="text" id="new_${col}" value="${sourceOfferData[col]}" 
+                        ${isEditable ? '' : 'readonly'} 
+                        style="width: 50%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; 
+                        ${isEditable ? 'background:#fff;' : 'background:#f0f0f0; color:#777; cursor:not-allowed;'}">
+                </div>`;
+        });
+        
+        formHTML += '</div>';
+        
+        // Προσθέτουμε τη φόρμα και το κουμπί Ολοκλήρωσης στο step3
+        document.getElementById('finalForm').innerHTML = formHTML;
+    }
+
+    function submitNewOffer() {
+        // 1. Παίρνουμε τον νέο κωδικό που έγραψε ο χρήστης στο πεδίο "Κωδικός προσφοράς"
+        const newCodeInput = document.getElementById('new_Κωδικός προσφοράς');
+        const newCodeValue = newCodeInput.value.trim().toUpperCase();
+
+        // 2. Έλεγχος αν ο κωδικός είναι κενός
+        if (!newCodeValue) {
+            alert("Παρακαλώ εισάγετε έναν κωδικό για τη νέα προσφορά.");
+            return;
+        }
+
+        // 3. Έλεγχος αν ο κωδικός υπάρχει ήδη στον πίνακα (Σαρώνουμε όλες τις γραμμές όλων των πινάκων)
+        let codeExists = false;
+        const allTableRows = document.querySelectorAll("table tbody tr");
+        
+        for (let row of allTableRows) {
+            // Υποθέτουμε ότι ο κωδικός είναι πάντα στην πρώτη στήλη (index 0)
+            let existingCode = row.cells[0].innerText.trim().toUpperCase();
+            if (existingCode === newCodeValue) {
+                codeExists = true;
+                break;
+            }
+        }
+
+        // 4. Αν ο κωδικός βρεθεί, σταματάμε τη διαδικασία και ειδοποιούμε τον χρήστη
+        if (codeExists) {
+            alert("Αυτός ο κωδικός (" + newCodeValue + ") χρησιμοποιείται ήδη για άλλη προσφορά. Παρακαλώ εισάγετε έναν διαφορετικό κωδικό.");
+            newCodeInput.focus(); // Βάζουμε τον κέρσορα πίσω στο πεδίο για ευκολία
+            return;
+        }
+
+        // 5. Αν ο έλεγχος περάσει, προχωράμε στην εισαγωγή της νέας γραμμής
+        const table = document.querySelector("#table-active tbody");
+        const newRow = table.insertRow(0); // Προσθήκη στην κορυφή
+
+        // Γεμίζουμε τις στήλες από τη φόρμα
+        columns.forEach((col, index) => {
+            let cell = newRow.insertCell(index);
+            cell.innerText = document.getElementById(`new_${col}`).value;
+        });
+
+        // Προσθήκη των στηλών κατάστασης αυτόματα
+        let cellApproval = newRow.insertCell(columns.length);
+        cellApproval.innerText = "Σε εξέλιξη";
+        cellApproval.className = "orange";
+
+        let cellLife = newRow.insertCell(columns.length + 1);
+        cellLife.innerText = "Υπό αξιολόγηση";
+        cellLife.className = "orange";
+
+        alert("Η νέα προσφορά με κωδικό " + newCodeValue + " καταχωρήθηκε επιτυχώς!");
+        closeModal();
+    }
+</script>
 </body>
 </html>
