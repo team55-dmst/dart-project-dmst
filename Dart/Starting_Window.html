@@ -89,12 +89,88 @@
             color: white !important;
         }
 
+        .upload-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 2000;
+            width: 450px;
+            color: #333;
+            text-align: center;
+        }
+
+        #upload-toggle:checked + .upload-window {
+            display: block;
+        }
+
         .toggle-input { display: none; }
 
         /* Λογική εμφάνισης: Όταν πατηθεί το checkbox, δείξε τα sub-buttons */
         #toggle1:checked ~ .sub-buttons,
         #toggle2:checked ~ .sub-buttons {
             display: flex;
+        }
+        /* Το παράθυρο του Upload */
+        .upload-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 2000;
+            width: 450px; /* Το μεγαλώσαμε λίγο για να χωράνε οι λέξεις */
+            text-align: center;
+        }
+
+        /* Η περιοχή Drag & Drop */
+        .drop-zone {
+            border: 2px dashed #b1d1f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            background: #fcfdfe;
+        }
+
+        /* Κοινό στυλ για όλα τα κουμπιά */
+        .upload-actions .main-btn,
+        .upload-actions .back-btn,
+        .sub-buttons .sub-btn,
+        .sub-buttons .back-btn {
+            width: 100% !important; /* Πιάνει όλο το διαθέσιμο πλάτος του παραθύρου */
+            max-width: 380px;
+            padding: 15px 10px !important;
+            margin: 8px auto !important;
+            display: block;
+            text-align: center;
+            box-sizing: border-box;
+            white-space: nowrap; /* Αναγκάζει το κείμενο να μένει σε ΜΙΑ σειρά */
+            font-size: 16px;
+        }
+
+        /* ΕΠΑΝΑΦΟΡΑ ΤΟΥ ΩΡΑΙΟΥ ΚΟΚΚΙΝΟΥ ΚΟΥΜΠΙΟΥ */
+        .back-btn {
+            background-color: #fff0f0 !important;
+            color: #ff0000 !important;
+            border: 1px solid #ffcccc !important;
+            border-radius: 15px !important;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #ff0000 !important;
+            color: white !important;
         }
 
         /* Αλλαγή χρώματος στο κεντρικό κουμπί όταν είναι ενεργό */
@@ -213,8 +289,28 @@
         <div class="menu-group">
             <input type="radio" id="toggle1" name="menu-toggle" class="toggle-input">
             <label for="toggle1" class="main-btn">Δημιουργία Νέας Προσφοράς</label>
+
             <div class="sub-buttons">
-                <button class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</button>
+                <label for="upload-toggle" class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</label>
+
+                <input type="checkbox" id="upload-toggle" class="toggle-input">
+
+                <div class="upload-window">
+                    <h3>Μεταφόρτωση Αρχείου Excel</h3>
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <p>Σύρετε το αρχείο Excel εδώ ή κάντε κλικ</p>
+                        <input type="file" id="fileInput" accept=".xlsx, .xls" hidden>
+                    </div>
+                    <div class="upload-actions">
+                        <label class="main-btn" onclick="document.getElementById('fileInput').click()" style="cursor:pointer">
+                            Επιλογή Αρχείου
+                        </label>
+
+                        <label for="upload-toggle" class="back-btn">Ακύρωση</label>
+                    </div>
+                </div>
+
                 <button class="sub-btn">Δημιουργία Παρόμοιας Προσφοράς</button>
                 <label for="close-all" class="sub-btn back-btn">Πίσω</label>
             </div>
