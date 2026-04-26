@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang = "el">
 <head>
@@ -386,7 +387,7 @@
             <div class="sub-buttons">
                 <input type="checkbox" id="original-options-toggle" class="toggle-input">
                 <label for="original-options-toggle" class="sub-btn">Δημιουργία Πρωτότυπης Προσφοράς</label>
-                <button class="sub-btn">Δημιουργία Παρόμοιας Προσφοράς</button>
+                <button class="sub-btn" onclick="openCloneModal()">Δημιουργία Παρόμοιας Προσφοράς</button>
                 <label for="close-all" class="sub-btn back-btn">Πίσω</label>
                 <div class="nested-window">
                     <input type="checkbox" id="dart-toggle" class="toggle-input">
@@ -602,6 +603,10 @@
         "Έκπτωση", "Τελική τιμή", "Ημερομηνία έναρξης", "Ημερομηνία λήξης"
     ];
 
+    function toId(col) {
+        return 'new_' + col.replace(/\s+/g, '_');
+    }
+
     let sourceOfferData = {};
 
     function openCloneModal() {
@@ -687,7 +692,7 @@
             formHTML += `
                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
                     <span style="font-size: 13px; font-weight: bold; width: 45%; text-align: left;">${col}:</span>
-                    <input type="text" id="new_${col}" value="${sourceOfferData[col]}" 
+                    <input type="text" id="${toId(col)}" value="${sourceOfferData[col]}" 
                         ${isEditable ? '' : 'readonly'} 
                         style="width: 50%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; 
                         ${isEditable ? 'background:#fff;' : 'background:#f0f0f0; color:#777; cursor:not-allowed;'}">
@@ -702,7 +707,7 @@
 
     function submitNewOffer() {
         // 1. Παίρνουμε τον νέο κωδικό που έγραψε ο χρήστης στο πεδίο "Κωδικός προσφοράς"
-        const newCodeInput = document.getElementById('new_Κωδικός προσφοράς');
+        const newCodeInput = document.getElementById(toId('Κωδικός προσφοράς'));
         const newCodeValue = newCodeInput.value.trim().toUpperCase();
 
         // 2. Έλεγχος αν ο κωδικός είναι κενός
@@ -738,7 +743,7 @@
         // Γεμίζουμε τις στήλες από τη φόρμα
         columns.forEach((col, index) => {
             let cell = newRow.insertCell(index);
-            cell.innerText = document.getElementById(`new_${col}`).value;
+            cell.innerText = document.getElementById(toId(col)).value;
         });
 
         // Προσθήκη των στηλών κατάστασης αυτόματα
