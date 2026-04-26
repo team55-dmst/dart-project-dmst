@@ -394,7 +394,7 @@
 
                     <label for="upload-toggle" class="sub-btn">Μέσω Excel</label>
 
-                    <label for="dart-toggle" class="sub-btn">Μέσω DART</label>
+                    <button onclick="openDartModal(); document.getElementById('close-all').checked=true;" class="sub-btn" style="border:1px solid #4a90e2; background:white; color:#4a90e2; padding:15px; font-size:16px; border-radius:12px; cursor:pointer; transition:0.3s;">Μέσω DART</button>
 
                     <label for="original-options-toggle" class="sub-btn back-btn">Πίσω</label>
 
@@ -451,7 +451,7 @@
                             <input type="date">
                         </div>
 
-                        <button class="main-btn" style="width:100%; background-color:#4a90e2; color:white; border:none; padding:12px; border-radius:10px; margin-top:10px;">Αποθήκευση Προσφοράς</button>
+                        <button class="main-btn" onclick="saveDartOffer()" style="width:100%; background-color:#4a90e2; color:white; border:none; padding:12px; border-radius:10px; margin-top:10px;">Αποθήκευση Προσφοράς</button>
                         <label for="dart-toggle" class="sub-btn back-btn" style="margin-top:10px;">Ακύρωση</label>
                     </div>
                 </div>
@@ -521,17 +521,19 @@
                 </thead>
                 <tbody>
                     <tr><td>DIS-1001</td><td>CUS-9821</td><td>Χονδρική</td><td>Αττική</td><td>5481301</td><td>Καλώδια</td><td>50</td><td>500€</td><td>10%</td><td>450€</td><td>01/05/2026</td><td>31/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1001</td><td>CUS-4432</td><td>Χονδρική</td><td>Αττική</td><td>8276905</td><td>Πρίζες</td><td>20</td><td>120€</td><td>5%</td><td>114€</td><td>10/05/2026</td><td>10/06/2026</td><td class="orange">Σε εξέλιξη</td><td class="orange">Υπό αξιολόγιση</td></tr>
-                    <tr><td>DIS-1002</td><td>CUS-1120</td><td>Τεχνική Εταιρεία</td><td>Κρήτη</td><td>1783222</td><td>Πάνελ LED</td><td>100</td><td>2.500€</td><td>15%</td><td>2.125€</td><td>15/05/2026</td><td>15/05/2027</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1003</td><td>CUS-8877</td><td>Χονδρική</td><td>Πάτρα</td><td>3167509</td><td>Πίνακες</td><td>5</td><td>800€</td><td>8%</td><td>736€</td><td>20/05/2026</td><td>20/08/2026</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-1004</td><td>CUS-3301</td><td>Λιανική</td><td>Λάρισα</td><td>2157402</td><td>Ασφάλειες</td><td>200</td><td>400€</td><td>12%</td><td>352€</td><td>01/06/2026</td><td>31/07/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1005</td><td>CUS-7762</td><td>Δημόσιο</td><td>Αττική</td><td>6139701</td><td>Προβολείς</td><td>15</td><td>1.200€</td><td>20%</td><td>960€</td><td>05/06/2026</td><td>05/06/2027</td><td class="orange">Σε εξέλιξη</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1006</td><td>CUS-2199</td><td>Χονδρική</td><td>Ιωάννινα</td><td>8318044</td><td>Σωλήνες</td><td>500</td><td>750€</td><td>10%</td><td>675€</td><td>10/06/2026</td><td>10/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1007</td><td>CUS-5541</td><td>Λιανική</td><td>Ρόδος</td><td>5318270</td><td>Διακόπτες</td><td>30</td><td>180€</td><td>4%</td><td>172,8€</td><td>12/06/2026</td><td>12/07/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1008</td><td>CUS-1090</td><td>Τεχνική Εταιρεία</td><td>Εύβοια</td><td>1837088</td><td>Ταινίες LED</td><td>60</td><td>600€</td><td>25%</td><td>450€</td><td>15/06/2026</td><td>15/09/2026</td><td class="orange">Σε εξέλιξη</td><td class="orange">Υπό αξιολόγιση</td></tr>
-                    <tr><td>DIS-1009</td><td>CUS-9900</td><td>Χονδρική</td><td>Αττική</td><td>9125410</td><td>Ρελέ</td><td>10</td><td>450€</td><td>5%</td><td>427.5€</td><td>20/06/2026</td><td>20/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1010</td><td>CUS-4422</td><td>Λιανική</td><td>Καλαμάτα</td><td>5197355</td><td>Κανάλια</td><td>100</td><td>300€</td><td>10%</td><td>270€</td><td>25/06/2026</td><td>25/07/2026</td><td class="orange">Σε εξέλιξη</td><td class="green">Ενεργή</td></tr>
-                    <tr><td>DIS-1011</td><td>CUS-6671</td><td>Δημόσιο</td><td>Βόλος</td><td>2253830</td><td>Φωτιστικά Δρόμου</td><td>8</td><td>3.200€</td><td>30%</td><td>2.240€</td><td>30/06/2026</td><td>30/06/2028</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1001</td><td>CUS-9821</td><td>Χονδρική</td><td>Αττική</td><td>8102933</td><td>Πρίζες</td><td>30</td><td>120€</td><td>10%</td><td>108€</td><td>01/05/2026</td><td>31/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1001</td><td>CUS-9821</td><td>Χονδρική</td><td>Αττική</td><td>3312201</td><td>Διακόπτες</td><td>20</td><td>80€</td><td>10%</td><td>72€</td><td>01/05/2026</td><td>31/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1002</td><td>CUS-4432</td><td>Λιανική</td><td>Θεσσαλονίκη</td><td>8276905</td><td>Πρίζες</td><td>20</td><td>120€</td><td>5%</td><td>114€</td><td>10/05/2026</td><td>10/06/2026</td><td class="orange">Σε εξέλιξη</td><td class="orange">Υπό αξιολόγιση</td></tr>
+                    <tr><td>DIS-1003</td><td>CUS-1120</td><td>Τεχνική Εταιρεία</td><td>Κρήτη</td><td>1783222</td><td>Πάνελ LED</td><td>100</td><td>2.500€</td><td>15%</td><td>2.125€</td><td>15/05/2026</td><td>15/05/2027</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1004</td><td>CUS-8877</td><td>Χονδρική</td><td>Πάτρα</td><td>3167509</td><td>Πίνακες</td><td>5</td><td>800€</td><td>8%</td><td>736€</td><td>20/05/2026</td><td>20/08/2026</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-1005</td><td>CUS-3301</td><td>Λιανική</td><td>Λάρισα</td><td>2157402</td><td>Ασφάλειες</td><td>200</td><td>400€</td><td>12%</td><td>352€</td><td>01/06/2026</td><td>31/07/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1006</td><td>CUS-7762</td><td>Δημόσιο</td><td>Αττική</td><td>6139701</td><td>Προβολείς</td><td>15</td><td>1.200€</td><td>20%</td><td>960€</td><td>05/06/2026</td><td>05/06/2027</td><td class="orange">Σε εξέλιξη</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1007</td><td>CUS-2199</td><td>Χονδρική</td><td>Ιωάννινα</td><td>8318044</td><td>Σωλήνες</td><td>500</td><td>750€</td><td>10%</td><td>675€</td><td>10/06/2026</td><td>10/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1008</td><td>CUS-5541</td><td>Λιανική</td><td>Ρόδος</td><td>5318270</td><td>Διακόπτες</td><td>30</td><td>180€</td><td>4%</td><td>172,8€</td><td>12/06/2026</td><td>12/07/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1009</td><td>CUS-1090</td><td>Τεχνική Εταιρεία</td><td>Εύβοια</td><td>1837088</td><td>Ταινίες LED</td><td>60</td><td>600€</td><td>25%</td><td>450€</td><td>15/06/2026</td><td>15/09/2026</td><td class="orange">Σε εξέλιξη</td><td class="orange">Υπό αξιολόγιση</td></tr>
+                    <tr><td>DIS-1010</td><td>CUS-9900</td><td>Χονδρική</td><td>Αττική</td><td>9125410</td><td>Ρελέ</td><td>10</td><td>450€</td><td>5%</td><td>427.5€</td><td>20/06/2026</td><td>20/12/2026</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1011</td><td>CUS-4422</td><td>Λιανική</td><td>Καλαμάτα</td><td>5197355</td><td>Κανάλια</td><td>100</td><td>300€</td><td>10%</td><td>270€</td><td>25/06/2026</td><td>25/07/2026</td><td class="orange">Σε εξέλιξη</td><td class="green">Ενεργή</td></tr>
+                    <tr><td>DIS-1012</td><td>CUS-6671</td><td>Δημόσιο</td><td>Βόλος</td><td>2253830</td><td>Φωτιστικά Δρόμου</td><td>8</td><td>3.200€</td><td>30%</td><td>2.240€</td><td>30/06/2026</td><td>30/06/2028</td><td class="green">Εγκρίθηκε</td><td class="green">Ενεργή</td></tr>
                 </tbody>
             </table>
 
@@ -569,194 +571,512 @@
             <label for="tab2" class="tab-label">Ανενεργές Προσφορές</label>
         </div>
     </div>
+<!-- =================== MODAL: ΠΑΡΟΜΟΙΑ ΠΡΟΣΦΟΡΑ =================== -->
 <div id="cloneModal" class="modal">
     <div class="modal-content">
-        <div id="step1">
+        <!-- STEP 1: Εισαγωγή κωδικού -->
+        <div id="clone-step1">
             <h3>Δημιουργία Παρόμοιας Προσφοράς</h3>
             <p>Με βάση ποια προσφορά θέλεις να δομήσεις τη νέα προσφορά;</p>
-            <input type="text" id="sourceCode" placeholder="π.χ. DIS-1001">
-            <button onclick="checkOffer()" class="main-btn" style="background-color: #4a90e2; color:white;">Συνέχεια</button>
-            <button onclick="closeModal()" class="main-btn">Ακύρωση</button>
+            <input type="text" id="sourceCode" placeholder="π.χ. DIS-1001" style="padding:8px; width:200px; border:1px solid #ccc; border-radius:6px; font-size:14px;">
+            <br><br>
+            <button onclick="checkOffer()" class="main-btn" style="background-color:#4a90e2; color:white;">Συνέχεια</button>
+            <button onclick="closeCloneModal()" class="main-btn">Ακύρωση</button>
+        </div>
+        <!-- STEP 2: Επιλογή γραμμών + στηλών -->
+        <div id="clone-step2" style="display:none;"></div>
+        <!-- STEP 3: Φόρμα επεξεργασίας -->
+        <div id="clone-step3" style="display:none;"></div>
+    </div>
+</div>
+
+<!-- =================== MODAL: ΠΡΩΤΟΤΥΠΗ ΠΡΟΣΦΟΡΑ (DART multi-product) =================== -->
+<div id="dartModal" class="modal" style="z-index:3500;">
+    <div class="modal-content" style="width:860px; max-height:85vh; overflow-y:auto;">
+        <h3 style="color:#4a90e2; margin-top:0;">Εισαγωγή Στοιχείων Νέας Προσφοράς</h3>
+        <!-- Κοινά πεδία προσφοράς -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px; text-align:left;">
+            <div class="dart-form-group"><label>Κωδικός προσφοράς</label><input type="text" id="dart-offer-code" placeholder="π.χ. DIS-1013"></div>
+            <div class="dart-form-group"><label>Κωδικός πελάτη</label><input type="text" id="dart-customer-code" placeholder="π.χ. CUS-0000"></div>
+            <div class="dart-form-group"><label>Τύπος πελάτη</label><input type="text" id="dart-customer-type" placeholder="π.χ. Χονδρική, Λιανική..."></div>
+            <div class="dart-form-group"><label>Περιοχή πελάτη</label><input type="text" id="dart-region" placeholder="π.χ. Αττική"></div>
+            <div class="dart-form-group"><label>Ημερομηνία έναρξης</label><input type="date" id="dart-start-date"></div>
+            <div class="dart-form-group"><label>Ημερομηνία λήξης</label><input type="date" id="dart-end-date"></div>
         </div>
 
-        <div id="step2" style="display:none;">
-            <h3>Επιλογή Στηλών προς Μεταβολή</h3>
-            <p>Επιλέξτε τις στήλες που θέλετε να αλλάξετε:</p>
-            <div id="columnsChecklist" style="text-align:left; margin:10px 0;">
-                </div>
-            <button onclick="prepareForm()" class="main-btn" style="background-color: #4a90e2; color:white;">Συνέχεια</button>
+        <!-- Λίστα προϊόντων -->
+        <div style="border-top:2px solid #e0eaf5; padding-top:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#4a90e2;">Προϊόντα της Προσφοράς</strong>
+                <button onclick="addDartProductRow()" style="background:#e8f4e8; border:1px solid #28a745; color:#28a745; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:bold;">+ Προσθήκη Προϊόντος</button>
+            </div>
+            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                <thead>
+                    <tr style="background:#f0f7ff;">
+                        <th style="border:1px solid #ccc; padding:6px;">Κωδ. Προϊόντος</th>
+                        <th style="border:1px solid #ccc; padding:6px;">Είδος Προϊόντος</th>
+                        <th style="border:1px solid #ccc; padding:6px;">Ποσότητα</th>
+                        <th style="border:1px solid #ccc; padding:6px;">Αρχική Τιμή (€)</th>
+                        <th style="border:1px solid #ccc; padding:6px;">Έκπτωση (%)</th>
+                        <th style="border:1px solid #ccc; padding:6px;">Τελική Τιμή (€)</th>
+                        <th style="border:1px solid #ccc; padding:6px; width:36px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="dart-products-body">
+                    <!-- Γραμμές προϊόντων δυναμικά -->
+                </tbody>
+            </table>
         </div>
 
-        <div id="step3" style="display:none;">
-            <h3>Εισαγωγή Νέων Δεδομένων</h3>
-            <div id="finalForm">
-                </div>
-            <button onclick="submitNewOffer()" class="main-btn" style="background-color: #28a745; color:white;">Ολοκλήρωση</button>
-            <button onclick="closeModal()" class="main-btn">Ακύρωση</button>
+        <div style="margin-top:15px; display:flex; gap:10px; justify-content:center;">
+            <button onclick="saveDartOffer()" class="main-btn" style="background:#28a745; color:white; padding:10px 30px;">Αποθήκευση Προσφοράς</button>
+            <button onclick="closeDartModal()" class="main-btn" style="background:#fff0f0; color:#dc3545; border-color:#dc3545;">Ακύρωση</button>
         </div>
     </div>
 </div>
+
+<style>
+    /* Highlight επιλεγμένης γραμμής στο clone modal */
+    .clone-row-selected { background-color: #d0eaff !important; outline: 2px solid #4a90e2; }
+    .clone-row-unselected { opacity: 0.45; }
+    .preview-table tr { cursor: pointer; transition: background 0.15s; }
+    .preview-table tr:hover { background:#e8f4ff !important; }
+    /* Ένδειξη επιλογής στα headers */
+    .row-indicator { display:inline-block; width:14px; height:14px; border-radius:3px; border:2px solid #4a90e2; margin-right:5px; vertical-align:middle; background:white; }
+    .row-indicator.selected { background:#4a90e2; }
+    /* Dart product inputs */
+    #dart-products-body td input {
+        width:100%; padding:4px 6px; border:1px solid #dde; border-radius:4px; font-size:12px; box-sizing:border-box;
+    }
+    #dart-products-body td input:focus { border-color:#4a90e2; outline:none; }
+</style>
+
 <script>
+    // ============================================================
+    // ΣΤΑΘΕΡΕΣ & ΒΟΗΘΗΤΙΚΕΣ
+    // ============================================================
     const columns = [
-        "Κωδικός προσφοράς", "Κωδικός πελάτη", "Τύπος πελάτη", "Περιοχή πελάτη", 
-        "Κωδικός προϊόντος", "Είδος προϊόντος", "Ποσότητα", "Αρχική τιμή", 
+        "Κωδικός προσφοράς", "Κωδικός πελάτη", "Τύπος πελάτη", "Περιοχή πελάτη",
+        "Κωδικός προϊόντος", "Είδος προϊόντος", "Ποσότητα", "Αρχική τιμή",
         "Έκπτωση", "Τελική τιμή", "Ημερομηνία έναρξης", "Ημερομηνία λήξης"
     ];
+    // Στήλες που κλειδώνουν πάντα ως μη-μεταβλητές (στοιχεία πελάτη)
+    const lockedColumns = ["Κωδικός πελάτη", "Τύπος πελάτη", "Περιοχή πελάτη"];
+    // Στήλες που είναι υποχρεωτικά επεξεργάσιμες (δεν μπορούν να αποεπιλεγούν)
+    const mandatoryEditColumns = ["Κωδικός προσφοράς"];
+    // Στήλες που αφορούν μόνο το προϊόν (διαφέρουν ανά γραμμή)
+    const productColumns = ["Κωδικός προϊόντος", "Είδος προϊόντος", "Ποσότητα", "Αρχική τιμή", "Έκπτωση", "Τελική τιμή"];
 
-    function toId(col) {
-        return 'new_' + col.replace(/\s+/g, '_');
+    function toId(col) { return 'new_' + col.replace(/\s+/g, '_'); }
+
+    function codeExists(code) {
+        for (let row of document.querySelectorAll("table tbody tr")) {
+            if (row.cells[0].innerText.trim().toUpperCase() === code) return true;
+        }
+        return false;
     }
 
-    let sourceOfferData = {};
+    function insertRowToTable(data) {
+        const tbody = document.querySelector("#table-active tbody");
+        const newRow = tbody.insertRow(0);
+        columns.forEach((col, i) => {
+            newRow.insertCell(i).innerText = data[col] || '';
+        });
+        let ca = newRow.insertCell(columns.length);
+        ca.innerText = "Σε εξέλιξη"; ca.className = "orange";
+        let cl = newRow.insertCell(columns.length + 1);
+        cl.innerText = "Υπό αξιολόγηση"; cl.className = "orange";
+    }
+
+    // ============================================================
+    // DART MODAL (ΠΡΩΤΟΤΥΠΗ ΠΡΟΣΦΟΡΑ)
+    // ============================================================
+    let dartProductCount = 0;
+
+    function openDartModal() {
+        document.getElementById('dartModal').style.display = 'block';
+        dartProductCount = 0;
+        document.getElementById('dart-products-body').innerHTML = '';
+        // Καθαρισμός κοινών πεδίων
+        ['dart-offer-code','dart-customer-code','dart-region','dart-start-date','dart-end-date'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        addDartProductRow(); // Ξεκινάμε με 1 προϊόν
+    }
+
+    function closeDartModal() {
+        document.getElementById('dartModal').style.display = 'none';
+    }
+
+    function addDartProductRow() {
+        dartProductCount++;
+        const pid = dartProductCount;
+        const tbody = document.getElementById('dart-products-body');
+        const tr = document.createElement('tr');
+        tr.id = 'dart-product-' + pid;
+        tr.innerHTML = `
+            <td style="border:1px solid #dde; padding:4px;"><input type="text" placeholder="π.χ. 5481301" id="dp-code-${pid}"></td>
+            <td style="border:1px solid #dde; padding:4px;"><input type="text" placeholder="π.χ. Καλώδια" id="dp-name-${pid}"></td>
+            <td style="border:1px solid #dde; padding:4px;"><input type="number" min="1" placeholder="0" id="dp-qty-${pid}" oninput="calcDartFinal(${pid})"></td>
+            <td style="border:1px solid #dde; padding:4px;"><input type="text" placeholder="0€" id="dp-price-${pid}" oninput="calcDartFinal(${pid})"></td>
+            <td style="border:1px solid #dde; padding:4px;"><input type="text" placeholder="0%" id="dp-disc-${pid}" oninput="calcDartFinal(${pid})"></td>
+            <td style="border:1px solid #dde; padding:4px;"><input type="text" id="dp-final-${pid}" readonly style="background:#f5f5f5; color:#555;"></td>
+            <td style="border:1px solid #dde; padding:4px; text-align:center;">
+                ${pid > 1 ? `<button onclick="removeDartRow(${pid})" style="background:none; border:none; color:#dc3545; cursor:pointer; font-size:16px; font-weight:bold;" title="Διαγραφή">✕</button>` : ''}
+            </td>`;
+        tbody.appendChild(tr);
+    }
+
+    function removeDartRow(pid) {
+        const el = document.getElementById('dart-product-' + pid);
+        if (el) el.remove();
+    }
+
+    function calcDartFinal(pid) {
+        const priceStr = (document.getElementById('dp-price-' + pid).value || '0').replace(/[€\s]/g,'').replace(',','.');
+        const discStr  = (document.getElementById('dp-disc-' + pid).value  || '0').replace(/[%\s]/g,'').replace(',','.');
+        const price = parseFloat(priceStr) || 0;
+        const disc  = parseFloat(discStr)  || 0;
+        const final = price * (1 - disc / 100);
+        document.getElementById('dp-final-' + pid).value = final > 0 ? final.toFixed(2) + '€' : '';
+    }
+
+    function saveDartOffer() {
+        const offerCode = document.getElementById('dart-offer-code').value.trim().toUpperCase();
+        if (!offerCode) { alert("Παρακαλώ εισάγετε Κωδικό Προσφοράς."); return; }
+        if (codeExists(offerCode)) { alert("Ο κωδικός " + offerCode + " υπάρχει ήδη."); return; }
+
+        const custCode   = document.getElementById('dart-customer-code').value.trim();
+        const custType   = document.getElementById('dart-customer-type').value;
+        const region     = document.getElementById('dart-region').value.trim();
+        const startDate  = document.getElementById('dart-start-date').value;
+        const endDate    = document.getElementById('dart-end-date').value;
+
+        // Βρίσκουμε όλες τις γραμμές προϊόντων
+        const productRows = document.querySelectorAll('#dart-products-body tr');
+        if (productRows.length === 0) { alert("Προσθέστε τουλάχιστον ένα προϊόν."); return; }
+
+        let inserted = 0;
+        productRows.forEach(tr => {
+            const pid = tr.id.replace('dart-product-', '');
+            const prodCode  = document.getElementById('dp-code-'  + pid).value.trim();
+            const prodName  = document.getElementById('dp-name-'  + pid).value.trim();
+            const qty       = document.getElementById('dp-qty-'   + pid).value.trim();
+            const price     = document.getElementById('dp-price-' + pid).value.trim();
+            const disc      = document.getElementById('dp-disc-'  + pid).value.trim();
+            const finalP    = document.getElementById('dp-final-' + pid).value.trim();
+
+            if (!prodCode && !prodName) return; // Άδεια γραμμή, παράλειψη
+
+            // Μορφοποίηση ημερομηνιών
+            const fmtDate = (d) => {
+                if (!d) return '';
+                const [y,m,day] = d.split('-');
+                return `${day}/${m}/${y}`;
+            };
+
+            insertRowToTable({
+                "Κωδικός προσφοράς": offerCode,
+                "Κωδικός πελάτη": custCode,
+                "Τύπος πελάτη": custType,
+                "Περιοχή πελάτη": region,
+                "Κωδικός προϊόντος": prodCode,
+                "Είδος προϊόντος": prodName,
+                "Ποσότητα": qty,
+                "Αρχική τιμή": price,
+                "Έκπτωση": disc,
+                "Τελική τιμή": finalP,
+                "Ημερομηνία έναρξης": fmtDate(startDate),
+                "Ημερομηνία λήξης": fmtDate(endDate)
+            });
+            inserted++;
+        });
+
+        if (inserted > 0) {
+            alert(`Η προσφορά ${offerCode} καταχωρήθηκε επιτυχώς με ${inserted} προϊόν${inserted > 1 ? 'τα' : ''}!`);
+            closeDartModal();
+            // Κλείνουμε και τα modals επάνω
+            document.getElementById('close-all').checked = true;
+        }
+    }
+
+    // ============================================================
+    // CLONE MODAL (ΠΑΡΟΜΟΙΑ ΠΡΟΣΦΟΡΑ)
+    // ============================================================
+    let cloneSourceRows = [];      // Όλες οι γραμμές της πηγής
+    let cloneSelectedRows = new Set(); // Indices επιλεγμένων γραμμών
+    let cloneSelectedCols = [];
 
     function openCloneModal() {
-        // Επαναφορά των βημάτων στην αρχική κατάσταση
-        document.getElementById('step1').style.display = 'block';
-        document.getElementById('step2').style.display = 'none';
-        document.getElementById('step3').style.display = 'none';
+        cloneSourceRows = [];
+        cloneSelectedRows = new Set();
+        cloneSelectedCols = [];
+        document.getElementById('clone-step1').style.display = 'block';
+        document.getElementById('clone-step2').style.display = 'none';
+        document.getElementById('clone-step3').style.display = 'none';
         document.getElementById('cloneModal').style.display = 'block';
         document.getElementById('sourceCode').value = '';
     }
 
-    function closeModal() {
+    function closeCloneModal() {
         document.getElementById('cloneModal').style.display = 'none';
+        // Reset όλων των steps ώστε να μην υπάρχουν υπολείμματα δεδομένων
+        document.getElementById('clone-step2').innerHTML = '';
+        document.getElementById('clone-step3').innerHTML = '';
+        document.getElementById('clone-step2').style.display = 'none';
+        document.getElementById('clone-step3').style.display = 'none';
+        cloneSourceRows = [];
+        cloneSelectedRows = new Set();
+        cloneSelectedCols = [];
     }
 
     function checkOffer() {
-        let inputCode = document.getElementById('sourceCode').value.trim().toUpperCase();
-        let found = false;
-        let foundRowHTML = ""; // Για να αποθηκεύσουμε το HTML της γραμμής
+        const inputCode = document.getElementById('sourceCode').value.trim().toUpperCase();
+        cloneSourceRows = [];
 
-        const rows = document.querySelectorAll("table tbody tr");
-
-        rows.forEach(row => {
+        document.querySelectorAll("table tbody tr").forEach(row => {
             if (row.cells[0].innerText.trim().toUpperCase() === inputCode) {
-                found = true;
-                foundRowHTML = row.innerHTML; // Παίρνουμε τα κελιά της γραμμής
-                for (let i = 0; i < columns.length; i++) {
-                    sourceOfferData[columns[i]] = row.cells[i].innerText.trim();
-                }
+                let rowData = {};
+                columns.forEach((col, i) => { rowData[col] = row.cells[i].innerText.trim(); });
+                cloneSourceRows.push(rowData);
             }
         });
 
-        if (found) {
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
-            
-            // Εμφάνιση της γραμμής που βρέθηκε
-            let previewHTML = `
-                <p style="font-weight:bold;">Βρέθηκε η προσφορά:</p>
-                <table class="preview-table">
-                    <thead><tr>${document.querySelector("thead tr").innerHTML}</tr></thead>
-                    <tbody><tr>${foundRowHTML}</tr></tbody>
-                </table>
-                <p>Επιλέξτε στήλες προς μεταβολή:</p>
-            `;
-            
-            let checklistHTML = '<div id="columnsChecklist" style="display:grid; grid-template-columns:1fr 1fr; text-align:left; gap:5px; background:#f4f4f4; padding:10px;">';
-            columns.forEach(col => {
-                let isId = (col === "Κωδικός προσφοράς");
-                checklistHTML += `
-                    <label style="font-size:12px;">
-                        <input type="checkbox" class="col-opt" value="${col}" ${isId ? 'checked disabled' : ''}> ${col}
-                    </label>`;
-            });
-            checklistHTML += '</div>';
-            
-            document.getElementById('step2').innerHTML = previewHTML + checklistHTML + 
-                `<br><button onclick="prepareForm()" class="main-btn" style="background:#4a90e2; color:white;">Συνέχεια</button>`;
-        } else {
+        if (cloneSourceRows.length === 0) {
             alert("Ο κωδικός " + inputCode + " δεν υπάρχει.");
+            return;
         }
+
+        // Αρχικά επιλεγμένες όλες οι γραμμές
+        cloneSourceRows.forEach((_, i) => cloneSelectedRows.add(i));
+
+        document.getElementById('clone-step1').style.display = 'none';
+        renderCloneStep2();
+        document.getElementById('clone-step2').style.display = 'block';
     }
-    function prepareForm() {
-        // 1. Βρίσκουμε ποιες στήλες επέλεξε ο χρήστης
-        let selectedCols = [];
-        document.querySelectorAll('.col-opt').forEach(cb => {
-            // Παίρνουμε όσες είναι τσεκαρισμένες ΚΑΙ τον Κωδικό που είναι disabled
-            if (cb.checked || cb.disabled) {
-                selectedCols.push(cb.value);
-            }
+
+    function renderCloneStep2() {
+        const step2 = document.getElementById('clone-step2');
+        const multiRow = cloneSourceRows.length > 1;
+
+        // --- Πίνακας γραμμών (clickable για επιλογή) ---
+        const theadHTML = document.querySelector("thead tr").innerHTML;
+        let tbodyHTML = '';
+        cloneSourceRows.forEach((row, i) => {
+            const sel = cloneSelectedRows.has(i);
+            const cls = sel ? 'clone-row-selected' : 'clone-row-unselected';
+            tbodyHTML += `<tr class="${cls}" onclick="toggleCloneRow(${i})" title="Κλικ για επιλογή/αποεπιλογή">`;
+            columns.forEach(col => { tbodyHTML += `<td>${row[col]}</td>`; });
+            tbodyHTML += `<td></td><td></td></tr>`; // status cols placeholder
         });
 
-        // 2. Εμφανίζουμε το Step 3 και κρύβουμε το Step 2
-        document.getElementById('step2').style.display = 'none';
-        document.getElementById('step3').style.display = 'block';
+        let rowSelectionBlock = '';
+        if (multiRow) {
+            rowSelectionBlock = `
+            <div style="background:#f0f7ff; border:1px solid #b8d9f5; border-radius:8px; padding:12px; margin-bottom:14px;">
+                <p style="margin:0 0 8px 0; font-size:13px; font-weight:bold; color:#4a90e2;">
+                    📦 Η προσφορά έχει ${cloneSourceRows.length} προϊόντα — επίλεξε ποια θέλεις να συμπεριλάβεις στη νέα
+                </p>
+                <p style="margin:0; font-size:11px; color:#888;">Κλικ σε γραμμή για να την επιλέξεις ή να την αποεπιλέξεις</p>
+                <div style="margin-top:8px; display:flex; gap:8px;">
+                    <button onclick="cloneSelectAll()" style="font-size:11px; padding:3px 10px; border:1px solid #4a90e2; border-radius:4px; background:white; color:#4a90e2; cursor:pointer;">Επιλογή Όλων</button>
+                    <button onclick="cloneSelectNone()" style="font-size:11px; padding:3px 10px; border:1px solid #999; border-radius:4px; background:white; color:#666; cursor:pointer;">Καμία</button>
+                </div>
+            </div>`;
+        }
 
-        // 3. Δημιουργούμε τη φόρμα εισαγωγής
-        let formHTML = '<div style="max-height: 350px; overflow-y: auto; padding-right: 10px; border: 1px solid #eee; padding: 10px;">';
-        
+        // --- Checklist στηλών ---
+        let checklistHTML = `
+            <p style="font-weight:bold; margin-bottom:6px;">Επιλέξτε στήλες προς μεταβολή:</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#fafafa; border:1px solid #eee; padding:10px; border-radius:6px; margin-bottom:12px;">`;
         columns.forEach(col => {
-            let isEditable = selectedCols.includes(col);
-            // Αν είναι editable το κελί είναι λευκό, αν όχι είναι γκρι (readonly)
-            formHTML += `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
-                    <span style="font-size: 13px; font-weight: bold; width: 45%; text-align: left;">${col}:</span>
-                    <input type="text" id="${toId(col)}" value="${sourceOfferData[col]}" 
-                        ${isEditable ? '' : 'readonly'} 
-                        style="width: 50%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; 
-                        ${isEditable ? 'background:#fff;' : 'background:#f0f0f0; color:#777; cursor:not-allowed;'}">
+            const isLocked = lockedColumns.includes(col);
+            const isMandatory = mandatoryEditColumns.includes(col);
+            const labelStyle = (isLocked || isMandatory) ? 'color:#aaa;' : 'cursor:pointer;';
+            checklistHTML += `<label style="font-size:12px; display:flex; align-items:center; gap:5px; ${labelStyle}">
+                <input type="checkbox" class="col-opt" value="${col}" ${(isLocked || isMandatory) ? 'checked disabled' : ''}> ${col}${isMandatory ? ' <span style="font-size:10px; color:#e07b00;">(υποχρεωτική μεταβολή)</span>' : ''}
+            </label>`;
+        });
+        checklistHTML += `</div>`;
+
+        step2.innerHTML = `
+            <h3 style="margin-top:0;">Βρέθηκε η Προσφορά</h3>
+            ${rowSelectionBlock}
+            <div style="overflow-x:auto; margin-bottom:14px;">
+                <table class="preview-table" id="clone-preview-table">
+                    <thead><tr>${theadHTML}<th>Κατ. Έγκρισης</th><th>Κατ. Κύκλου Ζωής</th></tr></thead>
+                    <tbody>${tbodyHTML}</tbody>
+                </table>
+            </div>
+            ${checklistHTML}
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button onclick="clonePrepareForm()" class="main-btn" style="background:#4a90e2; color:white;">Συνέχεια</button>
+                <button onclick="closeCloneModal()" class="main-btn" style="background:#fff0f0; color:#dc3545; border-color:#dc3545;">Ακύρωση</button>
+            </div>`;
+    }
+
+    function toggleCloneRow(idx) {
+        if (cloneSelectedRows.has(idx)) {
+            cloneSelectedRows.delete(idx);
+        } else {
+            cloneSelectedRows.add(idx);
+        }
+        // Ενημέρωση εμφάνισης
+        const rows = document.querySelectorAll('#clone-preview-table tbody tr');
+        rows.forEach((tr, i) => {
+            tr.className = cloneSelectedRows.has(i) ? 'clone-row-selected' : 'clone-row-unselected';
+        });
+    }
+
+    function cloneSelectAll() {
+        cloneSourceRows.forEach((_, i) => cloneSelectedRows.add(i));
+        document.querySelectorAll('#clone-preview-table tbody tr').forEach(tr => { tr.className = 'clone-row-selected'; });
+    }
+
+    function cloneSelectNone() {
+        cloneSelectedRows.clear();
+        document.querySelectorAll('#clone-preview-table tbody tr').forEach(tr => { tr.className = 'clone-row-unselected'; });
+    }
+
+    function clonePrepareForm() {
+        if (cloneSelectedRows.size === 0) { alert("Επίλεξε τουλάχιστον μία γραμμή."); return; }
+
+        cloneSelectedCols = [];
+        document.querySelectorAll('.col-opt').forEach(cb => {
+            if (cb.checked || cb.disabled) cloneSelectedCols.push(cb.value);
+        });
+
+        document.getElementById('clone-step2').style.display = 'none';
+        document.getElementById('clone-step3').style.display = 'block';
+        renderCloneStep3();
+    }
+
+    function renderCloneStep3() {
+        const selectedIndices = [...cloneSelectedRows].sort((a,b) => a-b);
+        const firstRow = cloneSourceRows[selectedIndices[0]];
+
+        // Διαχωρισμός: ποιες στήλες αλλάζουν ανά γραμμή (product) vs ανά προσφορά (κοινές)
+        const editableProductCols = cloneSelectedCols.filter(c => productColumns.includes(c));
+        const editableCommonCols  = cloneSelectedCols.filter(c => !productColumns.includes(c));
+
+        // Κοινές στήλες (1 φορά στην κορυφή)
+        let commonFormHTML = '';
+        columns.filter(c => !productColumns.includes(c)).forEach(col => {
+            const editable = (mandatoryEditColumns.includes(col)) || (editableCommonCols.includes(col) && !lockedColumns.includes(col));
+            commonFormHTML += `
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; align-items:center;">
+                    <span style="font-size:13px; font-weight:bold; width:45%; text-align:left;">${col}:</span>
+                    <input type="text" id="clone_common_${col.replace(/\s+/g,'_')}" value="${firstRow[col]}"
+                        ${editable ? '' : 'readonly'}
+                        style="width:50%; padding:5px; border:1px solid #ccc; border-radius:4px; font-size:12px;
+                        ${editable ? 'background:#fff;' : 'background:#f0f0f0; color:#888; cursor:not-allowed;'}">
                 </div>`;
         });
-        
-        formHTML += '</div>';
-        
-        // Προσθέτουμε τη φόρμα και το κουμπί Ολοκλήρωσης στο step3
-        document.getElementById('finalForm').innerHTML = formHTML;
+
+        // Πίνακας προϊόντων (1 γραμμή ανά επιλεγμένη γραμμή)
+        let prodTableHTML = `
+            <div style="border-top:2px solid #e0eaf5; padding-top:12px; margin-top:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <strong style="color:#4a90e2; font-size:13px;">Προϊόντα (${selectedIndices.length} επιλεγμένα)</strong>
+                    <button onclick="cloneAddExtraProduct()" style="background:#e8f4e8; border:1px solid #28a745; color:#28a745; padding:4px 10px; border-radius:5px; cursor:pointer; font-size:12px;">+ Προσθήκη Προϊόντος</button>
+                </div>
+                <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:12px;" id="clone-prod-table">
+                    <thead>
+                        <tr style="background:#f0f7ff;">
+                            <th style="border:1px solid #ccc; padding:5px;">#</th>`;
+        productColumns.forEach(col => {
+            prodTableHTML += `<th style="border:1px solid #ccc; padding:5px;">${col}</th>`;
+        });
+        prodTableHTML += `</tr></thead><tbody id="clone-prod-tbody">`;
+
+        selectedIndices.forEach((srcIdx, rowNum) => {
+            const srcRow = cloneSourceRows[srcIdx];
+            prodTableHTML += `<tr data-rownum="${rowNum}">
+                <td style="border:1px solid #dde; padding:4px; text-align:center; font-size:11px; color:#888;">Προϊόν ${rowNum+1}</td>`;
+            productColumns.forEach(col => {
+                const editable = editableProductCols.includes(col);
+                prodTableHTML += `<td style="border:1px solid #dde; padding:3px;">
+                    <input type="text" data-col="${col}" data-row="${rowNum}" value="${srcRow[col]}"
+                        ${editable ? '' : 'readonly'}
+                        style="width:100%; padding:4px; border:1px solid ${editable ? '#aac' : '#eee'}; border-radius:3px; font-size:12px;
+                        ${editable ? 'background:#fff;' : 'background:#f5f5f5; color:#888; cursor:not-allowed;'} box-sizing:border-box;">
+                </td>`;
+            });
+            prodTableHTML += `<td style="border:1px solid #dde; padding:3px; text-align:center;">
+                <button onclick="cloneRemoveProdRow(this)" style="background:none; border:none; color:#dc3545; cursor:pointer; font-size:14px;" title="Αφαίρεση">✕</button>
+            </td></tr>`;
+        });
+        prodTableHTML += `</tbody></table></div></div>`;
+
+        document.getElementById('clone-step3').innerHTML = `
+            <h3 style="margin-top:0;">Εισαγωγή Νέων Δεδομένων</h3>
+            <div style="max-height:420px; overflow-y:auto; padding:10px; border:1px solid #eee; border-radius:6px;">
+                <p style="font-size:12px; color:#888; margin-top:0;">Τα γκρι πεδία δεν μεταβάλλονται. Τα λευκά είναι επεξεργάσιμα.</p>
+                ${commonFormHTML}
+                ${prodTableHTML}
+            </div>
+            <div style="margin-top:12px; display:flex; gap:10px; justify-content:center;">
+                <button onclick="cloneSubmit()" class="main-btn" style="background:#28a745; color:white;">Ολοκλήρωση</button>
+                <button onclick="closeCloneModal()" class="main-btn" style="background:#fff0f0; color:#dc3545; border-color:#dc3545;">Ακύρωση</button>
+            </div>`;
     }
 
-    function submitNewOffer() {
-        // 1. Παίρνουμε τον νέο κωδικό που έγραψε ο χρήστης στο πεδίο "Κωδικός προσφοράς"
-        const newCodeInput = document.getElementById(toId('Κωδικός προσφοράς'));
-        const newCodeValue = newCodeInput.value.trim().toUpperCase();
+    function cloneAddExtraProduct() {
+        const tbody = document.getElementById('clone-prod-tbody');
+        const rowCount = tbody.querySelectorAll('tr').length;
+        const newRow = document.createElement('tr');
+        newRow.setAttribute('data-rownum', rowCount);
+        newRow.innerHTML = `<td style="border:1px solid #dde; padding:4px; text-align:center; font-size:11px; color:#888;">Νέο</td>`;
+        productColumns.forEach(col => {
+            newRow.innerHTML += `<td style="border:1px solid #dde; padding:3px;">
+                <input type="text" data-col="${col}" data-row="${rowCount}" value=""
+                    style="width:100%; padding:4px; border:1px solid #aac; border-radius:3px; font-size:12px; background:#fff; box-sizing:border-box;">
+            </td>`;
+        });
+        newRow.innerHTML += `<td style="border:1px solid #dde; padding:3px; text-align:center;">
+            <button onclick="cloneRemoveProdRow(this)" style="background:none; border:none; color:#dc3545; cursor:pointer; font-size:14px;">✕</button>
+        </td>`;
+        tbody.appendChild(newRow);
+    }
 
-        // 2. Έλεγχος αν ο κωδικός είναι κενός
-        if (!newCodeValue) {
-            alert("Παρακαλώ εισάγετε έναν κωδικό για τη νέα προσφορά.");
-            return;
+    function cloneRemoveProdRow(btn) {
+        btn.closest('tr').remove();
+    }
+
+    function cloneSubmit() {
+        // Παίρνουμε τον νέο κωδικό από τo κοινό πεδίο
+        const newCodeInput = document.getElementById('clone_common_Κωδικός_προσφοράς');
+        const newCode = newCodeInput.value.trim().toUpperCase();
+
+        if (!newCode) { alert("Παρακαλώ εισάγετε Κωδικό Προσφοράς."); return; }
+        if (codeExists(newCode)) {
+            alert("Ο κωδικός " + newCode + " υπάρχει ήδη. Παρακαλώ εισάγετε διαφορετικό.");
+            newCodeInput.focus(); return;
         }
 
-        // 3. Έλεγχος αν ο κωδικός υπάρχει ήδη στον πίνακα (Σαρώνουμε όλες τις γραμμές όλων των πινάκων)
-        let codeExists = false;
-        const allTableRows = document.querySelectorAll("table tbody tr");
-        
-        for (let row of allTableRows) {
-            // Υποθέτουμε ότι ο κωδικός είναι πάντα στην πρώτη στήλη (index 0)
-            let existingCode = row.cells[0].innerText.trim().toUpperCase();
-            if (existingCode === newCodeValue) {
-                codeExists = true;
-                break;
-            }
-        }
+        // Κοινά δεδομένα
+        const commonData = {};
+        columns.filter(c => !productColumns.includes(c)).forEach(col => {
+            const el = document.getElementById('clone_common_' + col.replace(/\s+/g,'_'));
+            commonData[col] = el ? el.value : '';
+        });
+        commonData["Κωδικός προσφοράς"] = newCode;
 
-        // 4. Αν ο κωδικός βρεθεί, σταματάμε τη διαδικασία και ειδοποιούμε τον χρήστη
-        if (codeExists) {
-            alert("Αυτός ο κωδικός (" + newCodeValue + ") χρησιμοποιείται ήδη για άλλη προσφορά. Παρακαλώ εισάγετε έναν διαφορετικό κωδικό.");
-            newCodeInput.focus(); // Βάζουμε τον κέρσορα πίσω στο πεδίο για ευκολία
-            return;
-        }
-
-        // 5. Αν ο έλεγχος περάσει, προχωράμε στην εισαγωγή της νέας γραμμής
-        const table = document.querySelector("#table-active tbody");
-        const newRow = table.insertRow(0); // Προσθήκη στην κορυφή
-
-        // Γεμίζουμε τις στήλες από τη φόρμα
-        columns.forEach((col, index) => {
-            let cell = newRow.insertCell(index);
-            cell.innerText = document.getElementById(toId(col)).value;
+        // Γραμμές προϊόντων
+        const prodRows = document.querySelectorAll('#clone-prod-tbody tr');
+        let inserted = 0;
+        prodRows.forEach(tr => {
+            const rowData = Object.assign({}, commonData);
+            tr.querySelectorAll('input[data-col]').forEach(inp => {
+                rowData[inp.getAttribute('data-col')] = inp.value;
+            });
+            insertRowToTable(rowData);
+            inserted++;
         });
 
-        // Προσθήκη των στηλών κατάστασης αυτόματα
-        let cellApproval = newRow.insertCell(columns.length);
-        cellApproval.innerText = "Σε εξέλιξη";
-        cellApproval.className = "orange";
-
-        let cellLife = newRow.insertCell(columns.length + 1);
-        cellLife.innerText = "Υπό αξιολόγηση";
-        cellLife.className = "orange";
-
-        alert("Η νέα προσφορά με κωδικό " + newCodeValue + " καταχωρήθηκε επιτυχώς!");
-        closeModal();
+        alert(`Η νέα προσφορά ${newCode} καταχωρήθηκε με ${inserted} προϊόν${inserted > 1 ? 'τα' : ''}!`);
+        closeCloneModal();
     }
 </script>
 </body>
