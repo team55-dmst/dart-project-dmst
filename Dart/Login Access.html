@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Login Portal</title>
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+    }
+
+    /* LEFT PANEL */
+    .left {
+        position: relative;
+        width: 35%;
+        height: 100vh;
+        background: #3687d2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left h1 {
+        margin: 10px 0;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .left p {
+        opacity: 0.8;
+        position: absolute;
+        margin-bottom: 20px;
+        bottom: 20px;
+    }
+
+    .left img{
+        width: 250px;
+        margin-bottom: 50px;
+    }
+
+    /* RIGHT PANEL */
+    .right {
+        width: 65%;
+        background: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box {
+        width: 400px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .login-header {
+        background: #1d5fa2;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .login-body {
+        padding: 40px;
+    }
+
+    .login-body label {
+        font-size: 12px;
+        color: #555;
+    }
+
+    .login-body input {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 15px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .login-body .options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .login-body button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 20px;
+        background: #1d5fa2;
+        color: white;
+        cursor: pointer;
+    }
+
+    .login-body button:hover {
+        background: #154a80;
+    }
+
+    .footer {
+        font-size: 11px;
+        text-align: center;
+        color: #777;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="left">
+    <img src="DARTlogo.png" alt="Dart Logo">
+    <h1>Real-time SAP Interface </h1>
+    <h2> Employee Portal</h2>
+    <p> @KAFKAS 2026</p>
+</div>
+
+<div class="right">
+    <div class="login-box">
+        <div class="login-header">Sign In</div>
+        <div class="login-body">
+            <label>Employee ID</label>
+            <input type="text" placeholder="EMP-XXXX">
+
+            <label>Password</label>
+            <input type="password">
+
+            <div class="options">
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" style="width: auto; margin: 0;"> Remember Me </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <form action="Starting_Window.html">
+                <button type="submit" class="login-body">LOG IN</button>
+            </form>
+
+            <div class="footer">
+                Access restricted to authorized personnel only.
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
