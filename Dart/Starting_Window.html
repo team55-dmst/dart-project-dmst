@@ -487,7 +487,7 @@
             <input type="radio" id="toggle2" name="menu-toggle" class="toggle-input">
             <label for="toggle2" class="main-btn">Τροποποίηση προσφοράς</label>
             <div class="sub-buttons">
-                <button class="sub-btn">Ατομική Τροποποίηση</button>
+                <button class="sub-btn" onclick="openEditModal()">Ατομική Τροποποίηση</button>
                 <button class="sub-btn">Μαζική Τροποποίηση</button>
                 <label for="close-all" class="sub-btn back-btn">Πίσω</label>
             </div>
@@ -1077,6 +1077,180 @@
         alert(`Η νέα προσφορά ${newCode} καταχωρήθηκε με ${inserted} προϊόν${inserted > 1 ? 'τα' : ''}!`);
         closeCloneModal();
     }
+    let editSourceRows = [];
+let editSelectedRows = new Set();
+let currentEditCode = "";
+
+function openEditModal() {
+    document.getElementById('editModal').style.display = 'block';
+    document.getElementById('edit-step1').style.display = 'block';
+    document.getElementById('edit-step2').style.display = 'none';
+    document.getElementById('edit-step3').style.display = 'none';
+}
+
+function closeEditModal() { document.getElementById('editModal').style.display = 'none'; }
+
+function checkOfferForEdit() {
+    currentEditCode = document.getElementById('editSourceCode').value.trim().toUpperCase();
+    editSourceRows = [];
+    document.querySelectorAll("#table-active tbody tr").forEach(row => {
+        if (row.cells[0].innerText.trim().toUpperCase() === currentEditCode) {
+            let rowData = {};
+            columns.forEach((col, i) => { rowData[col] = row.cells[i].innerText.trim(); });
+            editSourceRows.push(rowData);
+        }
+    });
+    if (editSourceRows.length === 0) { alert("Δεν βρέθηκε η προσφορά."); return; }
+    editSourceRows.forEach((_, i) => editSelectedRows.add(i));
+    document.getElementById('edit-step1').style.display = 'none';
+    renderEditStep2();
+    document.getElementById('edit-step2').style.display = 'block';
+}
+
+function renderEditStep2() {
+    const step2 = document.getElementById('edit-step2');
+    const theadHTML = document.querySelector("thead tr").innerHTML;
+    let tbodyHTML = '';
+    
+    // Εμφάνιση των γραμμών της προσφοράς που βρέθηκε
+    editSourceRows.forEach((row, i) => {
+        const sel = editSelectedRows.has(i);
+        tbodyHTML += `<tr class="${sel ? 'clone-row-selected' : 'clone-row-unselected'}" onclick="toggleEditRow(${i})" style="cursor:pointer;">`;
+        columns.forEach(col => { tbodyHTML += `<td>${row[col]}</td>`; });
+        tbodyHTML += `</tr>`;
+    });
+
+    step2.innerHTML = `
+        <h3 style="margin-top:0;">Επιλογή Στοιχείων (${currentEditCode})</h3>
+        
+        <div style="overflow-x:auto; margin-bottom:15px; border:1px solid #ddd; border-radius:8px;">
+            <table class="preview-table" style="margin:0;">
+                <thead><tr>${theadHTML}</tr></thead>
+                <tbody>${tbodyHTML}</tbody>
+            </table>
+        </div>
+
+        <p style="font-weight:bold; text-align:left; margin-bottom:5px;">Επιλέξτε στήλες προς μεταβολή:</p>
+        <div id="edit-cols-checklist" style="display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#fafafa; border:1px solid #eee; padding:10px; border-radius:6px; margin-bottom:12px; text-align:left;">
+            ${columns.map(col => `
+                <label style="font-size:12px; cursor:pointer;">
+                    <input type="checkbox" class="edit-col-opt" value="${col}" ${col === 'Κωδικός προσφοράς' ? 'checked disabled' : ''}> 
+                    ${col} ${col === 'Κωδικός προσφοράς' ? '<span style="color:orange;">(κλειδωμένο)</span>' : ''}
+                </label>
+            `).join('')}
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="document.getElementById('edit-step2').style.display='none'; document.getElementById('edit-step3').style.display='block'; renderEditStep3();" class="main-btn" style="background:#4a90e2; color:white;">Συνέχεια</button>
+            <button onclick="document.getElementById('edit-step2').style.display='none'; document.getElementById('edit-step1').style.display='block';" class="main-btn back-btn">Πίσω</button>
+        </div>`;
+}
+
+function renderEditStep3() {
+    const selectedIndices = [...editSelectedRows].sort((a,b) => a-b);
+    const selectedCols = Array.from(document.querySelectorAll('.edit-col-opt:checked')).map(cb => cb.value);
+    const firstRow = editSourceRows[selectedIndices[0]];
+
+    let html = `<h3>Επεξεργασία Δεδομένων</h3>
+                <div style="max-height:420px; overflow-y:auto; padding:15px; border:1px solid #eee; border-radius:10px; text-align:left; background:#fff;">`;
+
+    // Κοινά πεδία (Header πληροφορίες)
+    columns.filter(c => !productColumns.includes(c)).forEach(col => {
+        const isCode = (col === "Κωδικός προσφοράς");
+        const canEdit = selectedCols.includes(col) && !isCode;
+        html += `
+            <div style="margin-bottom:12px;">
+                <label style="font-size:13px; font-weight:bold; display:block; margin-bottom:4px; color:#444;">${col}:</label>
+                <input type="text" id="edit_val_${col.replace(/\s+/g,'_')}" value="${firstRow[col]}" 
+                ${!canEdit ? 'readonly style="background:#f4f4f4; width:100%; border:1px solid #ddd; padding:8px; border-radius:5px; color:#777;"' : 'style="width:100%; border:1px solid #4a90e2; padding:8px; border-radius:5px;"'}>
+            </div>`;
+    });
+
+    // Πίνακας Προϊόντων (για να αλλάξεις ποσότητες/τιμές ανά γραμμή)
+    html += `<div style="margin-top:20px; border-top:2px solid #f0f0f0; padding-top:10px;">
+                <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                    <tr style="background:#f8f9fa;">
+                        ${productColumns.map(c => `<th style="border:1px solid #ddd; padding:6px;">${c}</th>`).join('')}
+                    </tr>`;
+
+    selectedIndices.forEach((idx, i) => {
+        const row = editSourceRows[idx];
+        html += `<tr>`;
+        productColumns.forEach(col => {
+            const canEdit = selectedCols.includes(col);
+            html += `<td style="border:1px solid #ddd; padding:4px;">
+                <input type="text" class="edit-prod-input" data-row="${i}" data-col="${col}" value="${row[col]}"
+                ${canEdit ? 'style="width:100%; border:1px solid #4a90e2; padding:3px;"' : 'readonly style="width:100%; border:none; background:transparent; color:#888;"'}>
+            </td>`;
+        });
+        html += `</tr>`;
+    });
+
+    html += `</table></div></div>
+            <div style="margin-top:20px; display:flex; gap:10px; justify-content:center;">
+                <button onclick="submitEdit()" class="main-btn" style="background:#28a745; color:white; padding:10px 30px;">Αποθήκευση</button>
+                <button onclick="document.getElementById('edit-step3').style.display='none'; document.getElementById('edit-step2').style.display='block';" class="main-btn back-btn">Πίσω</button>
+            </div>`;
+
+    document.getElementById('edit-step3').innerHTML = html;
+}
+
+function submitEdit() {
+    // 1. Βρίσκουμε όλες τις γραμμές του πίνακα
+    const tbody = document.querySelector("#table-active tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    
+    // 2. Συλλέγουμε τα ΚΟΙΝΑ δεδομένα από τα inputs του Step 3
+    const commonData = {};
+    columns.filter(c => !productColumns.includes(c)).forEach(col => {
+        const inputId = 'edit_val_' + col.replace(/\s+/g,'_');
+        const inputEl = document.getElementById(inputId);
+        commonData[col] = inputEl ? inputEl.value : "";
+    });
+
+    // 3. Διαγράφουμε τις ΠΑΛΙΕΣ γραμμές της προσφοράς από τον πίνακα
+    rows.forEach(r => {
+        if (r.cells[0].innerText.trim() === currentEditCode) {
+            r.remove();
+        }
+    });
+
+    // 4. Εισάγουμε τις ΝΕΕΣ (ενημερωμένες) γραμμές
+    const numProducts = editSelectedRows.size;
+    for (let i = 0; i < numProducts; i++) {
+        const finalRowData = Object.assign({}, commonData);
+        
+        // Μαζεύουμε τα δεδομένα προϊόντος για τη συγκεκριμένη γραμμή (i)
+        document.querySelectorAll(`.edit-prod-input[data-row="${i}"]`).forEach(inp => {
+            finalRowData[inp.getAttribute('data-col')] = inp.value;
+        });
+
+        // Χρησιμοποιούμε την υπάρχουσα συνάρτηση για να μπει η γραμμή στο table
+        insertRowToTable(finalRowData);
+    }
+
+    // 5. Κλείσιμο και feedback
+    alert("Η προσφορά " + currentEditCode + " ενημερώθηκε επιτυχώς!");
+    closeEditModal();
+    
+    // Κλείνουμε το κεντρικό μενού (radio toggle)
+    const closeAll = document.getElementById('close-all');
+    if (closeAll) closeAll.checked = true;
+}
 </script>
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div id="edit-step1">
+            <h3>Τροποποίηση Προσφοράς</h3>
+            <p>Εισάγετε τον κωδικό για επεξεργασία:</p>
+            <input type="text" id="editSourceCode" placeholder="π.χ. DIS-1001" style="padding:8px; width:200px; border:1px solid #ccc; border-radius:6px;">
+            <br><br>
+            <button onclick="checkOfferForEdit()" class="main-btn" style="background-color:#4a90e2; color:white;">Αναζήτηση</button>
+            <button onclick="closeEditModal()" class="main-btn">Ακύρωση</button>
+        </div>
+        <div id="edit-step2" style="display:none;"></div>
+        <div id="edit-step3" style="display:none;"></div>
+    </div>
+</div>
 </body>
 </html>
