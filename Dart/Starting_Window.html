@@ -488,7 +488,7 @@
             <label for="toggle2" class="main-btn">Τροποποίηση προσφοράς</label>
             <div class="sub-buttons">
                 <button class="sub-btn" onclick="openEditModal()">Ατομική Τροποποίηση</button>
-                <button class="sub-btn">Μαζική Τροποποίηση</button>
+                <button class="sub-btn" onclick="openMassEditModal()">Μαζική Τροποποίηση</button>
                 <label for="close-all" class="sub-btn back-btn">Πίσω</label>
             </div>
         </div>
@@ -651,9 +651,9 @@
 </style>
 
 <script>
-    // ============================================================
+   
     // ΣΤΑΘΕΡΕΣ & ΒΟΗΘΗΤΙΚΕΣ
-    // ============================================================
+   
     const columns = [
         "Κωδικός προσφοράς", "Κωδικός πελάτη", "Τύπος πελάτη", "Περιοχή πελάτη",
         "Κωδικός προϊόντος", "Είδος προϊόντος", "Ποσότητα", "Αρχική τιμή",
@@ -687,9 +687,8 @@
         cl.innerText = "Υπό αξιολόγηση"; cl.className = "orange";
     }
 
-    // ============================================================
     // DART MODAL (ΠΡΩΤΟΤΥΠΗ ΠΡΟΣΦΟΡΑ)
-    // ============================================================
+
     let dartProductCount = 0;
 
     function openDartModal() {
@@ -1237,6 +1236,74 @@ function submitEdit() {
     const closeAll = document.getElementById('close-all');
     if (closeAll) closeAll.checked = true;
 }
+function openMassEditModal() {
+    document.getElementById('massEditModal').style.display = 'block';
+    // Καθαρισμός πεδίων
+    const inputs = document.querySelectorAll('#massEditModal input');
+    inputs.forEach(inp => inp.value = '');
+}
+
+function submitMassEdit() {
+    // 1. Λήψη Φίλτρων
+    const fType = document.getElementById('filter-cust-type').value.trim().toLowerCase();
+    const fRegion = document.getElementById('filter-region').value.trim().toLowerCase();
+    const fProd = document.getElementById('filter-prod-type').value.trim().toLowerCase();
+
+    // 2. Λήψη Νέων Τιμών (Προσοχή: χρησιμοποιούμε .value)
+    const newVals = {
+        6: document.getElementById('mass-qty').value.trim(),       // Ποσότητα
+        7: document.getElementById('mass-price').value.trim(),     // Αρχική τιμή
+        8: document.getElementById('mass-disc').value.trim(),      // Έκπτωση
+        9: document.getElementById('mass-final').value.trim(),     // Τελική τιμή
+        10: document.getElementById('mass-start').value,           // Ημ. Έναρξης
+        11: document.getElementById('mass-end').value              // Ημ. Λήξης
+    };
+
+    let count = 0;
+    const rows = document.querySelectorAll("#table-active tbody tr");
+
+    rows.forEach(row => {
+        // Λήψη δεδομένων από τα κελιά για το φιλτράρισμα
+        const rowCustType = row.cells[2].innerText.toLowerCase();
+        const rowRegion = row.cells[3].innerText.toLowerCase();
+        const rowProdType = row.cells[5].innerText.toLowerCase();
+
+        // Λογική Φιλτραρίσματος
+        const matchType = !fType || rowCustType.includes(fType);
+        const matchRegion = !fRegion || rowRegion.includes(fRegion);
+        const matchProd = !fProd || rowProdType.includes(fProd);
+
+        if (matchType && matchRegion && matchProd) {
+            // 3. Εφαρμογή Αλλαγών
+            if (newVals[6] !== "") row.cells[6].innerText = newVals[6];
+            if (newVals[7] !== "") row.cells[7].innerText = newVals[7].includes('€') ? newVals[7] : newVals[7] + '€';
+            if (newVals[8] !== "") row.cells[8].innerText = newVals[8].includes('%') ? newVals[8] : newVals[8] + '%';
+            if (newVals[9] !== "") row.cells[9].innerText = newVals[9].includes('€') ? newVals[9] : newVals[9] + '€';
+            
+            // Μορφοποίηση ημερομηνιών (από YYYY-MM-DD σε DD/MM/YYYY)
+            if (newVals[10] !== "") {
+                const d = newVals[10].split('-');
+                row.cells[10].innerText = `${d[2]}/${d[1]}/${d[0]}`;
+            }
+            if (newVals[11] !== "") {
+                const d = newVals[11].split('-');
+                row.cells[11].innerText = `${d[2]}/${d[1]}/${d[0]}`;
+            }
+            
+            count++;
+        }
+    });
+
+    if (count > 0) {
+        alert("Επιτυχία! Ενημερώθηκαν " + count + " γραμμές.");
+        document.getElementById('massEditModal').style.display = 'none';
+        // Κλείσιμο του κεντρικού μενού
+        const closeAll = document.getElementById('close-all');
+        if (closeAll) closeAll.checked = true;
+    } else {
+        alert("Δεν βρέθηκαν εγγραφές που να ταιριάζουν με τα φίλτρα.");
+    }
+}
 </script>
 <div id="editModal" class="modal">
     <div class="modal-content">
@@ -1250,6 +1317,46 @@ function submitEdit() {
         </div>
         <div id="edit-step2" style="display:none;"></div>
         <div id="edit-step3" style="display:none;"></div>
+    </div>
+</div>
+<div id="massEditModal" class="modal">
+    <div class="modal-content" style="width: 600px;">
+        <h3 style="color: #4a90e2;">Μαζική Τροποποίηση Προσφορών</h3>
+        
+        <div style="background: #f0f7ff; padding: 15px; border-radius: 12px; text-align: left; margin-bottom: 20px; border: 1px solid #b1d1f0;">
+            <strong style="display:block; margin-bottom:10px; color:#2a6dbd;">1. Ορίστε Φίλτρα Επιλογής:</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <label style="font-size: 11px; font-weight: bold;">Τύπος Πελάτη</label>
+                    <input type="text" id="filter-cust-type" placeholder="π.χ. Χονδρική" style="width:100%; padding:5px;">
+                </div>
+                <div>
+                    <label style="font-size: 11px; font-weight: bold;">Περιοχή</label>
+                    <input type="text" id="filter-region" placeholder="π.χ. Αττική" style="width:100%; padding:5px;">
+                </div>
+                <div style="grid-column: span 2;">
+                    <label style="font-size: 11px; font-weight: bold;">Είδος Προϊόντος</label>
+                    <input type="text" id="filter-prod-type" placeholder="π.χ. Καλώδια" style="width:100%; padding:5px;">
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: left; padding: 10px;">
+            <strong style="display:block; margin-bottom:10px;">2. Στοιχεία προς Μαζική Αλλαγή:</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div><label style="font-size:12px;">Ποσότητα</label><input type="number" id="mass-qty" style="width:100%;"></div>
+                <div><label style="font-size:12px;">Αρχική τιμή</label><input type="text" id="mass-price" style="width:100%;"></div>
+                <div><label style="font-size:12px;">Έκπτωση (%)</label><input type="text" id="mass-disc" style="width:100%;"></div>
+                <div><label style="font-size:12px;">Τελική τιμή</label><input type="text" id="mass-final" style="width:100%;"></div>
+                <div><label style="font-size:12px;">Έναρξη</label><input type="date" id="mass-start" style="width:100%;"></div>
+                <div><label style="font-size:12px;">Λήξη</label><input type="date" id="mass-end" style="width:100%;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 25px; display: flex; gap: 10px; justify-content: center;">
+            <button onclick="submitMassEdit()" class="main-btn" style="background:#28a745; color:white; padding: 10px 40px;">Εφαρμογή σε όλους</button>
+            <button onclick="document.getElementById('massEditModal').style.display='none'" class="main-btn back-btn">Ακύρωση</button>
+        </div>
     </div>
 </div>
 </body>
