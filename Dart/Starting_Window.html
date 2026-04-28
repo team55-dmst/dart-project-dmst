@@ -1248,39 +1248,48 @@ function submitMassEdit() {
     const fType = document.getElementById('filter-cust-type').value.trim().toLowerCase();
     const fRegion = document.getElementById('filter-region').value.trim().toLowerCase();
     const fProd = document.getElementById('filter-prod-type').value.trim().toLowerCase();
+    
+    // Λήψη ημερομηνιών φίλτρων και μετατροπή σε DD/MM/YYYY για σύγκριση
+    const fStartRaw = document.getElementById('filter-start-date').value;
+    const fEndRaw = document.getElementById('filter-end-date').value;
+    
+    const fStart = fStartRaw ? fStartRaw.split('-').reverse().join('/') : "";
+    const fEnd = fEndRaw ? fEndRaw.split('-').reverse().join('/') : "";
 
-    // 2. Λήψη Νέων Τιμών (Προσοχή: χρησιμοποιούμε .value)
+    // 2. Λήψη Νέων Τιμών προς αποθήκευση
     const newVals = {
-        6: document.getElementById('mass-qty').value.trim(),       // Ποσότητα
-        7: document.getElementById('mass-price').value.trim(),     // Αρχική τιμή
-        8: document.getElementById('mass-disc').value.trim(),      // Έκπτωση
-        9: document.getElementById('mass-final').value.trim(),     // Τελική τιμή
-        10: document.getElementById('mass-start').value,           // Ημ. Έναρξης
-        11: document.getElementById('mass-end').value              // Ημ. Λήξης
+        6: document.getElementById('mass-qty').value.trim(),
+        7: document.getElementById('mass-price').value.trim(),
+        8: document.getElementById('mass-disc').value.trim(),
+        9: document.getElementById('mass-final').value.trim(),
+        10: document.getElementById('mass-start').value,
+        11: document.getElementById('mass-end').value
     };
 
     let count = 0;
     const rows = document.querySelectorAll("#table-active tbody tr");
 
     rows.forEach(row => {
-        // Λήψη δεδομένων από τα κελιά για το φιλτράρισμα
         const rowCustType = row.cells[2].innerText.toLowerCase();
         const rowRegion = row.cells[3].innerText.toLowerCase();
         const rowProdType = row.cells[5].innerText.toLowerCase();
+        const rowStart = row.cells[10].innerText.trim();
+        const rowEnd = row.cells[11].innerText.trim();
 
-        // Λογική Φιλτραρίσματος
+        // Λογική Φιλτραρίσματος (περιλαμβάνει πλέον και ημερομηνίες)
         const matchType = !fType || rowCustType.includes(fType);
         const matchRegion = !fRegion || rowRegion.includes(fRegion);
         const matchProd = !fProd || rowProdType.includes(fProd);
+        const matchStart = !fStart || rowStart === fStart;
+        const matchEnd = !fEnd || rowEnd === fEnd;
 
-        if (matchType && matchRegion && matchProd) {
-            // 3. Εφαρμογή Αλλαγών
+        if (matchType && matchRegion && matchProd && matchStart && matchEnd) {
+            // 3. Εφαρμογή Αλλαγών (όπως πριν)
             if (newVals[6] !== "") row.cells[6].innerText = newVals[6];
             if (newVals[7] !== "") row.cells[7].innerText = newVals[7].includes('€') ? newVals[7] : newVals[7] + '€';
             if (newVals[8] !== "") row.cells[8].innerText = newVals[8].includes('%') ? newVals[8] : newVals[8] + '%';
             if (newVals[9] !== "") row.cells[9].innerText = newVals[9].includes('€') ? newVals[9] : newVals[9] + '€';
             
-            // Μορφοποίηση ημερομηνιών (από YYYY-MM-DD σε DD/MM/YYYY)
             if (newVals[10] !== "") {
                 const d = newVals[10].split('-');
                 row.cells[10].innerText = `${d[2]}/${d[1]}/${d[0]}`;
@@ -1289,19 +1298,16 @@ function submitMassEdit() {
                 const d = newVals[11].split('-');
                 row.cells[11].innerText = `${d[2]}/${d[1]}/${d[0]}`;
             }
-            
             count++;
         }
     });
 
     if (count > 0) {
-        alert("Επιτυχία! Ενημερώθηκαν " + count + " γραμμές.");
+        alert("Η μαζική ενημέρωση ολοκληρώθηκε για " + count + " γραμμές!");
         document.getElementById('massEditModal').style.display = 'none';
-        // Κλείσιμο του κεντρικού μενού
-        const closeAll = document.getElementById('close-all');
-        if (closeAll) closeAll.checked = true;
+        document.getElementById('close-all').checked = true;
     } else {
-        alert("Δεν βρέθηκαν εγγραφές που να ταιριάζουν με τα φίλτρα.");
+        alert("Δεν βρέθηκαν προσφορές που να ικανοποιούν όλα τα φίλτρα.");
     }
 }
 </script>
@@ -1324,22 +1330,29 @@ function submitMassEdit() {
         <h3 style="color: #4a90e2;">Μαζική Τροποποίηση Προσφορών</h3>
         
         <div style="background: #f0f7ff; padding: 15px; border-radius: 12px; text-align: left; margin-bottom: 20px; border: 1px solid #b1d1f0;">
-            <strong style="display:block; margin-bottom:10px; color:#2a6dbd;">1. Ορίστε Φίλτρα Επιλογής:</strong>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div>
-                    <label style="font-size: 11px; font-weight: bold;">Τύπος Πελάτη</label>
-                    <input type="text" id="filter-cust-type" placeholder="π.χ. Χονδρική" style="width:100%; padding:5px;">
-                </div>
-                <div>
-                    <label style="font-size: 11px; font-weight: bold;">Περιοχή</label>
-                    <input type="text" id="filter-region" placeholder="π.χ. Αττική" style="width:100%; padding:5px;">
-                </div>
-                <div style="grid-column: span 2;">
-                    <label style="font-size: 11px; font-weight: bold;">Είδος Προϊόντος</label>
-                    <input type="text" id="filter-prod-type" placeholder="π.χ. Καλώδια" style="width:100%; padding:5px;">
-                </div>
-            </div>
+    <strong style="display:block; margin-bottom:10px; color:#2a6dbd;">1. Ορίστε Φίλτρα Επιλογής:</strong>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div>
+            <label style="font-size: 11px; font-weight: bold;">Τύπος Πελάτη</label>
+            <input type="text" id="filter-cust-type" placeholder="π.χ. Χονδρική" style="width:100%; padding:5px; box-sizing:border-box;">
         </div>
+        <div>
+            <label style="font-size: 11px; font-weight: bold;">Περιοχή</label>
+            <input type="text" id="filter-region" placeholder="π.χ. Αττική" style="width:100%; padding:5px; box-sizing:border-box;">
+        </div>
+        <div style="grid-column: span 2;"> <label style="font-size: 11px; font-weight: bold;">Είδος Προϊόντος</label>
+            <input type="text" id="filter-prod-type" placeholder="π.χ. Καλώδια" style="width:100%; padding:5px; box-sizing:border-box;">
+        </div>
+        <div>
+            <label style="font-size: 11px; font-weight: bold;">Φίλτρο Έναρξης</label>
+            <input type="date" id="filter-start-date" style="width:100%; padding:4px; box-sizing:border-box;">
+        </div>
+        <div>
+            <label style="font-size: 11px; font-weight: bold;">Φίλτρο Λήξης</label>
+            <input type="date" id="filter-end-date" style="width:100%; padding:4px; box-sizing:border-box;">
+        </div>
+    </div>
+</div>
 
         <div style="text-align: left; padding: 10px;">
             <strong style="display:block; margin-bottom:10px;">2. Στοιχεία προς Μαζική Αλλαγή:</strong>
