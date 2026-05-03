@@ -236,6 +236,14 @@
         }
         .comment-btn:hover { background: #dc3545; color: white; }
 
+        .erp-btn {
+            background: none; border: 1px solid #28a745; color: #28a745;
+            border-radius: 4px; cursor: pointer; font-size: 11px;
+            padding: 2px 6px; margin-left: 6px;
+            transition: 0.2s; white-space: nowrap;
+        }
+        .erp-btn:hover { background: #28a745; color: white; }
+
         .comments-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .comments-table th { background: #dc3545; color: white; padding: 8px 12px; text-align: left; }
         .comments-table td { border: 1px solid #dde; padding: 8px 12px; }
@@ -337,11 +345,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>DIS-0990</td><td>CUS-1212</td><td>Χονδρική</td><td>Αττική</td><td>4412300</td><td>Λάμπες</td><td>100</td><td>200€</td><td>5%</td><td>190€</td><td>19000.00€</td><td>01/01/2024</td><td>01/01/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-0991</td><td>CUS-5566</td><td>Δημόσιο</td><td>Σέρρες</td><td>9988771</td><td>Προβολείς</td><td>10</td><td>1.000€</td><td>20%</td><td>800€</td><td>8000.00€</td><td>10/02/2024</td><td>10/02/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-0992</td><td>CUS-3344</td><td>Τεχνική Εταιρεία</td><td>Ρόδος</td><td>2233445</td><td>Κανάλια</td><td>300</td><td>600€</td><td>10%</td><td>540€</td><td>162000.00€</td><td>15/03/2024</td><td>15/03/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-0993</td><td>CUS-7788</td><td>Λιανική</td><td>Κόρινθος</td><td>5566778</td><td>Διακόπτες</td><td>40</td><td>150€</td><td>8%</td><td>138€</td><td>5520.00€</td><td>20/04/2024</td><td>20/04/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-0994</td><td>CUS-9900</td><td>Χονδρική</td><td>Βόλος</td><td>1122334</td><td>Καλώδια</td><td>80</td><td>400€</td><td>12%</td><td>352€</td><td>28160.00€</td><td>01/05/2024</td><td>01/05/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0990</td><td>CUS-1212</td><td>Χονδρική</td><td>Αττική</td><td>4412300</td><td>Λάμπες</td><td>100</td><td>200€</td><td>5%</td><td>190€</td><td>160€</td><td>01/01/2024</td><td>01/01/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0991</td><td>CUS-5566</td><td>Δημόσιο</td><td>Σέρρες</td><td>9988771</td><td>Προβολείς</td><td>10</td><td>990€</td><td>19%</td><td>800€</td><td>700€</td><td>10/02/2024</td><td>10/02/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0992</td><td>CUS-3344</td><td>Τεχνική Εταιρεία</td><td>Ρόδος</td><td>2233445</td><td>Κανάλια</td><td>300</td><td>600€</td><td>10%</td><td>540€</td><td>400€</td><td>15/03/2024</td><td>15/03/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0993</td><td>CUS-7788</td><td>Λιανική</td><td>Κόρινθος</td><td>5566778</td><td>Διακόπτες</td><td>40</td><td>150€</td><td>8%</td><td>138€</td><td>100€</td><td>20/04/2024</td><td>20/04/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0994</td><td>CUS-9900</td><td>Χονδρική</td><td>Βόλος</td><td>1122334</td><td>Καλώδια</td><td>80</td><td>400€</td><td>12%</td><td>352€</td><td>300€</td><td>01/05/2024</td><td>01/05/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
                 </tbody>
             </table>
         </div>
@@ -381,7 +389,7 @@
             <div id="rejection-offer-info" style="background:#fff5f5; border:1px solid #f5c6cb; border-radius:6px; padding:10px 14px; margin-bottom:16px; font-size:13px;"></div>
             <p style="font-size:13px; color:#555; margin:0 0 12px;">Επιλέξτε τις στήλες όπου υπάρχει <strong>διαφωνία</strong> και συμπληρώστε το σχόλιό σας:</p>
             <div id="rejection-columns-list" style="max-height:360px; overflow-y:auto; padding-right:4px;"></div>
-            <div id="rejection-validation-msg" style="color:#dc3545; font-size:12px; margin-top:8px; display:none;">⚠️ Παρακαλώ επιλέξτε τουλάχιστον μία στήλη διαφωνίας.</div>
+            <div id="rejection-validation-msg" style="color:#dc3545; font-size:12px; margin-top:8px; display:none;">Παρακαλώ επιλέξτε τουλάχιστον μία στήλη διαφωνίας.</div>
             <div style="display:flex; gap:10px; justify-content:center; margin-top:18px;">
                 <button onclick="submitRejection()" class="main-btn" style="background:#dc3545; color:white; border:none; padding:10px 28px; border-radius:6px; font-size:13px;">✗ Επιβεβαίωση Απόρριψης</button>
                 <button onclick="closeRejectionModal()" class="main-btn" style="background:#f8f9fa; color:#555; border-color:#ccc; padding:10px 20px; border-radius:6px; font-size:13px;">Ακύρωση</button>
@@ -393,7 +401,7 @@
     <div id="commentsModal" class="modal" style="z-index:3000;">
         <div class="modal-content" style="width:560px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <h3 style="margin:0; color:#dc3545;">💬 Λόγοι Απόρριψης</h3>
+                <h3 style="margin:0; color:#dc3545;">Λόγοι Απόρριψης</h3>
                 <button onclick="closeCommentsModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:#888;">✕</button>
             </div>
             <div id="comments-offer-title" style="font-size:13px; color:#555; margin-bottom:12px;"></div>
@@ -406,7 +414,7 @@
 
 
     <script>
-    const rejectionStore = {}; 
+    const rejectionStore = {};
     let currentRejectionRowId = null;
 
     const REJECTION_COLS = [
@@ -420,10 +428,49 @@
         return parseFloat((str || '0').replace('%', '').replace(',', '.').trim()) || 0;
     }
 
-    function classifyDiscount(pct) {
-        if (pct < 10)  return 'auto-approve';
-        if (pct > 20)  return 'auto-reject';
+    function parsePrice(str) {
+        let s = (str || '0').replace(/[€\s]/g, '');
+        // Αφαιρεί τελείες χιλιάδων (τελεία πριν από ακριβώς 3 ψηφία)
+        s = s.replace(/\.(?=\d{3}(?!\d))/g, '');
+        s = s.replace(',', '.');
+        return parseFloat(s) || 0;
+    }
+
+    function computeMargin(origPrice, finalPrice) {
+        const unitCost = origPrice * 0.8;
+        return finalPrice > 0 ? ((finalPrice - unitCost) / finalPrice * 100) : 0;
+    }
+
+    function classifyOffer(discount, margin) {
+        if (discount > 20 || margin <= 5) return 'auto-reject';
+        if (discount < 10 && margin > 15)  return 'auto-approve';
         return 'manual';
+    }
+
+    function buildRejectionColumns(discount, margin) {
+        const cols = {};
+        if (discount > 20) {
+            cols['Έκπτωση'] = `Αυτόματη απόρριψη: έκπτωση ${discount}% υπερβαίνει το ανώτατο επιτρεπτό όριο (20%).`;
+        }
+        if (margin <= 5) {
+            cols['Τελική τιμή'] = `Αυτόματη απόρριψη: περιθώριο κέρδους ${margin.toFixed(1)}% κάτω από το ελάχιστο αποδεκτό (5%).`;
+        }
+        if (Object.keys(cols).length === 0) {
+            cols['Τελική τιμή'] = 'Χειροκίνητη απόρριψη κατόπιν αξιολόγησης.';
+        }
+        return cols;
+    }
+
+    function computeRejectionColumnsForRow(tr) {
+        const orig    = parsePrice(tr.cells[7].textContent);
+        const disc    = parseDiscount(tr.cells[8].textContent);
+        const finalP  = parsePrice(tr.cells[9].textContent);
+        const margin  = computeMargin(orig, finalP);
+        return buildRejectionColumns(disc, margin);
+    }
+
+    function showErpNote() {
+        alert('Τα δεδομένα μεταφέρθηκαν στο ERP.');
     }
 
     function getRowData(tr) {
@@ -443,16 +490,40 @@
     }
 
     function applyApproved(tr) {
-        tr.cells[13].innerHTML  = '<span class="green">Εγκρίθηκε</span>';
+        tr.cells[13].innerHTML = '<span class="green">Εγκρίθηκε</span>'
+            + '<button class="erp-btn" onclick="showErpNote()">ERP</button>';
         tr.cells[14].innerHTML = '<span class="green">Ενεργή</span>';
         tr.setAttribute('data-status', 'approved');
     }
 
     function applyRejected(tr, rowId) {
-        tr.cells[13].innerHTML  = '<span class="red">Απορρίφθηκε</span>'
+        tr.cells[13].innerHTML = '<span class="red">Απορρίφθηκε</span>'
             + `<button class="comment-btn" onclick="viewRejectionComments('${rowId}')">Σχόλια</button>`;
         tr.cells[14].innerHTML = '<span class="red">Ανενεργή</span>';
         tr.setAttribute('data-status', 'rejected');
+    }
+
+    function initExpiredTable() {
+        document.querySelectorAll('#table-expired tbody tr').forEach((tr, idx) => {
+            const rowId = 'exp-row-' + idx;
+            tr.setAttribute('data-row-id', rowId);
+            const approvalText = tr.cells[13].textContent.trim();
+
+            if (approvalText.includes('Εγκρίθηκε')) {
+                tr.cells[13].innerHTML = '<span class="green">Εγκρίθηκε</span>'
+                    + '<button class="erp-btn" onclick="showErpNote()">ERP</button>';
+            } else if (approvalText.includes('Απορρίφθηκε')) {
+                const cols = computeRejectionColumnsForRow(tr);
+                const isAuto = Object.keys(cols).some(k => cols[k].startsWith('Αυτόματη'));
+                rejectionStore[rowId] = {
+                    auto: isAuto,
+                    offerCode: tr.cells[0].textContent.trim(),
+                    columns: cols
+                };
+                tr.cells[13].innerHTML = '<span class="red">Απορρίφθηκε</span>'
+                    + `<button class="comment-btn" onclick="viewRejectionComments('${rowId}')">Σχόλια</button>`;
+            }
+        });
     }
 
     function autoClassifyOffers() {
@@ -463,28 +534,54 @@
             const rowId = 'row-' + idx;
             tr.setAttribute('data-row-id', rowId);
 
-            const lifecycle = tr.cells[14].textContent.trim().toLowerCase();
+            const approvalText = tr.cells[13].textContent.trim();
+            const lifecycle    = tr.cells[14].textContent.trim().toLowerCase();
+
+            // Προ-ορισμένες εγκεκριμένες γραμμές (όχι "Υπό αξιολόγηση")
+            if (approvalText.includes('Εγκρίθηκε') && !lifecycle.includes('αξιολόγ')) {
+                tr.cells[13].innerHTML = '<span class="green">Εγκρίθηκε</span>'
+                    + '<button class="erp-btn" onclick="showErpNote()">ERP</button>';
+                return;
+            }
+
+            // Προ-ορισμένες απορριφθείσες γραμμές
+            if (approvalText.includes('Απορρίφθηκε')) {
+                const cols = computeRejectionColumnsForRow(tr);
+                const isAuto = Object.keys(cols).some(k => cols[k].startsWith('Αυτόματη'));
+                rejectionStore[rowId] = {
+                    auto: isAuto,
+                    offerCode: tr.cells[0].textContent.trim(),
+                    columns: cols
+                };
+                tr.cells[13].innerHTML = '<span class="red">Απορρίφθηκε</span>'
+                    + `<button class="comment-btn" onclick="viewRejectionComments('${rowId}')">Σχόλια</button>`;
+                tr.setAttribute('data-status', 'rejected');
+                return;
+            }
+
+            // Μόνο γραμμές "Υπό αξιολόγηση" αξιολογούνται αυτόματα
             if (!lifecycle.includes('αξιολόγ')) return;
 
-            const discount = parseDiscount(tr.cells[8].textContent);
-            const category = classifyDiscount(discount);
+            const discount  = parseDiscount(tr.cells[8].textContent);
+            const origPrice = parsePrice(tr.cells[7].textContent);
+            const finalP    = parsePrice(tr.cells[9].textContent);
+            const margin    = computeMargin(origPrice, finalP);
             const offerCode = tr.cells[0].textContent.trim();
+            const result    = classifyOffer(discount, margin);
 
-            if (category === 'auto-approve') {
+            if (result === 'auto-approve') {
                 applyApproved(tr);
-                autoApproved.push({ offerCode, discount });
-            } else if (category === 'auto-reject') {
-                rejectionStore[rowId] = {
-                    auto: true,
-                    offerCode,
-                    columns: { 'Έκπτωση': `Αυτόματη απόρριψη λόγω ορίου.` }
-                };
+                autoApproved.push({ offerCode, discount, margin });
+            } else if (result === 'auto-reject') {
+                const cols = buildRejectionColumns(discount, margin);
+                rejectionStore[rowId] = { auto: true, offerCode, columns: cols };
                 applyRejected(tr, rowId);
-                autoRejected.push({ offerCode, discount });
+                autoRejected.push({ offerCode, discount, margin });
             } else {
                 tr.setAttribute('data-status', 'pending');
             }
         });
+
         updateStatusChip();
         return { autoApproved, autoRejected };
     }
@@ -492,7 +589,7 @@
     function updateStatusChip() {
         const chip = document.getElementById('auto-status-chip');
         const pen = document.querySelectorAll('#table-active tbody tr[data-status="pending"]').length;
-        
+
         if (pen === 0) { chip.style.display = 'none'; return; }
         chip.style.display = 'inline-block';
         chip.innerHTML = `<strong>${pen} εκκρεμείς προσφορές</strong> για έλεγχο`;
@@ -512,16 +609,17 @@
     function renderAutoSummary() {
         const container = document.getElementById('auto-summary-panel');
         const autoApprovedRows = [...document.querySelectorAll('#table-active tbody tr[data-status="approved"]')];
-        const autoRejectedRows = [...document.querySelectorAll('#table-active tbody tr[data-status="rejected"]')].filter(tr => rejectionStore[tr.getAttribute('data-row-id')]?.auto);
+        const autoRejectedRows = [...document.querySelectorAll('#table-active tbody tr[data-status="rejected"]')]
+            .filter(tr => rejectionStore[tr.getAttribute('data-row-id')]?.auto);
 
         let html = '';
         if (autoApprovedRows.length > 0) {
-            html += `<div class="auto-banner success"> <strong>Αυτόματη Έγκριση</strong> — ${autoApprovedRows.length} προσφορά/ές ολοκληρώθηκαν.</div>`;
+            html += `<div class="auto-banner success"><strong>Αυτόματη Έγκριση</strong> — ${autoApprovedRows.length} προσφορά/ές ολοκληρώθηκαν.</div>`;
         }
         if (autoRejectedRows.length > 0) {
-            html += `<div class="auto-banner warning"> <strong>Αυτόματη Απόρριψη</strong> — ${autoRejectedRows.length} προσφορά/ές ακυρώθηκαν βάσει κανόνων.</div>`;
+            html += `<div class="auto-banner warning"><strong>Αυτόματη Απόρριψη</strong> — ${autoRejectedRows.length} προσφορά/ές ακυρώθηκαν βάσει κανόνων.</div>`;
         }
-        container.innerHTML = html || `<div class="auto-banner info">ℹ️ Καμία αυτόματη ενέργεια.</div>`;
+        container.innerHTML = html || `<div class="auto-banner info">Καμία αυτόματη ενέργεια.</div>`;
     }
 
     function renderPendingOffers() {
@@ -529,7 +627,7 @@
         const pendingRows = [...document.querySelectorAll('#table-active tbody tr[data-status="pending"]')];
 
         if (pendingRows.length === 0) {
-            container.innerHTML = `<div class="empty-state"><div class="icon">✅</div><p>Όλες οι προσφορές έχουν διεκπεραιωθεί.</p></div>`;
+            container.innerHTML = `<div class="empty-state"><div class="icon">&#10003;</div><p>Όλες οι προσφορές έχουν διεκπεραιωθεί.</p></div>`;
             return;
         }
 
@@ -547,7 +645,7 @@
                     <th>Αρχ. Τιμή</th>
                     <th>Έκπτωση</th>
                     <th>Τελ. Τιμή</th>
-                    <th style="min-width:140px;">Ενέργειες</th>
+                    <th style="min-width:180px;">Ενέργειες</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -555,6 +653,9 @@
         pendingRows.forEach(tr => {
             const rowId = tr.getAttribute('data-row-id');
             const d = getRowData(tr);
+            const orig   = parsePrice(tr.cells[7].textContent);
+            const finalP = parsePrice(tr.cells[9].textContent);
+            const margin = computeMargin(orig, finalP);
             html += `<tr>
                 <td><strong>${d.offerCode}</strong></td>
                 <td>${d.customer}</td>
@@ -567,9 +668,9 @@
                 <td><span style="color:#856404; font-weight:700;">${d.discount}</span></td>
                 <td>${d.finalPrice}</td>
                 <td>
-                    <button class="btn-accept" onclick="acceptOffer('${rowId}')">✓ Αποδοχή</button>
+                    <button class="btn-accept" onclick="acceptOffer('${rowId}')">&#10003; Αποδοχή</button>
                     &nbsp;
-                    <button class="btn-reject" onclick="openRejectionForm('${rowId}')">✗ Απόρριψη</button>
+                    <button class="btn-reject" onclick="openRejectionForm('${rowId}')">&#10007; Απόρριψη</button>
                 </td>
             </tr>`;
         });
@@ -609,7 +710,7 @@
     }
 
     function toggleRejectionInput(colKey) {
-        const cb = document.getElementById('rejcb-' + colKey);
+        const cb  = document.getElementById('rejcb-' + colKey);
         const inp = document.getElementById('rejinput-' + colKey);
         const row = document.getElementById('rejrow-' + colKey);
         inp.disabled = !cb.checked;
@@ -626,7 +727,7 @@
         let hasAny = false;
         REJECTION_COLS.forEach(col => {
             const key = col.replace(/\s+/g,'_');
-            const cb = document.getElementById('rejcb-' + key);
+            const cb  = document.getElementById('rejcb-' + key);
             if (cb?.checked) {
                 const inp = document.getElementById('rejinput-' + key);
                 selectedCols[col] = inp.value.trim() || '(χωρίς σχόλιο)';
@@ -640,7 +741,11 @@
         }
 
         const tr = document.querySelector(`#table-active tbody tr[data-row-id="${currentRejectionRowId}"]`);
-        rejectionStore[currentRejectionRowId] = { auto: false, offerCode: tr.cells[0].textContent.trim(), columns: selectedCols };
+        rejectionStore[currentRejectionRowId] = {
+            auto: false,
+            offerCode: tr.cells[0].textContent.trim(),
+            columns: selectedCols
+        };
         applyRejected(tr, currentRejectionRowId);
         closeRejectionModal();
         renderPendingOffers();
@@ -670,7 +775,10 @@
         if (e.target.id === 'commentsModal') closeCommentsModal();
     });
 
-    document.addEventListener('DOMContentLoaded', autoClassifyOffers);
+    document.addEventListener('DOMContentLoaded', () => {
+        initExpiredTable();
+        autoClassifyOffers();
+    });
     </script>
 </body>
 </html>

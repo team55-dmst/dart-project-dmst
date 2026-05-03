@@ -245,6 +245,73 @@
         .orange { color: #fd7e14; font-weight: bold; }
         .red { color: #dc3545; font-weight: bold; }
 
+        .erp-btn {
+            background: none;
+            border: 1px solid #28a745;
+            color: #28a745;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            padding: 2px 6px;
+            margin-left: 6px;
+            transition: 0.2s;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        .erp-btn:hover { background: #28a745; color: white; }
+
+        .comment-btn {
+            background: none;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            padding: 2px 6px;
+            margin-left: 6px;
+            transition: 0.2s;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        .comment-btn:hover { background: #dc3545; color: white; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid #000;
+            width: 800px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .comments-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+        .comments-table th {
+            background: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .comments-table td {
+            border: 1px solid #dde;
+            padding: 8px 12px;
+            color: #333;
+            word-break: break-word;
+            white-space: normal;
+        }
+        .comments-table tr:nth-child(even) td { background: #fdf0f0; }
+
         input[type="radio"] { display: none; }
         #table-expired { display: none; }
 
@@ -275,24 +342,7 @@
             font-weight: bold;
             border-bottom: 3px solid #4a90e2;
         }
-        /* ΤΟ ΚΥΡΙΟΤΕΡΟ: Το παράθυρο ξεκινάει ΚΡΥΦΟ */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6);
-        }
-        /* Πιο πλατύ και καθαρό παράθυρο */
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 25px;
-            border: 1px solid #000;
-            width: 800px; /* Αυξημένο πλάτος */
-            text-align: center;
-            border-radius: 8px;
-        }
+        /* Στυλ για την προεπισκόπηση της γραμμής — το modal ορίζεται παραπάνω */
         /* Στυλ για την προεπισκόπηση της γραμμής */
         .preview-table {
             width: 100%;
@@ -559,8 +609,8 @@
                 </thead>
                 <tbody>
                     <tr><td>DIS-0990</td><td>CUS-1212</td><td>Χονδρική</td><td>Αττική</td><td>4412300</td><td>Λάμπες</td><td>100</td><td>200€</td><td>5%</td><td>190€</td><td>160€</td><td>01/01/2024</td><td>01/01/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-0991</td><td>CUS-5566</td><td>Δημόσιο</td><td>Σέρρες</td><td>9988771</td><td>Προβολείς</td><td>10</td><td>1.000€</td><td>20%</td><td>800€</td><td>700€</td><td>10/02/2024</td><td>10/02/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
-                    <tr><td>DIS-0992</td><td>CUS-3344</td><td>Τεχνική Εταιρεία</td><td>Ρόδος</td><td>2233445</td><td>Κανάλια</td><td>300</td><td>600€</td><td>10%</td><td>540€</td><td>162000.00€</td><td>15/03/2024</td><td>15/03/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0991</td><td>CUS-5566</td><td>Δημόσιο</td><td>Σέρρες</td><td>9988771</td><td>Προβολείς</td><td>10</td><td>990€</td><td>19%</td><td>800€</td><td>700€</td><td>10/02/2024</td><td>10/02/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
+                    <tr><td>DIS-0992</td><td>CUS-3344</td><td>Τεχνική Εταιρεία</td><td>Ρόδος</td><td>2233445</td><td>Κανάλια</td><td>300</td><td>600€</td><td>10%</td><td>540€</td><td>400€</td><td>15/03/2024</td><td>15/03/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
                     <tr><td>DIS-0993</td><td>CUS-7788</td><td>Λιανική</td><td>Κόρινθος</td><td>5566778</td><td>Διακόπτες</td><td>40</td><td>150€</td><td>8%</td><td>138€</td><td>100€</td><td>20/04/2024</td><td>20/04/2025</td><td class="green">Εγκρίθηκε</td><td class="red">Ανενεργή</td></tr>
                     <tr><td>DIS-0994</td><td>CUS-9900</td><td>Χονδρική</td><td>Βόλος</td><td>1122334</td><td>Καλώδια</td><td>80</td><td>400€</td><td>12%</td><td>352€</td><td>300€</td><td>01/05/2024</td><td>01/05/2025</td><td class="red">Απορρίφθηκε</td><td class="red">Ανενεργή</td></tr>
                 </tbody>
@@ -637,6 +687,21 @@
     </div>
 </div>
 
+<!-- =================== MODAL: ΣΧΟΛΙΑ ΑΠΟΡΡΙΨΗΣ =================== -->
+<div id="commentsModal" class="modal" style="z-index:4000;">
+    <div class="modal-content" style="width:640px; max-width:92vw;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="margin:0; color:#dc3545;">Λόγοι Απόρριψης</h3>
+            <button onclick="closeCommentsModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:#888;">X</button>
+        </div>
+        <div id="comments-offer-title" style="font-size:13px; color:#555; margin-bottom:12px;"></div>
+        <div id="comments-content"></div>
+        <div style="text-align:center; margin-top:18px;">
+            <button onclick="closeCommentsModal()" class="main-btn" style="background:#4a90e2; color:white; border:none; padding:9px 28px; border-radius:6px;">Κλείσιμο</button>
+        </div>
+    </div>
+</div>
+
 <style>
     /* Highlight επιλεγμένης γραμμής στο clone modal */
     .clone-row-selected { background-color: #d0eaff !important; outline: 2px solid #4a90e2; }
@@ -670,6 +735,100 @@
     const productColumns = ["Κωδικός προϊόντος", "Είδος προϊόντος", "Ποσότητα", "Αρχική τιμή", "Έκπτωση", "Τελική τιμή", "Κόστος"];
 
     function toId(col) { return 'new_' + col.replace(/\s+/g, '_'); }
+
+    // ============================================================
+    // ΛΟΓΙΚΗ ERP / ΣΧΟΛΙΩΝ ΑΠΟΡΡΙΨΗΣ
+    // ============================================================
+
+    const swRejectionStore = {};
+
+    function swParseDiscount(str) {
+        return parseFloat((str || '0').replace('%', '').replace(',', '.').trim()) || 0;
+    }
+
+    function swParsePrice(str) {
+        let s = (str || '0').replace(/[€\s]/g, '');
+        s = s.replace(/\.(?=\d{3}(?!\d))/g, '');
+        s = s.replace(',', '.');
+        return parseFloat(s) || 0;
+    }
+
+    function swComputeMargin(origPrice, finalPrice) {
+        const unitCost = origPrice * 0.8;
+        return finalPrice > 0 ? ((finalPrice - unitCost) / finalPrice * 100) : 0;
+    }
+
+    function swBuildRejectionColumns(discount, margin) {
+        const cols = {};
+        if (discount > 20) {
+            cols['Έκπτωση'] = 'Αυτόματη απόρριψη: έκπτωση ' + discount + '% υπερβαίνει το ανώτατο επιτρεπτό όριο (20%).';
+        }
+        if (margin <= 5) {
+            cols['Τελική τιμή'] = 'Αυτόματη απόρριψη: περιθώριο κέρδους ' + margin.toFixed(1) + '% κάτω από το ελάχιστο αποδεκτό (5%).';
+        }
+        if (Object.keys(cols).length === 0) {
+            cols['Γενικό'] = 'Χειροκίνητη απόρριψη κατόπιν αξιολόγησης.';
+        }
+        return cols;
+    }
+
+    function swComputeRejectionForRow(tr) {
+        const orig   = swParsePrice(tr.cells[7].textContent);
+        const disc   = swParseDiscount(tr.cells[8].textContent);
+        const finalP = swParsePrice(tr.cells[9].textContent);
+        const margin = swComputeMargin(orig, finalP);
+        return swBuildRejectionColumns(disc, margin);
+    }
+
+    function showErpNote() {
+        alert('Τα δεδομένα μεταφέρθηκαν στο ERP.');
+    }
+
+    function viewRejectionComments(rowId) {
+        const data = swRejectionStore[rowId];
+        if (!data) return;
+        document.getElementById('comments-offer-title').innerHTML = 'Προσφορά: <strong>' + data.offerCode + '</strong>';
+        let html = '<table class="comments-table"><thead><tr><th>Στηλη</th><th>Σχολιο</th></tr></thead><tbody>';
+        Object.entries(data.columns).forEach(function(entry) {
+            html += '<tr><td><strong>' + entry[0] + '</strong></td><td>' + entry[1] + '</td></tr>';
+        });
+        html += '</tbody></table>';
+        document.getElementById('comments-content').innerHTML = html;
+        document.getElementById('commentsModal').style.display = 'block';
+    }
+
+    function closeCommentsModal() {
+        document.getElementById('commentsModal').style.display = 'none';
+    }
+
+    function swDecorateApproved(td13, offerCode) {
+        td13.innerHTML = '<span class="green">Εγκρίθηκε</span>'
+            + '<button class="erp-btn" onclick="showErpNote()">ERP</button>';
+    }
+
+    function swDecorateRejected(td13, rowId, offerCode) {
+        td13.innerHTML = '<span class="red">Απορρίφθηκε</span>'
+            + '<button class="comment-btn" onclick="viewRejectionComments(\'' + rowId + '\')">Σχόλια</button>';
+    }
+
+    function swInitTable(tableId, prefix) {
+        document.querySelectorAll('#' + tableId + ' tbody tr').forEach(function(tr, idx) {
+            var rowId = prefix + idx;
+            tr.setAttribute('data-row-id', rowId);
+            var approvalText = tr.cells[13].textContent.trim();
+            var offerCode = tr.cells[0].textContent.trim();
+
+            if (approvalText.includes('Εγκρίθηκε')) {
+                swDecorateApproved(tr.cells[13], offerCode);
+            } else if (approvalText.includes('Απορρίφθηκε')) {
+                var cols = swComputeRejectionForRow(tr);
+                swRejectionStore[rowId] = { offerCode: offerCode, columns: cols };
+                swDecorateRejected(tr.cells[13], rowId, offerCode);
+            }
+        });
+    }
+
+    // ============================================================
 
     function codeExists(code) {
         for (let row of document.querySelectorAll("table tbody tr")) {
@@ -885,7 +1044,7 @@
             rowSelectionBlock = `
             <div style="background:#f0f7ff; border:1px solid #b8d9f5; border-radius:8px; padding:12px; margin-bottom:14px;">
                 <p style="margin:0 0 8px 0; font-size:13px; font-weight:bold; color:#4a90e2;">
-                    📦 Η προσφορά έχει ${cloneSourceRows.length} προϊόντα — επίλεξε ποια θέλεις να συμπεριλάβεις στη νέα
+                    Η προσφορά έχει ${cloneSourceRows.length} προϊόντα — επίλεξε ποια θέλεις να συμπεριλάβεις στη νέα
                 </p>
                 <p style="margin:0; font-size:11px; color:#888;">Κλικ σε γραμμή για να την επιλέξεις ή να την αποεπιλέξεις</p>
                 <div style="margin-top:8px; display:flex; gap:8px;">
@@ -1006,9 +1165,10 @@
                 <td style="border:1px solid #dde; padding:4px; text-align:center; font-size:11px; color:#888;">Προϊόν ${rowNum+1}</td>`;
             productColumns.forEach(col => {
                 const editable = editableProductCols.includes(col);
+                const needsRecalc = editable && (col === 'Αρχική τιμή' || col === 'Έκπτωση') ? `oninput="recalcCloneFinal(${rowNum})"` : '';
                 prodTableHTML += `<td style="border:1px solid #dde; padding:3px;">
-                    <input type="text" data-col="${col}" data-row="${rowNum}" value="${srcRow[col]}"
-                        ${editable ? '' : 'readonly'}
+                    <input type="text" class="clone-prod-input" data-col="${col}" data-row="${rowNum}" value="${srcRow[col]}"
+                        ${editable ? needsRecalc : 'readonly'}
                         style="width:100%; padding:4px; border:1px solid ${editable ? '#aac' : '#eee'}; border-radius:3px; font-size:12px;
                         ${editable ? 'background:#fff;' : 'background:#f5f5f5; color:#888; cursor:not-allowed;'} box-sizing:border-box;">
                 </td>`;
@@ -1039,8 +1199,10 @@
         newRow.setAttribute('data-rownum', rowCount);
         newRow.innerHTML = `<td style="border:1px solid #dde; padding:4px; text-align:center; font-size:11px; color:#888;">Νέο</td>`;
         productColumns.forEach(col => {
+            const needsRecalc = (col === 'Αρχική τιμή' || col === 'Έκπτωση') ? `oninput="recalcCloneFinal(${rowCount})"` : '';
             newRow.innerHTML += `<td style="border:1px solid #dde; padding:3px;">
-                <input type="text" data-col="${col}" data-row="${rowCount}" value=""
+                <input type="text" class="clone-prod-input" data-col="${col}" data-row="${rowCount}" value=""
+                    ${needsRecalc}
                     style="width:100%; padding:4px; border:1px solid #aac; border-radius:3px; font-size:12px; background:#fff; box-sizing:border-box;">
             </td>`;
         });
@@ -1157,6 +1319,36 @@ function renderEditStep2() {
         </div>`;
 }
 
+function recalcEditFinal(rowNum) {
+    const priceInp = document.querySelector(`.edit-prod-input[data-row="${rowNum}"][data-col="Αρχική τιμή"]`);
+    const discInp  = document.querySelector(`.edit-prod-input[data-row="${rowNum}"][data-col="Έκπτωση"]`);
+    const finalInp = document.querySelector(`.edit-prod-input[data-row="${rowNum}"][data-col="Τελική τιμή"]`);
+    if (!priceInp || !discInp || !finalInp) return;
+
+    const priceVal = parseFloat((priceInp.value || '0').replace(/[€\s]/g,'').replace(/\.(?=\d{3}(?!\d))/g,'').replace(',','.')) || 0;
+    const discVal  = parseFloat((discInp.value  || '0').replace('%','').replace(',','.').trim()) || 0;
+    const final    = priceVal * (1 - discVal / 100);
+
+    if (priceVal > 0) {
+        finalInp.value = final.toFixed(2) + '€';
+    }
+}
+
+function recalcCloneFinal(rowNum) {
+    const priceInp = document.querySelector(`#clone-prod-tbody .clone-prod-input[data-row="${rowNum}"][data-col="Αρχική τιμή"]`);
+    const discInp  = document.querySelector(`#clone-prod-tbody .clone-prod-input[data-row="${rowNum}"][data-col="Έκπτωση"]`);
+    const finalInp = document.querySelector(`#clone-prod-tbody .clone-prod-input[data-row="${rowNum}"][data-col="Τελική τιμή"]`);
+    if (!priceInp || !discInp || !finalInp) return;
+
+    const priceVal = parseFloat((priceInp.value || '0').replace(/[€\s]/g,'').replace(/\.(?=\d{3}(?!\d))/g,'').replace(',','.')) || 0;
+    const discVal  = parseFloat((discInp.value  || '0').replace('%','').replace(',','.').trim()) || 0;
+    const final    = priceVal * (1 - discVal / 100);
+
+    if (priceVal > 0) {
+        finalInp.value = final.toFixed(2) + '€';
+    }
+}
+
 function renderEditStep3() {
     const selectedIndices = [...editSelectedRows].sort((a,b) => a-b);
     const selectedCols = Array.from(document.querySelectorAll('.edit-col-opt:checked')).map(cb => cb.value);
@@ -1189,9 +1381,10 @@ function renderEditStep3() {
         html += `<tr>`;
         productColumns.forEach(col => {
             const canEdit = selectedCols.includes(col);
+            const needsRecalc = (col === 'Αρχική τιμή' || col === 'Έκπτωση') ? `oninput="recalcEditFinal(${i})"` : '';
             html += `<td style="border:1px solid #ddd; padding:4px;">
                 <input type="text" class="edit-prod-input" data-row="${i}" data-col="${col}" value="${row[col]}"
-                ${canEdit ? 'style="width:100%; border:1px solid #4a90e2; padding:3px;"' : 'readonly style="width:100%; border:none; background:transparent; color:#888;"'}>
+                ${canEdit ? `${needsRecalc} style="width:100%; border:1px solid #4a90e2; padding:3px;"` : 'readonly style="width:100%; border:none; background:transparent; color:#888;"'}>
             </td>`;
         });
         html += `</tr>`;
@@ -1329,6 +1522,26 @@ function submitMassEdit() {
         alert("Δεν βρέθηκαν προσφορές που να ικανοποιούν όλα τα φίλτρα.");
     }
 }
+    document.addEventListener('DOMContentLoaded', function() {
+        swInitTable('table-active', 'sw-active-');
+        swInitTable('table-expired', 'sw-expired-');
+
+        // Reset των nested checkboxes όταν κλείνει το menu
+        function resetNestedToggles() {
+            const ot = document.getElementById('original-options-toggle');
+            const dt = document.getElementById('dart-toggle');
+            if (ot) ot.checked = false;
+            if (dt) dt.checked = false;
+        }
+
+        document.getElementById('close-all').addEventListener('change', resetNestedToggles);
+        document.getElementById('toggle2').addEventListener('change', resetNestedToggles);
+        document.getElementById('toggle1').addEventListener('change', resetNestedToggles);
+    });
+
+    window.addEventListener('click', function(e) {
+        if (e.target.id === 'commentsModal') closeCommentsModal();
+    });
 </script>
 <div id="editModal" class="modal">
     <div class="modal-content">
