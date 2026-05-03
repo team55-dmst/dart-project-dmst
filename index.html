@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Login Portal</title>
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+    }
+
+    /* LEFT PANEL */
+    .left {
+        position: relative;
+        width: 35%;
+        height: 100vh;
+        background: #3687d2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left h1 {
+        margin: 10px 0;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .left p {
+        opacity: 0.8;
+        position: absolute;
+        margin-bottom: 20px;
+        bottom: 20px;
+    }
+
+    .left img{
+        width: 250px;
+        margin-bottom: 50px;
+    }
+
+    /* RIGHT PANEL */
+    .right {
+        width: 65%;
+        background: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box {
+        width: 400px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .login-header {
+        background: #1d5fa2;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .login-body {
+        padding: 40px;
+    }
+
+    .login-body label {
+        font-size: 12px;
+        color: #555;
+    }
+
+    .login-body input {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 15px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .login-body .options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .login-body button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 20px;
+        background: #1d5fa2;
+        color: white;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .login-body button:hover {
+        background: #154a80;
+    }
+
+    .footer {
+        font-size: 11px;
+        text-align: center;
+        color: #777;
+        margin-top: 10px;
+    }
+
+    .role-section {
+        margin-bottom: 18px;
+    }
+
+    .role-section-label {
+        font-size: 12px;
+        color: #555;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .role-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .role-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+        color: #333;
+        background: #fafafa;
+    }
+
+    .role-option:hover {
+        border-color: #1d5fa2;
+        background: #f0f7ff;
+    }
+
+    .role-option input[type="radio"] {
+        width: auto;
+        margin: 0;
+        accent-color: #1d5fa2;
+        cursor: pointer;
+    }
+
+    .role-option.selected {
+        border-color: #1d5fa2;
+        background: #e8f2ff;
+        font-weight: bold;
+        color: #1d5fa2;
+    }
+
+    .validation-msg {
+        color: #dc3545;
+        font-size: 12px;
+        margin-bottom: 10px;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="left">
+    <img src="DARTlogo.png" alt="Dart Logo">
+    <h1>Real-time SAP Interface </h1>
+    <h2> Employee Portal</h2>
+</div>
+
+<div class="right">
+    <div class="login-box">
+        <div class="login-header">Sign In</div>
+        <div class="login-body">
+            <label>Employee ID</label>
+            <input type="text" id="emp-id" placeholder="EMP-XXXX">
+
+            <label>Password</label>
+            <input type="password" id="emp-pass">
+
+            <div class="options">
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" style="width: auto; margin: 0;"> Remember Me </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <div class="role-section">
+                <span class="role-section-label">Ρόλος</span>
+                <div class="role-options">
+                    <label class="role-option" id="role-option-sales" onclick="selectRole(this)">
+                        <input type="radio" name="role" value="salesperson">
+                        Πωλητής
+                    </label>
+                    <label class="role-option" id="role-option-finance" onclick="selectRole(this)">
+                        <input type="radio" name="role" value="finance">
+                        Οικονομική Διεύθυνση
+                    </label>
+                </div>
+            </div>
+
+            <div class="validation-msg" id="validation-msg"></div>
+
+            <button type="button" onclick="doLogin()">LOG IN</button>
+
+            <div class="footer">
+                Access restricted to authorized personnel only.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectRole(labelEl) {
+        document.querySelectorAll('.role-option').forEach(l => l.classList.remove('selected'));
+        labelEl.classList.add('selected');
+        labelEl.querySelector('input[type="radio"]').checked = true;
+    }
+
+    function doLogin() {
+        const empId   = document.getElementById('emp-id').value.trim();
+        const empPass = document.getElementById('emp-pass').value;
+        const roleEl  = document.querySelector('input[name="role"]:checked');
+        const msgEl   = document.getElementById('validation-msg');
+
+        if (!empId) {
+            msgEl.textContent = 'Παρακαλώ εισάγετε Employee ID.';
+            msgEl.style.display = 'block';
+            return;
+        }
+        if (!empPass) {
+            msgEl.textContent = 'Παρακαλώ εισάγετε κωδικό.';
+            msgEl.style.display = 'block';
+            return;
+        }
+        if (!roleEl) {
+            msgEl.textContent = 'Παρακαλώ επιλέξτε ρόλο πρόσβασης.';
+            msgEl.style.display = 'block';
+            return;
+        }
+
+        msgEl.style.display = 'none';
+
+        if (roleEl.value === 'salesperson') {
+            window.location.href = 'Starting_Window.html';
+        } else {
+            window.location.href = 'RequestManagement.html';
+        }
+    }
+</script>
+
+</body>
+</html>
