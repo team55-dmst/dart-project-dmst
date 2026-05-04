@@ -2078,17 +2078,17 @@ function submitMassEdit() {
         const actionsEl = document.getElementById('role-actions-container');
         if (!infoEl || !actionsEl) return;
 
-        infoEl.textContent = '👤 ' + (ROLE_LABELS[role] || 'Πωλητής');
+        infoEl.textContent = (ROLE_LABELS[role] || 'Πωλητής';
 
         let buttonsHtml = '';
         if (role === 'sales_analyst') {
-            buttonsHtml += '<button class="role-btn" onclick="openAnalysisModal()">📊 Ανάλυση Πωλήσεων</button>';
+            buttonsHtml += '<button class="role-btn" onclick="openAnalysisModal()">Ανάλυση Πωλήσεων</button>';
         }
         if (role === 'sales_dev') {
-            buttonsHtml += '<button class="role-btn" onclick="openCompetitionModal()">🎯 Σύγκριση με Ανταγωνισμό</button>';
+            buttonsHtml += '<button class="role-btn" onclick="openCompetitionModal()">Σύγκριση με Ανταγωνισμό</button>';
         }
         // Complaint button is shown for ALL roles
-        buttonsHtml += '<button class="role-btn complaint-btn" onclick="openComplaintModal()">⚠️ Υποβολή Παραπόνου</button>';
+        buttonsHtml += '<button class="role-btn complaint-btn" onclick="openComplaintModal()">Υποβολή Παραπόνου</button>';
 
         actionsEl.innerHTML = buttonsHtml;
     }
