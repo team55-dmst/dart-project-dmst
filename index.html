@@ -71,7 +71,9 @@
     }
 
     .login-body {
-        padding: 40px;
+        padding: 30px 40px;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
     .login-body label {
@@ -81,8 +83,8 @@
 
     .login-body input {
         width: 100%;
-        padding: 15px;
-        margin: 5px 0 15px;
+        padding: 12px 15px;
+        margin: 5px 0 12px;
         border-radius: 6px;
         border: 1px solid #ddd;
         font-size: 16px;
@@ -141,12 +143,12 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 10px 14px;
+        padding: 8px 12px;
         border: 1px solid #ddd;
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s;
-        font-size: 14px;
+        font-size: 13px;
         color: #333;
         background: #fafafa;
     }
@@ -175,6 +177,47 @@
         font-size: 12px;
         margin-bottom: 10px;
         display: none;
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        body {
+            flex-direction: column;
+            height: auto;
+            min-height: 100vh;
+        }
+        .left {
+            width: 100%;
+            height: auto;
+            padding: 30px 20px;
+        }
+        .left img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .left h1 {
+            font-size: 22px;
+            text-align: center;
+        }
+        .left h2 {
+            font-size: 16px;
+        }
+        .left p {
+            position: static;
+            margin-top: 15px;
+            font-size: 11px;
+        }
+        .right {
+            width: 100%;
+            padding: 20px 10px;
+        }
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-body {
+            padding: 25px 20px;
+        }
     }
 </style>
 </head>
@@ -212,6 +255,18 @@
                     <label class="role-option" id="role-option-finance" onclick="selectRole(this)">
                         <input type="radio" name="role" value="finance">
                         Οικονομική Διεύθυνση
+                    </label>
+                    <label class="role-option" id="role-option-analyst" onclick="selectRole(this)">
+                        <input type="radio" name="role" value="sales_analyst">
+                        Sales Analyst
+                    </label>
+                    <label class="role-option" id="role-option-salesdev" onclick="selectRole(this)">
+                        <input type="radio" name="role" value="sales_dev">
+                        Sales Development &amp; Market Intelligence
+                    </label>
+                    <label class="role-option" id="role-option-it" onclick="selectRole(this)">
+                        <input type="radio" name="role" value="it">
+                        Διεύθυνση Information Technology
                     </label>
                 </div>
             </div>
@@ -259,9 +314,15 @@
         msgEl.style.display = 'none';
 
         if (roleEl.value === 'salesperson') {
-            window.location.href = 'Starting_Window.html';
-        } else {
+            window.location.href = 'Starting_Window.html?role=salesperson';
+        } else if (roleEl.value === 'finance') {
             window.location.href = 'RequestManagement.html';
+        } else if (roleEl.value === 'sales_analyst') {
+            window.location.href = 'Starting_Window.html?role=sales_analyst';
+        } else if (roleEl.value === 'sales_dev') {
+            window.location.href = 'Starting_Window.html?role=sales_dev';
+        } else if (roleEl.value === 'it') {
+            window.location.href = 'ITDashboard.html';
         }
     }
 </script>

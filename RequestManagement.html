@@ -301,6 +301,87 @@
                 padding: 6px 8px;
             }
         }
+
+        /* ===== COMPLAINT BUTTON & FORM ===== */
+        .complaint-btn-main {
+            background: linear-gradient(135deg, #fd7e14, #c46006);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 6px;
+            box-shadow: 0 3px 8px rgba(253,126,20,0.4);
+            letter-spacing: 0.3px;
+            transition: 0.2s;
+            margin-left: auto;
+        }
+        .complaint-btn-main:hover {
+            background: linear-gradient(135deg, #c46006, #8a4204);
+            box-shadow: 0 4px 12px rgba(253,126,20,0.5);
+        }
+        .complaint-form { text-align: left; }
+        .complaint-form .form-group { margin-bottom: 14px; }
+        .complaint-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+        .complaint-form input,
+        .complaint-form select,
+        .complaint-form textarea {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #b1d1f0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 13px;
+            font-family: inherit;
+        }
+        .complaint-form textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+        .complaint-form input:focus,
+        .complaint-form select:focus,
+        .complaint-form textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74,144,226,0.15);
+        }
+        .severity-options { display: flex; gap: 8px; }
+        .severity-options label {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            color: #555;
+            background: #fafafa;
+            transition: 0.2s;
+            margin: 0;
+        }
+        .severity-options label:hover { border-color: #4a90e2; }
+        .severity-options input { display: none; }
+        .severity-options label.sev-low.checked { background: #28a745; border-color: #28a745; color: white; }
+        .severity-options label.sev-med.checked { background: #fd7e14; border-color: #fd7e14; color: white; }
+        .severity-options label.sev-high.checked { background: #dc3545; border-color: #dc3545; color: white; }
+        .complaint-success {
+            background: #e8f8f0;
+            border: 1px solid #a9dfbf;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            color: #145a32;
+            margin: 12px 0;
+        }
+        .complaint-success .icon { font-size: 38px; margin-bottom: 6px; }
     </style>
 </head>
 <body>
@@ -314,6 +395,7 @@
             </button>
         </div>
         <div id="auto-status-chip" style="display:none; align-self:center; font-size:12px; background:rgba(255,255,255,0.9); border-radius:20px; padding:5px 14px; color:#555; box-shadow:0 1px 4px rgba(0,0,0,0.15);"></div>
+        <button class="complaint-btn-main" onclick="openComplaintModal()">⚠️ Υποβολή Παραπόνου</button>
     </div>
 
     <div class="excel-window">
@@ -448,6 +530,76 @@
         </div>
     </div>
 
+    <!-- ============================================================ -->
+    <!-- COMPLAINT MODAL                                              -->
+    <!-- ============================================================ -->
+    <div id="complaintModal" class="modal" style="z-index:5000;">
+        <div class="modal-content" style="width:560px; max-width:95vw;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <h3 style="margin:0; color:#fd7e14;">Υποβολή Παραπόνου / Αναφοράς Προβλήματος</h3>
+                <button onclick="closeComplaintModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:#888;">✕</button>
+            </div>
+            <div id="complaint-form-wrapper">
+                <div style="font-size:13px; color:#555; margin-bottom:14px;">
+                    Καταχωρήστε το παράπονο ή τεχνικό πρόβλημα που αντιμετωπίζετε. Η ομάδα IT θα το λάβει άμεσα.
+                </div>
+                <div class="complaint-form">
+                    <div class="form-group">
+                        <label>Τίτλος προβλήματος *</label>
+                        <input type="text" id="complaint-title" placeholder="π.χ. Δεν αποθηκεύονται οι αλλαγές στην απόρριψη">
+                    </div>
+                    <div class="form-group">
+                        <label>Κατηγορία</label>
+                        <select id="complaint-category">
+                            <option value="UI/UX">Διεπαφή Χρήστη (UI/UX)</option>
+                            <option value="Performance">Απόδοση / Ταχύτητα</option>
+                            <option value="Bug">Σφάλμα Λειτουργίας (Bug)</option>
+                            <option value="Data">Πρόβλημα Δεδομένων</option>
+                            <option value="Feature">Πρόταση Νέας Λειτουργίας</option>
+                            <option value="Other">Άλλο</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Σοβαρότητα *</label>
+                        <div class="severity-options">
+                            <label class="sev-low" id="sev-low-lbl">
+                                <input type="radio" name="complaint-sev" value="Χαμηλή" onchange="setSeverity('low')">
+                                <span>Χαμηλή</span>
+                            </label>
+                            <label class="sev-med checked" id="sev-med-lbl">
+                                <input type="radio" name="complaint-sev" value="Μεσαία" checked onchange="setSeverity('med')">
+                                <span>Μεσαία</span>
+                            </label>
+                            <label class="sev-high" id="sev-high-lbl">
+                                <input type="radio" name="complaint-sev" value="Υψηλή" onchange="setSeverity('high')">
+                                <span>Υψηλή</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Περιγραφή *</label>
+                        <textarea id="complaint-desc" placeholder="Περιγράψτε αναλυτικά το πρόβλημα. Πότε εμφανίστηκε; Σε ποια οθόνη;"></textarea>
+                    </div>
+                    <div id="complaint-validation" style="color:#dc3545; font-size:12px; margin-bottom:8px; display:none;"></div>
+                </div>
+                <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+                    <button onclick="submitComplaint()" class="main-btn" style="background:#fd7e14; color:white; border:none; padding:10px 28px; border-radius:6px; font-size:13px;">📨 Αποστολή στο IT</button>
+                    <button onclick="closeComplaintModal()" class="main-btn" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:10px 20px; border-radius:6px; font-size:13px;">Ακύρωση</button>
+                </div>
+            </div>
+            <div id="complaint-success-wrapper" style="display:none;">
+                <div class="complaint-success">
+                    <div class="icon">✓</div>
+                    <strong>Το παράπονό σας υποβλήθηκε επιτυχώς!</strong><br>
+                    <span style="font-size:12px;">Αριθμός αναφοράς: <strong id="complaint-ref-id">-</strong></span><br>
+                    <span style="font-size:12px;">Η ομάδα IT θα το αξιολογήσει σύντομα.</span>
+                </div>
+                <div style="text-align:center; margin-top:14px;">
+                    <button onclick="closeComplaintModal()" class="main-btn" style="background:#4a90e2; color:white; border:none; padding:9px 28px; border-radius:6px;">Κλείσιμο</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
     const rejectionStore = {};
@@ -805,10 +957,74 @@
         document.getElementById('commentsModal').style.display = 'none';
     }
 
+    // ============================================================
+    // COMPLAINT (Submit problem to IT)
+    // ============================================================
+    function openComplaintModal() {
+        document.getElementById('complaint-title').value = '';
+        document.getElementById('complaint-category').value = 'UI/UX';
+        document.getElementById('complaint-desc').value = '';
+        const medRadio = document.querySelector('input[name="complaint-sev"][value="Μεσαία"]');
+        if (medRadio) medRadio.checked = true;
+        setSeverity('med');
+        document.getElementById('complaint-validation').style.display = 'none';
+        document.getElementById('complaint-form-wrapper').style.display = 'block';
+        document.getElementById('complaint-success-wrapper').style.display = 'none';
+        document.getElementById('complaintModal').style.display = 'block';
+    }
+    function closeComplaintModal() {
+        document.getElementById('complaintModal').style.display = 'none';
+    }
+    function setSeverity(level) {
+        ['low','med','high'].forEach(l => {
+            const el = document.getElementById('sev-' + l + '-lbl');
+            if (el) el.classList.remove('checked');
+        });
+        const target = document.getElementById('sev-' + level + '-lbl');
+        if (target) target.classList.add('checked');
+    }
+    function submitComplaint() {
+        const title = document.getElementById('complaint-title').value.trim();
+        const category = document.getElementById('complaint-category').value;
+        const desc = document.getElementById('complaint-desc').value.trim();
+        const sevEl = document.querySelector('input[name="complaint-sev"]:checked');
+        const valEl = document.getElementById('complaint-validation');
+
+        if (!title) { valEl.textContent = 'Παρακαλώ εισάγετε τίτλο.'; valEl.style.display = 'block'; return; }
+        if (!desc)  { valEl.textContent = 'Παρακαλώ εισάγετε περιγραφή.'; valEl.style.display = 'block'; return; }
+        if (!sevEl) { valEl.textContent = 'Παρακαλώ επιλέξτε σοβαρότητα.'; valEl.style.display = 'block'; return; }
+
+        const refId = 'CMP-' + Date.now().toString().slice(-6);
+        const complaint = {
+            id: refId,
+            title,
+            category,
+            severity: sevEl.value,
+            description: desc,
+            submittedBy: 'Οικονομική Διεύθυνση',
+            roleKey: 'finance',
+            timestamp: new Date().toISOString(),
+            status: 'Νέο'
+        };
+
+        try {
+            const stored = JSON.parse(localStorage.getItem('system_complaints') || '[]');
+            stored.unshift(complaint);
+            localStorage.setItem('system_complaints', JSON.stringify(stored));
+        } catch(e) {
+            console.warn('Could not save complaint to localStorage', e);
+        }
+
+        document.getElementById('complaint-ref-id').textContent = refId;
+        document.getElementById('complaint-form-wrapper').style.display = 'none';
+        document.getElementById('complaint-success-wrapper').style.display = 'block';
+    }
+
     window.addEventListener('click', e => {
         if (e.target.id === 'requestsModal') closeRequestsPanel();
         if (e.target.id === 'rejectionModal') closeRejectionModal();
         if (e.target.id === 'commentsModal') closeCommentsModal();
+        if (e.target.id === 'complaintModal') closeComplaintModal();
     });
 
     document.addEventListener('DOMContentLoaded', () => {

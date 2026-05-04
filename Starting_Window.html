@@ -459,11 +459,315 @@
                 padding: 16px !important;
             }
         }
+
+        /* ===== ROLE HEADER (top-right action buttons) ===== */
+        .role-header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .role-info {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.18);
+            padding: 6px 14px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+        }
+        .role-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+        .role-btn {
+            background: linear-gradient(135deg, #4a90e2, #2a6dbd);
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 6px;
+            box-shadow: 0 3px 8px rgba(74,144,226,0.4);
+            letter-spacing: 0.3px;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .role-btn:hover {
+            background: linear-gradient(135deg, #2a6dbd, #1a4d8f);
+            box-shadow: 0 4px 12px rgba(74,144,226,0.5);
+        }
+        .role-btn.complaint-btn {
+            background: linear-gradient(135deg, #fd7e14, #c46006);
+            box-shadow: 0 3px 8px rgba(253,126,20,0.4);
+        }
+        .role-btn.complaint-btn:hover {
+            background: linear-gradient(135deg, #c46006, #8a4204);
+            box-shadow: 0 4px 12px rgba(253,126,20,0.5);
+        }
+
+        /* ===== ANALYSIS / COMPETITION DASHBOARD ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f0f7ff, #e8f2ff);
+            border: 1px solid #b1d1f0;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,144,226,0.2); }
+        .stat-card .label {
+            font-size: 11px;
+            color: #2a6dbd;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a4d8f;
+        }
+        .stat-card .sub {
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+        }
+        .stat-card.green { background: linear-gradient(135deg, #e8f8f0, #d4f0e0); border-color: #a9dfbf; }
+        .stat-card.green .label { color: #1e8449; }
+        .stat-card.green .value { color: #145a32; }
+        .stat-card.orange { background: linear-gradient(135deg, #fff5e8, #ffead0); border-color: #ffd9a3; }
+        .stat-card.orange .label { color: #c46006; }
+        .stat-card.orange .value { color: #8a4204; }
+        .stat-card.red { background: linear-gradient(135deg, #fff0f0, #ffe0e0); border-color: #f5c6cb; }
+        .stat-card.red .label { color: #c0392b; }
+        .stat-card.red .value { color: #7d2018; }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2a6dbd;
+            border-bottom: 2px solid #e0eaf5;
+            padding-bottom: 6px;
+            margin: 22px 0 12px;
+        }
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .bar-row .name {
+            min-width: 110px;
+            font-weight: 600;
+            color: #333;
+        }
+        .bar-row .bar-track {
+            flex: 1;
+            background: #f0f0f0;
+            height: 18px;
+            border-radius: 9px;
+            overflow: hidden;
+            position: relative;
+        }
+        .bar-row .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #2a6dbd);
+            border-radius: 9px;
+            transition: width 0.6s ease;
+        }
+        .bar-row .bar-fill.green { background: linear-gradient(90deg, #28a745, #1e7e34); }
+        .bar-row .bar-fill.orange { background: linear-gradient(90deg, #fd7e14, #c46006); }
+        .bar-row .bar-fill.red { background: linear-gradient(90deg, #dc3545, #bd2130); }
+        .bar-row .val {
+            min-width: 60px;
+            text-align: right;
+            font-weight: 700;
+            color: #1a4d8f;
+        }
+
+        .insight-box {
+            background: #fffbe8;
+            border-left: 4px solid #f1c40f;
+            border-radius: 6px;
+            padding: 12px 14px;
+            margin: 12px 0;
+            font-size: 13px;
+            color: #5d4d00;
+        }
+        .insight-box strong { color: #7d6608; }
+        .insight-box.success { background: #e8f8f0; border-left-color: #28a745; color: #145a32; }
+        .insight-box.success strong { color: #1e8449; }
+        .insight-box.warning { background: #fff0f0; border-left-color: #dc3545; color: #7d2018; }
+        .insight-box.warning strong { color: #c0392b; }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        .compare-table th {
+            background: #2a6dbd;
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+            font-size: 11px;
+        }
+        .compare-table td {
+            border: 1px solid #dde;
+            padding: 7px 10px;
+            color: #333;
+        }
+        .compare-table tr:nth-child(even) td { background: #f5f9ff; }
+        .compare-table .price-better { color: #28a745; font-weight: 700; }
+        .compare-table .price-worse { color: #dc3545; font-weight: 700; }
+        .compare-table .price-equal { color: #fd7e14; font-weight: 700; }
+
+        /* ===== COMPLAINT FORM ===== */
+        .complaint-form {
+            text-align: left;
+        }
+        .complaint-form .form-group {
+            margin-bottom: 14px;
+        }
+        .complaint-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+        .complaint-form input,
+        .complaint-form select,
+        .complaint-form textarea {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #b1d1f0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 13px;
+            font-family: inherit;
+        }
+        .complaint-form textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+        .complaint-form input:focus,
+        .complaint-form select:focus,
+        .complaint-form textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74,144,226,0.15);
+        }
+        .severity-options {
+            display: flex;
+            gap: 8px;
+        }
+        .severity-options label {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            color: #555;
+            background: #fafafa;
+            transition: 0.2s;
+            margin: 0;
+        }
+        .severity-options label:hover { border-color: #4a90e2; }
+        .severity-options input { display: none; }
+        .severity-options input:checked + span { color: white; }
+        .severity-options label.sev-low.checked { background: #28a745; border-color: #28a745; color: white; }
+        .severity-options label.sev-med.checked { background: #fd7e14; border-color: #fd7e14; color: white; }
+        .severity-options label.sev-high.checked { background: #dc3545; border-color: #dc3545; color: white; }
+
+        .complaint-success {
+            background: #e8f8f0;
+            border: 1px solid #a9dfbf;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            color: #145a32;
+            margin: 12px 0;
+        }
+        .complaint-success .icon {
+            font-size: 38px;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .role-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .role-info {
+                text-align: center;
+            }
+            .role-actions {
+                justify-content: center;
+                margin-left: 0;
+            }
+            .role-btn {
+                flex: 1;
+                min-width: 130px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .stat-card {
+                padding: 12px 8px;
+            }
+            .stat-card .value {
+                font-size: 18px;
+            }
+            .bar-row {
+                flex-wrap: wrap;
+            }
+            .bar-row .name {
+                min-width: 0;
+                width: 100%;
+            }
+            .compare-table {
+                font-size: 11px;
+            }
+            .compare-table th, .compare-table td {
+                padding: 5px 6px;
+            }
+        }
     </style>
 </head>
 <body>
     <input type="radio" id="close-all" name="menu-toggle" class="toggle-input">
     <h2>Βασική Οθόνη Συστήματος - Λίστα Προσφορών</h2>
+
+    <!-- Role Header: shows current role + role-specific action buttons -->
+    <div class="role-header">
+        <div class="role-info" id="role-info-display">Πωλητής</div>
+        <div class="role-actions" id="role-actions-container">
+            <!-- Buttons inserted dynamically based on role -->
+        </div>
+    </div>
+
     <h2>Βασική Οθόνη Συστήματος</h2>
 
     <div class="controls-container">
@@ -1642,5 +1946,639 @@ function submitMassEdit() {
         </div>
     </div>
 </div>
+
+<!-- ============================================================ -->
+<!-- ANALYSIS MODAL (Sales Analyst only)                          -->
+<!-- ============================================================ -->
+<div id="analysisModal" class="modal" style="z-index:4000;">
+    <div class="modal-content" style="width:1000px; max-width:96vw; max-height:90vh; overflow-y:auto; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="margin:0; color:#2a6dbd; font-size:20px;">Ανάλυση Πωλήσεων &amp; Στρατηγική Πληροφόρηση</h3>
+            <button onclick="closeAnalysisModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:#888;" title="Κλείσιμο">✕</button>
+        </div>
+        <div style="font-size:13px; color:#555; margin-bottom:10px;">
+            Ζωντανή ανάλυση βάσει των ενεργών προσφορών του συστήματος. Εντοπισμός τάσεων, υπολογισμός ποσοστών επιτυχίας και προβλέψεις πωλήσεων.
+        </div>
+        <div id="analysis-content"></div>
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="closeAnalysisModal()" class="main-btn" style="background:#4a90e2; color:white; border:none; padding:10px 30px; border-radius:6px;">Κλείσιμο</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- COMPETITION MODAL (Sales Development & Market Intelligence)  -->
+<!-- ============================================================ -->
+<div id="competitionModal" class="modal" style="z-index:4000;">
+    <div class="modal-content" style="width:1000px; max-width:96vw; max-height:90vh; overflow-y:auto; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="margin:0; color:#2a6dbd; font-size:20px;">Σύγκριση με Ανταγωνισμό &amp; Ανάλυση Αγοράς</h3>
+            <button onclick="closeCompetitionModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:#888;" title="Κλείσιμο">✕</button>
+        </div>
+        <div style="font-size:13px; color:#555; margin-bottom:10px;">
+            Σύγκριση των προσφορών μας έναντι του ανταγωνισμού. Εντοπισμός νέων ευκαιριών στην αγορά και στρατηγικές προτάσεις προώθησης.
+        </div>
+        <div id="competition-content"></div>
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="closeCompetitionModal()" class="main-btn" style="background:#4a90e2; color:white; border:none; padding:10px 30px; border-radius:6px;">Κλείσιμο</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- COMPLAINT MODAL (All roles)                                  -->
+<!-- ============================================================ -->
+<div id="complaintModal" class="modal" style="z-index:5000;">
+    <div class="modal-content" style="width:560px; max-width:95vw;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="margin:0; color:#fd7e14;">Υποβολή Παραπόνου / Αναφοράς Προβλήματος</h3>
+            <button onclick="closeComplaintModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:#888;">✕</button>
+        </div>
+        <div id="complaint-form-wrapper">
+            <div style="font-size:13px; color:#555; margin-bottom:14px;">
+                Καταχωρήστε το παράπονο ή τεχνικό πρόβλημα που αντιμετωπίζετε. Η ομάδα IT θα το λάβει άμεσα.
+            </div>
+            <div class="complaint-form">
+                <div class="form-group">
+                    <label>Τίτλος προβλήματος *</label>
+                    <input type="text" id="complaint-title" placeholder="π.χ. Δεν φορτώνει η σελίδα τροποποίησης">
+                </div>
+                <div class="form-group">
+                    <label>Κατηγορία</label>
+                    <select id="complaint-category">
+                        <option value="UI/UX">Διεπαφή Χρήστη (UI/UX)</option>
+                        <option value="Performance">Απόδοση / Ταχύτητα</option>
+                        <option value="Bug">Σφάλμα Λειτουργίας (Bug)</option>
+                        <option value="Data">Πρόβλημα Δεδομένων</option>
+                        <option value="Feature">Πρόταση Νέας Λειτουργίας</option>
+                        <option value="Other">Άλλο</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Σοβαρότητα *</label>
+                    <div class="severity-options">
+                        <label class="sev-low" id="sev-low-lbl">
+                            <input type="radio" name="complaint-sev" value="Χαμηλή" onchange="setSeverity('low')">
+                            <span>Χαμηλή</span>
+                        </label>
+                        <label class="sev-med checked" id="sev-med-lbl">
+                            <input type="radio" name="complaint-sev" value="Μεσαία" checked onchange="setSeverity('med')">
+                            <span>Μεσαία</span>
+                        </label>
+                        <label class="sev-high" id="sev-high-lbl">
+                            <input type="radio" name="complaint-sev" value="Υψηλή" onchange="setSeverity('high')">
+                            <span>Υψηλή</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Περιγραφή *</label>
+                    <textarea id="complaint-desc" placeholder="Περιγράψτε αναλυτικά το πρόβλημα. Πότε εμφανίστηκε; Σε ποια οθόνη;"></textarea>
+                </div>
+                <div id="complaint-validation" style="color:#dc3545; font-size:12px; margin-bottom:8px; display:none;"></div>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+                <button onclick="submitComplaint()" class="main-btn" style="background:#fd7e14; color:white; border:none; padding:10px 28px; border-radius:6px; font-size:13px;">📨 Αποστολή στο IT</button>
+                <button onclick="closeComplaintModal()" class="main-btn" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:10px 20px; border-radius:6px; font-size:13px;">Ακύρωση</button>
+            </div>
+        </div>
+        <div id="complaint-success-wrapper" style="display:none;">
+            <div class="complaint-success">
+                <div class="icon">✓</div>
+                <strong>Το παράπονό σας υποβλήθηκε επιτυχώς!</strong><br>
+                <span style="font-size:12px;">Αριθμός αναφοράς: <strong id="complaint-ref-id">-</strong></span><br>
+                <span style="font-size:12px;">Η ομάδα IT θα το αξιολογήσει σύντομα.</span>
+            </div>
+            <div style="text-align:center; margin-top:14px;">
+                <button onclick="closeComplaintModal()" class="main-btn" style="background:#4a90e2; color:white; border:none; padding:9px 28px; border-radius:6px;">Κλείσιμο</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ROLE LOGIC: detect role, render header buttons & analysis    -->
+<!-- ============================================================ -->
+<script>
+    // ======== ROLE DETECTION ========
+    function getCurrentRole() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('role') || 'salesperson';
+    }
+
+    const ROLE_LABELS = {
+        'salesperson': 'Πωλητής Διεύθυνσης Δικτύου',
+        'sales_analyst': 'Sales Analyst',
+        'sales_dev': 'Sales Development & Market Intelligence'
+    };
+
+    function setupRoleHeader() {
+        const role = getCurrentRole();
+        const infoEl = document.getElementById('role-info-display');
+        const actionsEl = document.getElementById('role-actions-container');
+        if (!infoEl || !actionsEl) return;
+
+        infoEl.textContent = '👤 ' + (ROLE_LABELS[role] || 'Πωλητής');
+
+        let buttonsHtml = '';
+        if (role === 'sales_analyst') {
+            buttonsHtml += '<button class="role-btn" onclick="openAnalysisModal()">📊 Ανάλυση Πωλήσεων</button>';
+        }
+        if (role === 'sales_dev') {
+            buttonsHtml += '<button class="role-btn" onclick="openCompetitionModal()">🎯 Σύγκριση με Ανταγωνισμό</button>';
+        }
+        // Complaint button is shown for ALL roles
+        buttonsHtml += '<button class="role-btn complaint-btn" onclick="openComplaintModal()">⚠️ Υποβολή Παραπόνου</button>';
+
+        actionsEl.innerHTML = buttonsHtml;
+    }
+
+    // ======== HELPER: extract data from active table ========
+    function getAllOffersData() {
+        const rows = document.querySelectorAll('#table-active tbody tr');
+        const offers = [];
+        rows.forEach(tr => {
+            if (tr.cells.length < 15) return;
+            offers.push({
+                offerCode: tr.cells[0].textContent.trim(),
+                customer:  tr.cells[1].textContent.trim(),
+                custType:  tr.cells[2].textContent.trim(),
+                region:    tr.cells[3].textContent.trim(),
+                prodCode:  tr.cells[4].textContent.trim(),
+                product:   tr.cells[5].textContent.trim(),
+                qty:       parseFloat(tr.cells[6].textContent.replace(',','.')) || 0,
+                price:     swParsePrice(tr.cells[7].textContent),
+                discount:  swParseDiscount(tr.cells[8].textContent),
+                finalPrice:swParsePrice(tr.cells[9].textContent),
+                cost:      swParsePrice(tr.cells[10].textContent),
+                startDate: tr.cells[11].textContent.trim(),
+                endDate:   tr.cells[12].textContent.trim(),
+                approval:  tr.cells[13].textContent.trim(),
+                lifecycle: tr.cells[14].textContent.trim()
+            });
+        });
+        return offers;
+    }
+
+    // ======== ANALYSIS (Sales Analyst) ========
+    function openAnalysisModal() {
+        renderAnalysis();
+        document.getElementById('analysisModal').style.display = 'block';
+    }
+    function closeAnalysisModal() {
+        document.getElementById('analysisModal').style.display = 'none';
+    }
+
+    function renderAnalysis() {
+        const offers = getAllOffersData();
+        const total = offers.length;
+        if (total === 0) {
+            document.getElementById('analysis-content').innerHTML =
+                '<div class="empty-state" style="text-align:center; padding:40px; color:#888;">Δεν βρέθηκαν δεδομένα προς ανάλυση.</div>';
+            return;
+        }
+
+        // === Aggregate metrics ===
+        const approved = offers.filter(o => o.approval.includes('Εγκρίθηκε')).length;
+        const rejected = offers.filter(o => o.approval.includes('Απορρίφθηκε')).length;
+        const pending  = offers.filter(o => o.approval.includes('Σε εξέλιξη')).length;
+        const avgDiscount = (offers.reduce((s,o)=>s+o.discount,0) / total).toFixed(1);
+        const totalRevenue = offers.reduce((s,o)=>s + (o.qty * o.finalPrice), 0);
+        const approvalRate = ((approved/total)*100).toFixed(1);
+
+        // === Discount per region ===
+        const regionMap = {};
+        offers.forEach(o => {
+            if (!regionMap[o.region]) regionMap[o.region] = { count:0, totalDisc:0, revenue:0 };
+            regionMap[o.region].count++;
+            regionMap[o.region].totalDisc += o.discount;
+            regionMap[o.region].revenue += o.qty * o.finalPrice;
+        });
+        const regionList = Object.entries(regionMap)
+            .map(([r,v]) => ({ region:r, count:v.count, avgDisc:(v.totalDisc/v.count).toFixed(1), revenue:v.revenue }))
+            .sort((a,b)=>b.revenue-a.revenue);
+
+        // === Top products by quantity ===
+        const prodMap = {};
+        offers.forEach(o => {
+            if (!prodMap[o.product]) prodMap[o.product] = { qty:0, revenue:0, count:0 };
+            prodMap[o.product].qty += o.qty;
+            prodMap[o.product].revenue += o.qty * o.finalPrice;
+            prodMap[o.product].count++;
+        });
+        const topProducts = Object.entries(prodMap)
+            .map(([p,v]) => ({ product:p, qty:v.qty, revenue:v.revenue, count:v.count }))
+            .sort((a,b)=>b.qty-a.qty)
+            .slice(0, 6);
+
+        // === Customer type distribution ===
+        const typeMap = {};
+        offers.forEach(o => {
+            if (!typeMap[o.custType]) typeMap[o.custType] = 0;
+            typeMap[o.custType]++;
+        });
+        const typeList = Object.entries(typeMap)
+            .map(([t,c]) => ({ type:t, count:c, pct:((c/total)*100).toFixed(0) }))
+            .sort((a,b)=>b.count-a.count);
+
+        // === Forecast (simple projection: +12% growth based on approval trend) ===
+        const projectedQ = (totalRevenue * 1.12);
+        const successRate = approvalRate;
+        const trendIndicator = approvalRate >= 60 ? 'positive' : (approvalRate >= 40 ? 'neutral' : 'negative');
+
+        // === Build HTML ===
+        const maxRegion = Math.max(...regionList.map(r=>r.revenue)) || 1;
+        const maxProd = Math.max(...topProducts.map(p=>p.qty)) || 1;
+
+        let html = `
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Σύνολο Προσφορών</div>
+                <div class="value">${total}</div>
+                <div class="sub">ενεργές γραμμές</div>
+            </div>
+            <div class="stat-card green">
+                <div class="label">Εγκεκριμένες</div>
+                <div class="value">${approved}</div>
+                <div class="sub">${approvalRate}% επιτυχία</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="label">Σε Εξέλιξη</div>
+                <div class="value">${pending}</div>
+                <div class="sub">υπό αξιολόγηση</div>
+            </div>
+            <div class="stat-card red">
+                <div class="label">Απορριφθείσες</div>
+                <div class="value">${rejected}</div>
+                <div class="sub">${total ? ((rejected/total)*100).toFixed(1) : 0}% του συνόλου</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Μέση Έκπτωση</div>
+                <div class="value">${avgDiscount}%</div>
+                <div class="sub">σε όλες τις γραμμές</div>
+            </div>
+            <div class="stat-card green">
+                <div class="label">Συνολικός Τζίρος</div>
+                <div class="value">${totalRevenue.toLocaleString('el-GR', {maximumFractionDigits:0})}€</div>
+                <div class="sub">από ενεργές προσφορές</div>
+            </div>
+        </div>
+
+        <div class="section-title">📍 Κατανομή Τζίρου ανά Περιοχή</div>
+        <div>`;
+        regionList.slice(0, 8).forEach(r => {
+            const pct = (r.revenue / maxRegion * 100).toFixed(1);
+            html += `
+            <div class="bar-row">
+                <div class="name">${r.region}</div>
+                <div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div>
+                <div class="val">${r.revenue.toLocaleString('el-GR', {maximumFractionDigits:0})}€</div>
+            </div>`;
+        });
+        html += `</div>
+
+        <div class="section-title">🏆 Top Είδη Προϊόντων (ανά πωλούμενη ποσότητα)</div>
+        <div>`;
+        topProducts.forEach(p => {
+            const pct = (p.qty / maxProd * 100).toFixed(1);
+            html += `
+            <div class="bar-row">
+                <div class="name">${p.product}</div>
+                <div class="bar-track"><div class="bar-fill green" style="width:${pct}%;"></div></div>
+                <div class="val">${p.qty} τμχ</div>
+            </div>`;
+        });
+        html += `</div>
+
+        <div class="section-title">👥 Κατανομή Πελατολογίου</div>
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">`;
+        typeList.forEach(t => {
+            html += `
+            <div class="stat-card" style="padding:12px;">
+                <div class="label">${t.type}</div>
+                <div class="value" style="font-size:20px;">${t.count}</div>
+                <div class="sub">${t.pct}% του συνόλου</div>
+            </div>`;
+        });
+        html += `</div>
+
+        <div class="section-title">🔮 Πρόβλεψη Πωλήσεων Επόμενου Τριμήνου</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Προβλεπόμενος Τζίρος</div>
+                <div class="value">${projectedQ.toLocaleString('el-GR', {maximumFractionDigits:0})}€</div>
+                <div class="sub">+12% έναντι τρέχοντος</div>
+            </div>
+            <div class="stat-card ${trendIndicator==='positive'?'green':(trendIndicator==='negative'?'red':'orange')}">
+                <div class="label">Δείκτης Τάσης</div>
+                <div class="value">${trendIndicator==='positive'?'↗':(trendIndicator==='negative'?'↘':'→')}</div>
+                <div class="sub">${trendIndicator==='positive'?'Ανοδική':(trendIndicator==='negative'?'Πτωτική':'Σταθερή')}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Εκτιμώμενες Νέες Προσφορές</div>
+                <div class="value">${Math.round(total * 1.15)}</div>
+                <div class="sub">βάσει ιστορικού ρυθμού</div>
+            </div>
+        </div>`;
+
+        // === Strategic Insights ===
+        html += `<div class="section-title">💡 Στρατηγική Πληροφόρηση</div>`;
+
+        const topRegion = regionList[0];
+        const topProduct = topProducts[0];
+        if (topRegion) {
+            html += `<div class="insight-box success">
+                <strong>Κορυφαία Αγορά:</strong> Η ${topRegion.region} αντιπροσωπεύει ${((topRegion.revenue/totalRevenue)*100).toFixed(1)}% του συνολικού τζίρου με ${topRegion.count} προσφορές. Προτείνεται ενίσχυση παρουσίας.
+            </div>`;
+        }
+        if (topProduct) {
+            html += `<div class="insight-box">
+                <strong>Δυναμικό Προϊόν:</strong> ${topProduct.product} με ${topProduct.qty} τμχ συνολικά. Εξετάστε αυξημένη προβολή και bundle deals.
+            </div>`;
+        }
+        if (parseFloat(approvalRate) < 50) {
+            html += `<div class="insight-box warning">
+                <strong>Προσοχή:</strong> Το ποσοστό έγκρισης (${approvalRate}%) είναι χαμηλότερο του 50%. Συνιστάται επανεξέταση πολιτικής εκπτώσεων ή τιμολόγησης.
+            </div>`;
+        } else {
+            html += `<div class="insight-box success">
+                <strong>Καλή Επίδοση:</strong> Το ποσοστό έγκρισης (${approvalRate}%) δείχνει υγιή πολιτική τιμολόγησης.
+            </div>`;
+        }
+        if (parseFloat(avgDiscount) > 15) {
+            html += `<div class="insight-box warning">
+                <strong>Υψηλές Εκπτώσεις:</strong> Η μέση έκπτωση (${avgDiscount}%) είναι αυξημένη. Πιθανή πίεση στα περιθώρια κέρδους.
+            </div>`;
+        }
+
+        document.getElementById('analysis-content').innerHTML = html;
+    }
+
+    // ======== COMPETITION (Sales Development & Market Intelligence) ========
+    function openCompetitionModal() {
+        renderCompetition();
+        document.getElementById('competitionModal').style.display = 'block';
+    }
+    function closeCompetitionModal() {
+        document.getElementById('competitionModal').style.display = 'none';
+    }
+
+    // Static competitor benchmark data (mock market intelligence)
+    const COMPETITOR_BENCHMARKS = {
+        'Καλώδια':           { competitors: { 'ElectroHub': 470, 'PowerLine SA': 485, 'VoltMax': 460 }, marketDemand: 'Υψηλή' },
+        'Πρίζες':            { competitors: { 'ElectroHub': 115, 'PowerLine SA': 112, 'VoltMax': 118 }, marketDemand: 'Μέτρια' },
+        'Διακόπτες':         { competitors: { 'ElectroHub': 78,  'PowerLine SA': 82,  'VoltMax': 75  }, marketDemand: 'Μέτρια' },
+        'Πάνελ LED':         { competitors: { 'ElectroHub': 2200,'PowerLine SA': 2350,'VoltMax': 2100}, marketDemand: 'Πολύ Υψηλή' },
+        'Πίνακες':           { competitors: { 'ElectroHub': 780, 'PowerLine SA': 820, 'VoltMax': 760 }, marketDemand: 'Χαμηλή' },
+        'Ασφάλειες':         { competitors: { 'ElectroHub': 380, 'PowerLine SA': 405, 'VoltMax': 395 }, marketDemand: 'Σταθερή' },
+        'Προβολείς':         { competitors: { 'ElectroHub': 1180,'PowerLine SA': 1220,'VoltMax': 1100}, marketDemand: 'Υψηλή' },
+        'Σωλήνες':           { competitors: { 'ElectroHub': 720, 'PowerLine SA': 745, 'VoltMax': 700 }, marketDemand: 'Σταθερή' },
+        'Ταινίες LED':       { competitors: { 'ElectroHub': 580, 'PowerLine SA': 615, 'VoltMax': 550 }, marketDemand: 'Πολύ Υψηλή' },
+        'Ρελέ':              { competitors: { 'ElectroHub': 440, 'PowerLine SA': 460, 'VoltMax': 430 }, marketDemand: 'Μέτρια' },
+        'Κανάλια':           { competitors: { 'ElectroHub': 290, 'PowerLine SA': 305, 'VoltMax': 280 }, marketDemand: 'Σταθερή' },
+        'Φωτιστικά Δρόμου':  { competitors: { 'ElectroHub': 3100,'PowerLine SA': 3250,'VoltMax': 3000}, marketDemand: 'Υψηλή' },
+        'Φωτιστικά':         { competitors: { 'ElectroHub': 780, 'PowerLine SA': 820, 'VoltMax': 750 }, marketDemand: 'Υψηλή' },
+        'Λάμπες':            { competitors: { 'ElectroHub': 195, 'PowerLine SA': 210, 'VoltMax': 185 }, marketDemand: 'Σταθερή' }
+    };
+
+    function renderCompetition() {
+        const offers = getAllOffersData();
+        if (offers.length === 0) {
+            document.getElementById('competition-content').innerHTML =
+                '<div class="empty-state" style="text-align:center; padding:40px; color:#888;">Δεν βρέθηκαν προσφορές προς σύγκριση.</div>';
+            return;
+        }
+
+        // Aggregate avg final price per product type for our offers
+        const ourPrices = {};
+        offers.forEach(o => {
+            if (!ourPrices[o.product]) ourPrices[o.product] = { sum:0, count:0, qty:0, regions: new Set() };
+            ourPrices[o.product].sum += o.finalPrice;
+            ourPrices[o.product].count++;
+            ourPrices[o.product].qty += o.qty;
+            ourPrices[o.product].regions.add(o.region);
+        });
+
+        // Build comparison rows
+        const compareRows = [];
+        Object.entries(ourPrices).forEach(([product, data]) => {
+            const ourAvg = data.sum / data.count;
+            const bench = COMPETITOR_BENCHMARKS[product];
+            if (!bench) {
+                compareRows.push({ product, ourAvg, competitors: {}, marketDemand: 'Μη διαθέσιμα', verdict: 'unknown', diff: 0, qty: data.qty, regions: data.regions.size });
+                return;
+            }
+            const compVals = Object.values(bench.competitors);
+            const compAvg = compVals.reduce((a,b)=>a+b,0) / compVals.length;
+            const diff = ((ourAvg - compAvg) / compAvg * 100);
+            let verdict = 'equal';
+            if (diff < -3) verdict = 'better';
+            else if (diff > 3) verdict = 'worse';
+            compareRows.push({
+                product,
+                ourAvg,
+                competitors: bench.competitors,
+                competitorAvg: compAvg,
+                marketDemand: bench.marketDemand,
+                verdict,
+                diff,
+                qty: data.qty,
+                regions: data.regions.size
+            });
+        });
+
+        // KPIs
+        const competitiveCount = compareRows.filter(r => r.verdict === 'better').length;
+        const overpricedCount = compareRows.filter(r => r.verdict === 'worse').length;
+        const equalCount = compareRows.filter(r => r.verdict === 'equal').length;
+        const highDemand = compareRows.filter(r => r.marketDemand === 'Υψηλή' || r.marketDemand === 'Πολύ Υψηλή').length;
+
+        // Find untapped regions
+        const allRegions = ['Αττική','Θεσσαλονίκη','Κρήτη','Πάτρα','Λάρισα','Ιωάννινα','Ρόδος','Εύβοια','Καλαμάτα','Βόλος','Σέρρες','Κόρινθος'];
+        const ourRegions = new Set(offers.map(o => o.region));
+        const untappedRegions = allRegions.filter(r => !ourRegions.has(r));
+
+        let html = `
+        <div class="stats-grid">
+            <div class="stat-card green">
+                <div class="label">Ανταγωνιστικά Είδη</div>
+                <div class="value">${competitiveCount}</div>
+                <div class="sub">τιμή κάτω από αγορά</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="label">Στο Μέσο Όρο</div>
+                <div class="value">${equalCount}</div>
+                <div class="sub">±3% από αγορά</div>
+            </div>
+            <div class="stat-card red">
+                <div class="label">Υψηλή Τιμολόγηση</div>
+                <div class="value">${overpricedCount}</div>
+                <div class="sub">πάνω από αγορά</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Είδη Υψηλής Ζήτησης</div>
+                <div class="value">${highDemand}</div>
+                <div class="sub">από το χαρτοφυλάκιό μας</div>
+            </div>
+        </div>
+
+        <div class="section-title">⚔️ Συγκριτικός Πίνακας με Ανταγωνισμό</div>
+        <div style="overflow-x:auto;">
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Είδος Προϊόντος</th>
+                    <th>Δική μας Τιμή</th>
+                    <th>ElectroHub</th>
+                    <th>PowerLine SA</th>
+                    <th>VoltMax</th>
+                    <th>Μ.Ο. Αγοράς</th>
+                    <th>Διαφορά</th>
+                    <th>Ζήτηση</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        compareRows.sort((a,b) => a.diff - b.diff).forEach(r => {
+            const verdictClass = r.verdict === 'better' ? 'price-better' : (r.verdict === 'worse' ? 'price-worse' : 'price-equal');
+            const arrow = r.verdict === 'better' ? '↓' : (r.verdict === 'worse' ? '↑' : '=');
+            html += `<tr>
+                <td><strong>${r.product}</strong></td>
+                <td>${r.ourAvg.toLocaleString('el-GR', {maximumFractionDigits:0})}€</td>
+                <td>${r.competitors['ElectroHub'] ? r.competitors['ElectroHub']+'€' : '—'}</td>
+                <td>${r.competitors['PowerLine SA'] ? r.competitors['PowerLine SA']+'€' : '—'}</td>
+                <td>${r.competitors['VoltMax'] ? r.competitors['VoltMax']+'€' : '—'}</td>
+                <td>${r.competitorAvg ? r.competitorAvg.toLocaleString('el-GR', {maximumFractionDigits:0})+'€' : '—'}</td>
+                <td class="${verdictClass}">${r.diff !== 0 ? arrow + ' ' + Math.abs(r.diff).toFixed(1) + '%' : '—'}</td>
+                <td>${r.marketDemand}</td>
+            </tr>`;
+        });
+
+        html += `</tbody></table></div>
+
+        <div class="section-title">🌍 Ανάλυση Γεωγραφικής Παρουσίας</div>
+        <div class="stats-grid">
+            <div class="stat-card green">
+                <div class="label">Καλυπτόμενες Περιοχές</div>
+                <div class="value">${ourRegions.size}</div>
+                <div class="sub">από ${allRegions.length} βασικές</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="label">Ανεκμετάλλευτες</div>
+                <div class="value">${untappedRegions.length}</div>
+                <div class="sub">νέες ευκαιρίες</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Ποσοστό Κάλυψης</div>
+                <div class="value">${((ourRegions.size/allRegions.length)*100).toFixed(0)}%</div>
+                <div class="sub">της εθνικής αγοράς</div>
+            </div>
+        </div>`;
+
+        if (untappedRegions.length > 0) {
+            html += `<div class="insight-box">
+                <strong>Νέες Ευκαιρίες:</strong> Οι περιοχές <em>${untappedRegions.join(', ')}</em> δεν έχουν ενεργές προσφορές. Συνιστάται στόχευση μέσω εμπορικών αντιπροσώπων.
+            </div>`;
+        }
+
+        // === Strategic Recommendations ===
+        html += `<div class="section-title">🎯 Στρατηγικές Προτάσεις Ανάπτυξης</div>`;
+
+        const winners = compareRows.filter(r => r.verdict === 'better' && (r.marketDemand === 'Υψηλή' || r.marketDemand === 'Πολύ Υψηλή'));
+        const losers = compareRows.filter(r => r.verdict === 'worse');
+
+        if (winners.length > 0) {
+            html += `<div class="insight-box success">
+                <strong>Επιθετική Προώθηση:</strong> Τα είδη <em>${winners.map(w=>w.product).join(', ')}</em> είναι ταυτόχρονα ανταγωνιστικά τιμολογημένα και υψηλής ζήτησης. Συνιστάται marketing campaign και bundle deals.
+            </div>`;
+        }
+        if (losers.length > 0) {
+            html += `<div class="insight-box warning">
+                <strong>Επανατιμολόγηση:</strong> Τα είδη <em>${losers.map(l=>l.product).join(', ')}</em> είναι ακριβότερα από τη μέση αγορά. Συνιστάται αναθεώρηση τιμοκαταλόγου ή προσθήκη υπηρεσιών προστιθέμενης αξίας.
+            </div>`;
+        }
+
+        const veryHighDemandProducts = compareRows.filter(r => r.marketDemand === 'Πολύ Υψηλή').map(r => r.product);
+        if (veryHighDemandProducts.length > 0) {
+            html += `<div class="insight-box">
+                <strong>Στρατηγική Επένδυση:</strong> Τα είδη <em>${veryHighDemandProducts.join(', ')}</em> εμφανίζουν πολύ υψηλή ζήτηση στην αγορά. Σκέψου αύξηση stock και dedicated sales team.
+            </div>`;
+        }
+
+        document.getElementById('competition-content').innerHTML = html;
+    }
+
+    // ======== COMPLAINT (All roles) ========
+    function openComplaintModal() {
+        // Reset form
+        document.getElementById('complaint-title').value = '';
+        document.getElementById('complaint-category').value = 'UI/UX';
+        document.getElementById('complaint-desc').value = '';
+        document.querySelector('input[name="complaint-sev"][value="Μεσαία"]').checked = true;
+        setSeverity('med');
+        document.getElementById('complaint-validation').style.display = 'none';
+        document.getElementById('complaint-form-wrapper').style.display = 'block';
+        document.getElementById('complaint-success-wrapper').style.display = 'none';
+        document.getElementById('complaintModal').style.display = 'block';
+    }
+    function closeComplaintModal() {
+        document.getElementById('complaintModal').style.display = 'none';
+    }
+    function setSeverity(level) {
+        ['low','med','high'].forEach(l => {
+            document.getElementById('sev-' + l + '-lbl').classList.remove('checked');
+        });
+        document.getElementById('sev-' + level + '-lbl').classList.add('checked');
+    }
+    function submitComplaint() {
+        const title = document.getElementById('complaint-title').value.trim();
+        const category = document.getElementById('complaint-category').value;
+        const desc = document.getElementById('complaint-desc').value.trim();
+        const sevEl = document.querySelector('input[name="complaint-sev"]:checked');
+        const valEl = document.getElementById('complaint-validation');
+
+        if (!title) { valEl.textContent = 'Παρακαλώ εισάγετε τίτλο.'; valEl.style.display = 'block'; return; }
+        if (!desc)  { valEl.textContent = 'Παρακαλώ εισάγετε περιγραφή.'; valEl.style.display = 'block'; return; }
+        if (!sevEl) { valEl.textContent = 'Παρακαλώ επιλέξτε σοβαρότητα.'; valEl.style.display = 'block'; return; }
+
+        const role = getCurrentRole();
+        const refId = 'CMP-' + Date.now().toString().slice(-6);
+        const complaint = {
+            id: refId,
+            title,
+            category,
+            severity: sevEl.value,
+            description: desc,
+            submittedBy: ROLE_LABELS[role] || 'Πωλητής',
+            roleKey: role,
+            timestamp: new Date().toISOString(),
+            status: 'Νέο'
+        };
+
+        // Persist to localStorage so IT dashboard can read it
+        try {
+            const stored = JSON.parse(localStorage.getItem('system_complaints') || '[]');
+            stored.unshift(complaint);
+            localStorage.setItem('system_complaints', JSON.stringify(stored));
+        } catch(e) {
+            console.warn('Could not save complaint to localStorage', e);
+        }
+
+        document.getElementById('complaint-ref-id').textContent = refId;
+        document.getElementById('complaint-form-wrapper').style.display = 'none';
+        document.getElementById('complaint-success-wrapper').style.display = 'block';
+    }
+
+    // Modal click-outside handlers (extending existing)
+    window.addEventListener('click', function(e) {
+        if (e.target.id === 'analysisModal') closeAnalysisModal();
+        if (e.target.id === 'competitionModal') closeCompetitionModal();
+        if (e.target.id === 'complaintModal') closeComplaintModal();
+    });
+
+    // Initialize role header on load
+    document.addEventListener('DOMContentLoaded', setupRoleHeader);
+</script>
+
 </body>
 </html>

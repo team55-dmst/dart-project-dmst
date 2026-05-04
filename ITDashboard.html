@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Dashboard - Διαχείριση Παραπόνων</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #7e99b8e2;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 92vh;
+        }
+
+        h2 { color: white; margin-top: 0; }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .role-info {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.18);
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        /* ===== TOP STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .stat-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 14px 18px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        .stat-card .label {
+            font-size: 11px;
+            color: #555;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a4d8f;
+        }
+        .stat-card.new { border-top: 4px solid #4a90e2; }
+        .stat-card.new .value { color: #2a6dbd; }
+        .stat-card.progress { border-top: 4px solid #fd7e14; }
+        .stat-card.progress .value { color: #c46006; }
+        .stat-card.resolved { border-top: 4px solid #28a745; }
+        .stat-card.resolved .value { color: #1e7e34; }
+        .stat-card.high { border-top: 4px solid #dc3545; }
+        .stat-card.high .value { color: #c0392b; }
+
+        /* ===== TOOLBAR ===== */
+        .toolbar {
+            background: white;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .toolbar label {
+            font-size: 12px;
+            color: #555;
+            font-weight: 600;
+        }
+        .toolbar select, .toolbar input {
+            padding: 7px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+        .toolbar select:focus, .toolbar input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        .toolbar .search-input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        /* ===== TABLE ===== */
+        .complaints-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            overflow: hidden;
+            flex-grow: 1;
+        }
+        .complaints-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .complaints-table thead {
+            background: linear-gradient(135deg, #4a90e2, #2a6dbd);
+        }
+        .complaints-table th {
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .complaints-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            vertical-align: middle;
+        }
+        .complaints-table tbody tr {
+            transition: 0.15s;
+        }
+        .complaints-table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-new { background: #e8f2ff; color: #1a4d8f; border: 1px solid #b1d1f0; }
+        .badge-progress { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .badge-resolved { background: #d4edda; color: #155724; border: 1px solid #a9dfbf; }
+
+        .sev-badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+        }
+        .sev-low { background: #28a745; }
+        .sev-med { background: #fd7e14; }
+        .sev-high { background: #dc3545; }
+
+        .action-btn {
+            background: none;
+            border: 1px solid #4a90e2;
+            color: #4a90e2;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            padding: 4px 10px;
+            margin-right: 4px;
+            transition: 0.2s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .action-btn:hover { background: #4a90e2; color: white; }
+        .action-btn.progress { border-color: #fd7e14; color: #fd7e14; }
+        .action-btn.progress:hover { background: #fd7e14; color: white; }
+        .action-btn.resolve { border-color: #28a745; color: #28a745; }
+        .action-btn.resolve:hover { background: #28a745; color: white; }
+        .action-btn.delete { border-color: #dc3545; color: #dc3545; }
+        .action-btn.delete:hover { background: #dc3545; color: white; }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #888;
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .ref-id {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #555;
+        }
+
+        .title-cell {
+            font-weight: 600;
+            color: #1a4d8f;
+            max-width: 280px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 28px;
+            border-radius: 12px;
+            width: 640px;
+            max-width: 95vw;
+            max-height: 88vh;
+            overflow-y: auto;
+            text-align: left;
+        }
+        .modal-row {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 14px;
+            font-size: 13px;
+        }
+        .modal-row .field-label {
+            min-width: 130px;
+            font-weight: 600;
+            color: #555;
+        }
+        .modal-row .field-value {
+            flex: 1;
+            color: #333;
+        }
+        .modal-row.full {
+            flex-direction: column;
+            gap: 6px;
+        }
+        .desc-box {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 13px;
+            color: #333;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .it-notes {
+            background: #fffbe8;
+            border-left: 4px solid #f1c40f;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #5d4d00;
+        }
+        .it-notes textarea {
+            width: 100%;
+            margin-top: 6px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 12px;
+            min-height: 60px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .toolbar-btn {
+            background: linear-gradient(135deg, #4a90e2, #2a6dbd);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(74,144,226,0.3);
+            transition: 0.2s;
+        }
+        .toolbar-btn:hover {
+            background: linear-gradient(135deg, #2a6dbd, #1a4d8f);
+        }
+        .toolbar-btn.danger {
+            background: linear-gradient(135deg, #dc3545, #bd2130);
+        }
+        .toolbar-btn.danger:hover {
+            background: linear-gradient(135deg, #bd2130, #8b1818);
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            body { margin: 8px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .stat-card { padding: 10px; }
+            .stat-card .value { font-size: 22px; }
+            .toolbar { padding: 10px; gap: 8px; }
+            .toolbar select, .toolbar input { font-size: 12px; padding: 6px 8px; }
+            .complaints-table { font-size: 11px; }
+            .complaints-table th, .complaints-table td { padding: 8px 6px; }
+            .title-cell { max-width: 140px; }
+            /* Hide less critical columns on mobile */
+            .complaints-table .hide-mobile { display: none; }
+            .modal-content { padding: 18px; margin: 3% auto; }
+            .modal-row { flex-direction: column; gap: 4px; }
+            .modal-row .field-label { min-width: 0; }
+            .role-header { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <h2>IT Dashboard - Διαχείριση Παραπόνων Συστήματος</h2>
+
+    <div class="role-header">
+        <div class="role-info">👤 Διεύθυνση Information Technology</div>
+        <div style="color:white; font-size:12px; opacity:0.9;">
+            Παρακολούθηση και επίλυση τεχνικών προβλημάτων όλων των χρηστών
+        </div>
+    </div>
+
+    <!-- Stats overview -->
+    <div class="stats-grid" id="stats-grid">
+        <!-- Filled dynamically -->
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <label>Κατάσταση:</label>
+        <select id="filter-status" onchange="renderComplaints()">
+            <option value="all">Όλα</option>
+            <option value="Νέο">Νέο</option>
+            <option value="Σε επεξεργασία">Σε επεξεργασία</option>
+            <option value="Επιλύθηκε">Επιλύθηκε</option>
+        </select>
+
+        <label>Σοβαρότητα:</label>
+        <select id="filter-severity" onchange="renderComplaints()">
+            <option value="all">Όλα</option>
+            <option value="Υψηλή">Υψηλή</option>
+            <option value="Μεσαία">Μεσαία</option>
+            <option value="Χαμηλή">Χαμηλή</option>
+        </select>
+
+        <label>Από:</label>
+        <select id="filter-role" onchange="renderComplaints()">
+            <option value="all">Όλα τα τμήματα</option>
+            <option value="salesperson">Πωλητής</option>
+            <option value="finance">Οικονομική Δ/νση</option>
+            <option value="sales_analyst">Sales Analyst</option>
+            <option value="sales_dev">Sales Development</option>
+        </select>
+
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 Αναζήτηση σε τίτλο/περιγραφή..." oninput="renderComplaints()">
+
+        <button class="toolbar-btn" onclick="renderComplaints()">↻ Ανανέωση</button>
+    </div>
+
+    <!-- Complaints table -->
+    <div class="complaints-container">
+        <div style="overflow-x:auto;">
+            <table class="complaints-table">
+                <thead>
+                    <tr>
+                        <th>Αναφορά</th>
+                        <th>Τίτλος</th>
+                        <th class="hide-mobile">Κατηγορία</th>
+                        <th>Σοβαρότητα</th>
+                        <th class="hide-mobile">Από</th>
+                        <th class="hide-mobile">Ημερομηνία</th>
+                        <th>Κατάσταση</th>
+                        <th>Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody id="complaints-tbody">
+                    <!-- Rendered dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Detail modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 style="margin:0; color:#2a6dbd;" id="detail-title">Λεπτομέρειες Αναφοράς</h3>
+                <button onclick="closeDetailModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:#888;">✕</button>
+            </div>
+            <div id="detail-content"></div>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
+                <button class="toolbar-btn" id="btn-mark-progress" onclick="updateStatus('Σε επεξεργασία')">⏱ Σε Επεξεργασία</button>
+                <button class="toolbar-btn" id="btn-mark-resolved" onclick="updateStatus('Επιλύθηκε')" style="background:linear-gradient(135deg, #28a745, #1e7e34);">✓ Επιλύθηκε</button>
+                <button class="toolbar-btn danger" onclick="deleteComplaint()">🗑 Διαγραφή</button>
+                <button onclick="closeDetailModal()" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:8px 16px; border-radius:6px; font-size:13px; cursor:pointer;">Κλείσιμο</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // PRE-POPULATED COMPLAINTS (sample data so the dashboard
+        // looks realistic on first run). These are merged with any
+        // user-submitted complaints stored in localStorage.
+        // ============================================================
+        const SEED_COMPLAINTS = [
+            {
+                id: 'CMP-100847',
+                title: 'Δεν φορτώνει η μαζική τροποποίηση στο Chrome',
+                category: 'Bug',
+                severity: 'Υψηλή',
+                description: 'Όταν πατάω "Μαζική Τροποποίηση" από το κεντρικό μενού, το παράθυρο ανοίγει αλλά τα φίλτρα δεν αποκρίνονται. Συμβαίνει μόνο σε Chrome 120, στον Edge δουλεύει κανονικά. Δοκίμασα και σε δύο διαφορετικά PC.',
+                submittedBy: 'Πωλητής Διεύθυνσης Δικτύου',
+                roleKey: 'salesperson',
+                timestamp: '2026-04-28T09:14:22.000Z',
+                status: 'Σε επεξεργασία',
+                itNotes: 'Εντοπίστηκε σύγκρουση με extension ad-blocker. Δουλεύουμε σε patch.'
+            },
+            {
+                id: 'CMP-100823',
+                title: 'Λάθος υπολογισμός κόστους σε προσφορά DIS-1009',
+                category: 'Data',
+                severity: 'Υψηλή',
+                description: 'Στην προσφορά DIS-1009 για ταινίες LED, το σύστημα δείχνει κόστος 27.000€ ενώ θα έπρεπε να είναι περίπου 21.000€. Ίσως υπάρχει bug στον τύπο qty * unit cost. Παρακαλώ ελέγξτε άμεσα γιατί προχωράμε σε εγκρίσεις.',
+                submittedBy: 'Οικονομική Διεύθυνση',
+                roleKey: 'finance',
+                timestamp: '2026-04-25T14:32:11.000Z',
+                status: 'Νέο',
+                itNotes: ''
+            },
+            {
+                id: 'CMP-100819',
+                title: 'Πρόταση: Export ανάλυσης σε Excel/PDF',
+                category: 'Feature',
+                severity: 'Χαμηλή',
+                description: 'Θα ήταν εξαιρετικά χρήσιμο να μπορώ να εξάγω την ανάλυση πωλήσεων σε αρχείο Excel ή PDF για να την αποστείλω σε meetings. Τώρα πρέπει να κάνω screenshot.',
+                submittedBy: 'Sales Analyst',
+                roleKey: 'sales_analyst',
+                timestamp: '2026-04-24T11:05:48.000Z',
+                status: 'Νέο',
+                itNotes: ''
+            },
+            {
+                id: 'CMP-100805',
+                title: 'Αργή φόρτωση πίνακα προσφορών μετά τις 200 γραμμές',
+                category: 'Performance',
+                severity: 'Μεσαία',
+                description: 'Όταν ο πίνακας ενεργών προσφορών έχει πάνω από 200 γραμμές, το scroll γίνεται αργό και το hover δεν αποκρίνεται άμεσα. Συμβαίνει σε όλους τους browsers.',
+                submittedBy: 'Πωλητής Διεύθυνσης Δικτύου',
+                roleKey: 'salesperson',
+                timestamp: '2026-04-22T16:48:03.000Z',
+                status: 'Σε επεξεργασία',
+                itNotes: 'Σχεδιάζεται virtualized rendering. ETA 2 εβδομάδες.'
+            },
+            {
+                id: 'CMP-100791',
+                title: 'Δεν αποθηκεύεται το σχόλιο απόρριψης σε μερικές περιπτώσεις',
+                category: 'Bug',
+                severity: 'Υψηλή',
+                description: 'Σε 2 από τις 5 απορρίψεις που έκανα χθες, το σχόλιο δεν εμφανίζεται όταν πατάω "Σχόλια" αργότερα. Φαίνεται να χάνεται αν κλείσω το παράθυρο πολύ γρήγορα μετά το submit.',
+                submittedBy: 'Οικονομική Διεύθυνση',
+                roleKey: 'finance',
+                timestamp: '2026-04-20T10:22:15.000Z',
+                status: 'Επιλύθηκε',
+                itNotes: 'Διορθώθηκε race condition στο submitRejection(). Deployed v2.4.1.'
+            },
+            {
+                id: 'CMP-100782',
+                title: 'Τα δεδομένα ανταγωνισμού να ενημερώνονται από εξωτερικό feed',
+                category: 'Feature',
+                severity: 'Μεσαία',
+                description: 'Αυτή τη στιγμή τα benchmarks ανταγωνισμού είναι στατικά. Θα ήθελα integration με κάποιο API ή ένα admin panel για να τα ενημερώνουμε εμείς ανά μήνα.',
+                submittedBy: 'Sales Development & Market Intelligence',
+                roleKey: 'sales_dev',
+                timestamp: '2026-04-19T08:30:00.000Z',
+                status: 'Νέο',
+                itNotes: ''
+            },
+            {
+                id: 'CMP-100774',
+                title: 'Κενή σελίδα μετά το login από κινητό (iOS)',
+                category: 'UI/UX',
+                severity: 'Υψηλή',
+                description: 'Σε iPhone Safari, μετά το login μου εμφανίζει κενή λευκή σελίδα. Πρέπει να κάνω refresh για να φορτώσει σωστά. Στο desktop δουλεύει.',
+                submittedBy: 'Πωλητής Διεύθυνσης Δικτύου',
+                roleKey: 'salesperson',
+                timestamp: '2026-04-18T13:15:42.000Z',
+                status: 'Σε επεξεργασία',
+                itNotes: 'Reproduced σε iOS 16. Θέμα με viewport meta tag.'
+            },
+            {
+                id: 'CMP-100763',
+                title: 'Πρόταση: Σύγκριση δύο προσφορών side-by-side',
+                category: 'Feature',
+                severity: 'Χαμηλή',
+                description: 'Θα ήταν χρήσιμο να μπορώ να επιλέξω δύο γραμμές και να τις δω η μία δίπλα στην άλλη για σύγκριση κόστους/εκπτώσεων.',
+                submittedBy: 'Sales Analyst',
+                roleKey: 'sales_analyst',
+                timestamp: '2026-04-15T17:42:30.000Z',
+                status: 'Νέο',
+                itNotes: ''
+            },
+            {
+                id: 'CMP-100751',
+                title: 'Το ERP button δεν αποκρίνεται μερικές φορές',
+                category: 'Bug',
+                severity: 'Μεσαία',
+                description: 'Σε εγκεκριμένες προσφορές, το πράσινο κουμπί "ERP" δείχνει το alert μόνο στις μισές περιπτώσεις. Φαίνεται να χάνεται το event listener μετά από αλλαγή tab.',
+                submittedBy: 'Οικονομική Διεύθυνση',
+                roleKey: 'finance',
+                timestamp: '2026-04-12T09:55:18.000Z',
+                status: 'Επιλύθηκε',
+                itNotes: 'Διορθώθηκε event delegation. Live από v2.4.0.'
+            },
+            {
+                id: 'CMP-100744',
+                title: 'Να προστεθεί dark mode',
+                category: 'UI/UX',
+                severity: 'Χαμηλή',
+                description: 'Δουλεύω αργά τα βράδια και το λευκό φόντο κουράζει τα μάτια. Ένα dark mode toggle θα βοηθούσε.',
+                submittedBy: 'Πωλητής Διεύθυνσης Δικτύου',
+                roleKey: 'salesperson',
+                timestamp: '2026-04-10T22:18:55.000Z',
+                status: 'Νέο',
+                itNotes: ''
+            }
+        ];
+
+        const SEVERITY_RANK = { 'Υψηλή': 3, 'Μεσαία': 2, 'Χαμηλή': 1 };
+        const ROLE_LABELS = {
+            'salesperson': 'Πωλητής',
+            'finance': 'Οικονομική Δ/νση',
+            'sales_analyst': 'Sales Analyst',
+            'sales_dev': 'Sales Development',
+            'it': 'IT'
+        };
+
+        let currentDetailId = null;
+
+        // ===== Storage =====
+        function loadAllComplaints() {
+            let userComplaints = [];
+            try {
+                userComplaints = JSON.parse(localStorage.getItem('system_complaints') || '[]');
+            } catch(e) {
+                userComplaints = [];
+            }
+            // Also persist seed status updates / IT notes
+            let seedOverrides = {};
+            try {
+                seedOverrides = JSON.parse(localStorage.getItem('it_seed_overrides') || '{}');
+            } catch(e) {
+                seedOverrides = {};
+            }
+            // Apply overrides to seed data
+            const seedWithOverrides = SEED_COMPLAINTS
+                .filter(c => !seedOverrides[c.id]?.deleted)
+                .map(c => ({ ...c, ...(seedOverrides[c.id] || {}) }));
+
+            return [...userComplaints, ...seedWithOverrides];
+        }
+
+        function saveUserComplaint(complaint) {
+            try {
+                const stored = JSON.parse(localStorage.getItem('system_complaints') || '[]');
+                const idx = stored.findIndex(c => c.id === complaint.id);
+                if (idx >= 0) stored[idx] = complaint;
+                else stored.unshift(complaint);
+                localStorage.setItem('system_complaints', JSON.stringify(stored));
+            } catch(e) { console.warn(e); }
+        }
+
+        function isSeedComplaint(id) {
+            return SEED_COMPLAINTS.some(c => c.id === id);
+        }
+
+        function updateSeedOverride(id, patch) {
+            try {
+                const overrides = JSON.parse(localStorage.getItem('it_seed_overrides') || '{}');
+                overrides[id] = { ...(overrides[id] || {}), ...patch };
+                localStorage.setItem('it_seed_overrides', JSON.stringify(overrides));
+            } catch(e) { console.warn(e); }
+        }
+
+        function deleteUserComplaint(id) {
+            try {
+                let stored = JSON.parse(localStorage.getItem('system_complaints') || '[]');
+                stored = stored.filter(c => c.id !== id);
+                localStorage.setItem('system_complaints', JSON.stringify(stored));
+            } catch(e) { console.warn(e); }
+        }
+
+        // ===== Stats =====
+        function renderStats() {
+            const all = loadAllComplaints();
+            const newCount = all.filter(c => c.status === 'Νέο').length;
+            const progressCount = all.filter(c => c.status === 'Σε επεξεργασία').length;
+            const resolvedCount = all.filter(c => c.status === 'Επιλύθηκε').length;
+            const highSev = all.filter(c => c.severity === 'Υψηλή' && c.status !== 'Επιλύθηκε').length;
+
+            document.getElementById('stats-grid').innerHTML = `
+                <div class="stat-card new">
+                    <div class="label">Νέα Παράπονα</div>
+                    <div class="value">${newCount}</div>
+                </div>
+                <div class="stat-card progress">
+                    <div class="label">Σε Επεξεργασία</div>
+                    <div class="value">${progressCount}</div>
+                </div>
+                <div class="stat-card resolved">
+                    <div class="label">Επιλύθηκαν</div>
+                    <div class="value">${resolvedCount}</div>
+                </div>
+                <div class="stat-card high">
+                    <div class="label">Υψηλής Σοβαρότητας</div>
+                    <div class="value">${highSev}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Σύνολο</div>
+                    <div class="value">${all.length}</div>
+                </div>
+            `;
+        }
+
+        // ===== Render table =====
+        function renderComplaints() {
+            renderStats();
+
+            const all = loadAllComplaints();
+            const fStatus = document.getElementById('filter-status').value;
+            const fSev = document.getElementById('filter-severity').value;
+            const fRole = document.getElementById('filter-role').value;
+            const search = (document.getElementById('search-input').value || '').toLowerCase().trim();
+
+            let filtered = all.filter(c => {
+                if (fStatus !== 'all' && c.status !== fStatus) return false;
+                if (fSev !== 'all' && c.severity !== fSev) return false;
+                if (fRole !== 'all' && c.roleKey !== fRole) return false;
+                if (search) {
+                    const hay = (c.title + ' ' + c.description + ' ' + c.id).toLowerCase();
+                    if (!hay.includes(search)) return false;
+                }
+                return true;
+            });
+
+            // Sort: status (Νέο > Σε επεξεργασία > Επιλύθηκε), then severity, then date
+            filtered.sort((a, b) => {
+                const statusOrder = { 'Νέο': 0, 'Σε επεξεργασία': 1, 'Επιλύθηκε': 2 };
+                if (statusOrder[a.status] !== statusOrder[b.status]) {
+                    return statusOrder[a.status] - statusOrder[b.status];
+                }
+                if (SEVERITY_RANK[b.severity] !== SEVERITY_RANK[a.severity]) {
+                    return SEVERITY_RANK[b.severity] - SEVERITY_RANK[a.severity];
+                }
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+
+            const tbody = document.getElementById('complaints-tbody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr><td colspan="8">
+                        <div class="empty-state">
+                            <div class="icon">📭</div>
+                            <p>Δεν βρέθηκαν παράπονα με τα επιλεγμένα φίλτρα.</p>
+                        </div>
+                    </td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => {
+                const statusBadge = c.status === 'Νέο' ? 'badge-new'
+                    : (c.status === 'Σε επεξεργασία' ? 'badge-progress' : 'badge-resolved');
+                const sevClass = c.severity === 'Υψηλή' ? 'sev-high'
+                    : (c.severity === 'Μεσαία' ? 'sev-med' : 'sev-low');
+                const date = new Date(c.timestamp);
+                const dateStr = date.toLocaleDateString('el-GR') + ' ' + date.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit' });
+
+                return `<tr onclick="openDetail('${c.id}')" style="cursor:pointer;">
+                    <td><span class="ref-id">${c.id}</span></td>
+                    <td class="title-cell">${escapeHtml(c.title)}</td>
+                    <td class="hide-mobile">${escapeHtml(c.category || '—')}</td>
+                    <td><span class="sev-badge ${sevClass}">${c.severity}</span></td>
+                    <td class="hide-mobile">${escapeHtml(ROLE_LABELS[c.roleKey] || c.submittedBy || '—')}</td>
+                    <td class="hide-mobile">${dateStr}</td>
+                    <td><span class="badge ${statusBadge}">${c.status}</span></td>
+                    <td onclick="event.stopPropagation();">
+                        <button class="action-btn" onclick="openDetail('${c.id}')">📋 Λεπτομέρειες</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // ===== Detail modal =====
+        function openDetail(id) {
+            const all = loadAllComplaints();
+            const c = all.find(x => x.id === id);
+            if (!c) return;
+            currentDetailId = id;
+
+            const date = new Date(c.timestamp);
+            const dateStr = date.toLocaleDateString('el-GR') + ' ' + date.toLocaleTimeString('el-GR');
+            const sevClass = c.severity === 'Υψηλή' ? 'sev-high' : (c.severity === 'Μεσαία' ? 'sev-med' : 'sev-low');
+            const statusBadge = c.status === 'Νέο' ? 'badge-new'
+                : (c.status === 'Σε επεξεργασία' ? 'badge-progress' : 'badge-resolved');
+
+            document.getElementById('detail-title').textContent = c.title;
+            document.getElementById('detail-content').innerHTML = `
+                <div class="modal-row">
+                    <div class="field-label">Αναφορά:</div>
+                    <div class="field-value"><span class="ref-id">${c.id}</span></div>
+                </div>
+                <div class="modal-row">
+                    <div class="field-label">Κατάσταση:</div>
+                    <div class="field-value"><span class="badge ${statusBadge}">${c.status}</span></div>
+                </div>
+                <div class="modal-row">
+                    <div class="field-label">Σοβαρότητα:</div>
+                    <div class="field-value"><span class="sev-badge ${sevClass}">${c.severity}</span></div>
+                </div>
+                <div class="modal-row">
+                    <div class="field-label">Κατηγορία:</div>
+                    <div class="field-value">${escapeHtml(c.category || '—')}</div>
+                </div>
+                <div class="modal-row">
+                    <div class="field-label">Από:</div>
+                    <div class="field-value">${escapeHtml(c.submittedBy || ROLE_LABELS[c.roleKey] || '—')}</div>
+                </div>
+                <div class="modal-row">
+                    <div class="field-label">Ημερομηνία:</div>
+                    <div class="field-value">${dateStr}</div>
+                </div>
+                <div class="modal-row full">
+                    <div class="field-label">Περιγραφή:</div>
+                    <div class="desc-box">${escapeHtml(c.description || '')}</div>
+                </div>
+                <div class="it-notes">
+                    <strong>📝 Σημειώσεις IT:</strong>
+                    <textarea id="it-notes-input" placeholder="Προσθέστε σημείωση εξέλιξης / λύσης...">${escapeHtml(c.itNotes || '')}</textarea>
+                    <div style="text-align:right; margin-top:6px;">
+                        <button onclick="saveItNotes()" style="background:#4a90e2; color:white; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;">💾 Αποθήκευση Σημειώσεων</button>
+                    </div>
+                </div>
+            `;
+
+            // Hide buttons that don't make sense based on status
+            const btnProg = document.getElementById('btn-mark-progress');
+            const btnRes = document.getElementById('btn-mark-resolved');
+            btnProg.style.display = (c.status === 'Σε επεξεργασία') ? 'none' : '';
+            btnRes.style.display = (c.status === 'Επιλύθηκε') ? 'none' : '';
+
+            document.getElementById('detailModal').style.display = 'block';
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').style.display = 'none';
+            currentDetailId = null;
+        }
+
+        function updateStatus(newStatus) {
+            if (!currentDetailId) return;
+            const all = loadAllComplaints();
+            const c = all.find(x => x.id === currentDetailId);
+            if (!c) return;
+
+            c.status = newStatus;
+            // Capture latest IT notes from textarea before saving
+            const notesInput = document.getElementById('it-notes-input');
+            if (notesInput) c.itNotes = notesInput.value;
+
+            if (isSeedComplaint(c.id)) {
+                updateSeedOverride(c.id, { status: newStatus, itNotes: c.itNotes });
+            } else {
+                saveUserComplaint(c);
+            }
+            closeDetailModal();
+            renderComplaints();
+        }
+
+        function saveItNotes() {
+            if (!currentDetailId) return;
+            const notesInput = document.getElementById('it-notes-input');
+            if (!notesInput) return;
+            const newNotes = notesInput.value;
+
+            const all = loadAllComplaints();
+            const c = all.find(x => x.id === currentDetailId);
+            if (!c) return;
+
+            c.itNotes = newNotes;
+            if (isSeedComplaint(c.id)) {
+                updateSeedOverride(c.id, { itNotes: newNotes });
+            } else {
+                saveUserComplaint(c);
+            }
+            // Light feedback
+            const btn = event.target;
+            const original = btn.innerHTML;
+            btn.innerHTML = '✓ Αποθηκεύτηκε';
+            btn.style.background = '#28a745';
+            setTimeout(() => { btn.innerHTML = original; btn.style.background = '#4a90e2'; }, 1500);
+        }
+
+        function deleteComplaint() {
+            if (!currentDetailId) return;
+            if (!confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την αναφορά;')) return;
+
+            if (isSeedComplaint(currentDetailId)) {
+                updateSeedOverride(currentDetailId, { deleted: true });
+            } else {
+                deleteUserComplaint(currentDetailId);
+            }
+            closeDetailModal();
+            renderComplaints();
+        }
+
+        window.addEventListener('click', e => {
+            if (e.target.id === 'detailModal') closeDetailModal();
+        });
+
+        document.addEventListener('DOMContentLoaded', renderComplaints);
+    </script>
+</body>
+</html>
