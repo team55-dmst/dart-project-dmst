@@ -399,13 +399,8 @@
             <div id="detail-content"></div>
             <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
                 <button class="toolbar-btn" id="btn-mark-progress" onclick="updateStatus('Σε επεξεργασία')">Σε Επεξεργασία</button>
-<<<<<<< HEAD
                 <button class="toolbar-btn" id="btn-mark-resolved" onclick="updateStatus('Επιλύθηκε')" style="background:linear-gradient(135deg, #28a745, #1e7e34);">Επιλύθηκε</button>
                 <button class="toolbar-btn danger" onclick="deleteComplaint()">Διαγραφή</button>
-=======
-                <button class="toolbar-btn" id="btn-mark-resolved" onclick="updateStatus('Επιλύθηκε')" style="background:linear-gradient(135deg, #28a745, #1e7e34);">✓ Επιλύθηκε</button>
-                <button class="toolbar-btn danger" onclick="deleteComplaint()">🗑 Διαγραφή</button>
->>>>>>> 051b9574ba4b38a966df04b815042b70c6cecb97
                 <button onclick="closeDetailModal()" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:8px 16px; border-radius:6px; font-size:13px; cursor:pointer;">Κλείσιμο</button>
             </div>
         </div>
@@ -728,7 +723,7 @@
                     <strong>Σημειώσεις IT:</strong>
                     <textarea id="it-notes-input" placeholder="Προσθέστε σημείωση εξέλιξης / λύσης...">${escapeHtml(c.itNotes || '')}</textarea>
                     <div style="text-align:right; margin-top:6px;">
-                        <button onclick="saveItNotes()" style="background:#4a90e2; color:white; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;">💾 Αποθήκευση Σημειώσεων</button>
+                        <button onclick="saveItNotes()" style="background:#4a90e2; color:white; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;">Αποθήκευση Σημειώσεων</button>
                     </div>
                 </div>
             `;
