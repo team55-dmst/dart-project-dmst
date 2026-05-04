@@ -33,8 +33,7 @@
             padding: 6px 14px;
             border-radius: 20px;
         }
-
-        /* ===== TOP STATS ===== */
+        /* TOP STATS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -106,7 +105,7 @@
             min-width: 180px;
         }
 
-        /* ===== TABLE ===== */
+        /* TABLE */
         .complaints-container {
             background: white;
             border-radius: 10px;
@@ -307,7 +306,7 @@
             background: linear-gradient(135deg, #bd2130, #8b1818);
         }
 
-        /* ===== MOBILE ===== */
+        /* MOBILE */
         @media (max-width: 768px) {
             body { margin: 8px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -336,13 +335,8 @@
             Παρακολούθηση και επίλυση τεχνικών προβλημάτων όλων των χρηστών
         </div>
     </div>
-
-    <!-- Stats overview -->
     <div class="stats-grid" id="stats-grid">
-        <!-- Filled dynamically -->
     </div>
-
-    <!-- Toolbar -->
     <div class="toolbar">
         <label>Κατάσταση:</label>
         <select id="filter-status" onchange="renderComplaints()">
@@ -369,12 +363,10 @@
             <option value="sales_dev">Sales Development</option>
         </select>
 
-        <input type="text" id="search-input" class="search-input" placeholder="🔍 Αναζήτηση σε τίτλο/περιγραφή..." oninput="renderComplaints()">
+        <input type="text" id="search-input" class="search-input" placeholder="Αναζήτηση σε τίτλο/περιγραφή..." oninput="renderComplaints()">
 
-        <button class="toolbar-btn" onclick="renderComplaints()">↻ Ανανέωση</button>
+        <button class="toolbar-btn" onclick="renderComplaints()">Ανανέωση</button>
     </div>
-
-    <!-- Complaints table -->
     <div class="complaints-container">
         <div style="overflow-x:auto;">
             <table class="complaints-table">
@@ -406,20 +398,14 @@
             </div>
             <div id="detail-content"></div>
             <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
-                <button class="toolbar-btn" id="btn-mark-progress" onclick="updateStatus('Σε επεξεργασία')">⏱ Σε Επεξεργασία</button>
+                <button class="toolbar-btn" id="btn-mark-progress" onclick="updateStatus('Σε επεξεργασία')">Σε Επεξεργασία</button>
                 <button class="toolbar-btn" id="btn-mark-resolved" onclick="updateStatus('Επιλύθηκε')" style="background:linear-gradient(135deg, #28a745, #1e7e34);">✓ Επιλύθηκε</button>
                 <button class="toolbar-btn danger" onclick="deleteComplaint()">🗑 Διαγραφή</button>
                 <button onclick="closeDetailModal()" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:8px 16px; border-radius:6px; font-size:13px; cursor:pointer;">Κλείσιμο</button>
             </div>
         </div>
     </div>
-
     <script>
-        // ============================================================
-        // PRE-POPULATED COMPLAINTS (sample data so the dashboard
-        // looks realistic on first run). These are merged with any
-        // user-submitted complaints stored in localStorage.
-        // ============================================================
         const SEED_COMPLAINTS = [
             {
                 id: 'CMP-100847',
@@ -542,7 +528,6 @@
                 itNotes: ''
             }
         ];
-
         const SEVERITY_RANK = { 'Υψηλή': 3, 'Μεσαία': 2, 'Χαμηλή': 1 };
         const ROLE_LABELS = {
             'salesperson': 'Πωλητής',
@@ -551,10 +536,7 @@
             'sales_dev': 'Sales Development',
             'it': 'IT'
         };
-
         let currentDetailId = null;
-
-        // ===== Storage =====
         function loadAllComplaints() {
             let userComplaints = [];
             try {
@@ -562,21 +544,18 @@
             } catch(e) {
                 userComplaints = [];
             }
-            // Also persist seed status updates / IT notes
             let seedOverrides = {};
             try {
                 seedOverrides = JSON.parse(localStorage.getItem('it_seed_overrides') || '{}');
             } catch(e) {
                 seedOverrides = {};
             }
-            // Apply overrides to seed data
             const seedWithOverrides = SEED_COMPLAINTS
                 .filter(c => !seedOverrides[c.id]?.deleted)
                 .map(c => ({ ...c, ...(seedOverrides[c.id] || {}) }));
 
             return [...userComplaints, ...seedWithOverrides];
         }
-
         function saveUserComplaint(complaint) {
             try {
                 const stored = JSON.parse(localStorage.getItem('system_complaints') || '[]');
@@ -586,11 +565,9 @@
                 localStorage.setItem('system_complaints', JSON.stringify(stored));
             } catch(e) { console.warn(e); }
         }
-
         function isSeedComplaint(id) {
             return SEED_COMPLAINTS.some(c => c.id === id);
         }
-
         function updateSeedOverride(id, patch) {
             try {
                 const overrides = JSON.parse(localStorage.getItem('it_seed_overrides') || '{}');
@@ -598,7 +575,6 @@
                 localStorage.setItem('it_seed_overrides', JSON.stringify(overrides));
             } catch(e) { console.warn(e); }
         }
-
         function deleteUserComplaint(id) {
             try {
                 let stored = JSON.parse(localStorage.getItem('system_complaints') || '[]');
@@ -606,15 +582,12 @@
                 localStorage.setItem('system_complaints', JSON.stringify(stored));
             } catch(e) { console.warn(e); }
         }
-
-        // ===== Stats =====
         function renderStats() {
             const all = loadAllComplaints();
             const newCount = all.filter(c => c.status === 'Νέο').length;
             const progressCount = all.filter(c => c.status === 'Σε επεξεργασία').length;
             const resolvedCount = all.filter(c => c.status === 'Επιλύθηκε').length;
             const highSev = all.filter(c => c.severity === 'Υψηλή' && c.status !== 'Επιλύθηκε').length;
-
             document.getElementById('stats-grid').innerHTML = `
                 <div class="stat-card new">
                     <div class="label">Νέα Παράπονα</div>
@@ -638,17 +611,13 @@
                 </div>
             `;
         }
-
-        // ===== Render table =====
         function renderComplaints() {
             renderStats();
-
             const all = loadAllComplaints();
             const fStatus = document.getElementById('filter-status').value;
             const fSev = document.getElementById('filter-severity').value;
             const fRole = document.getElementById('filter-role').value;
             const search = (document.getElementById('search-input').value || '').toLowerCase().trim();
-
             let filtered = all.filter(c => {
                 if (fStatus !== 'all' && c.status !== fStatus) return false;
                 if (fSev !== 'all' && c.severity !== fSev) return false;
@@ -659,8 +628,6 @@
                 }
                 return true;
             });
-
-            // Sort: status (Νέο > Σε επεξεργασία > Επιλύθηκε), then severity, then date
             filtered.sort((a, b) => {
                 const statusOrder = { 'Νέο': 0, 'Σε επεξεργασία': 1, 'Επιλύθηκε': 2 };
                 if (statusOrder[a.status] !== statusOrder[b.status]) {
@@ -671,7 +638,6 @@
                 }
                 return new Date(b.timestamp) - new Date(a.timestamp);
             });
-
             const tbody = document.getElementById('complaints-tbody');
             if (filtered.length === 0) {
                 tbody.innerHTML = `
@@ -683,7 +649,6 @@
                     </td></tr>`;
                 return;
             }
-
             tbody.innerHTML = filtered.map(c => {
                 const statusBadge = c.status === 'Νέο' ? 'badge-new'
                     : (c.status === 'Σε επεξεργασία' ? 'badge-progress' : 'badge-resolved');
@@ -691,7 +656,6 @@
                     : (c.severity === 'Μεσαία' ? 'sev-med' : 'sev-low');
                 const date = new Date(c.timestamp);
                 const dateStr = date.toLocaleDateString('el-GR') + ' ' + date.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit' });
-
                 return `<tr onclick="openDetail('${c.id}')" style="cursor:pointer;">
                     <td><span class="ref-id">${c.id}</span></td>
                     <td class="title-cell">${escapeHtml(c.title)}</td>
@@ -701,12 +665,11 @@
                     <td class="hide-mobile">${dateStr}</td>
                     <td><span class="badge ${statusBadge}">${c.status}</span></td>
                     <td onclick="event.stopPropagation();">
-                        <button class="action-btn" onclick="openDetail('${c.id}')">📋 Λεπτομέρειες</button>
+                        <button class="action-btn" onclick="openDetail('${c.id}')">Λεπτομέρειες</button>
                     </td>
                 </tr>`;
             }).join('');
         }
-
         function escapeHtml(str) {
             if (!str) return '';
             return String(str)
@@ -716,20 +679,16 @@
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#039;');
         }
-
-        // ===== Detail modal =====
         function openDetail(id) {
             const all = loadAllComplaints();
             const c = all.find(x => x.id === id);
             if (!c) return;
             currentDetailId = id;
-
             const date = new Date(c.timestamp);
             const dateStr = date.toLocaleDateString('el-GR') + ' ' + date.toLocaleTimeString('el-GR');
             const sevClass = c.severity === 'Υψηλή' ? 'sev-high' : (c.severity === 'Μεσαία' ? 'sev-med' : 'sev-low');
             const statusBadge = c.status === 'Νέο' ? 'badge-new'
                 : (c.status === 'Σε επεξεργασία' ? 'badge-progress' : 'badge-resolved');
-
             document.getElementById('detail-title').textContent = c.title;
             document.getElementById('detail-content').innerHTML = `
                 <div class="modal-row">
@@ -761,15 +720,13 @@
                     <div class="desc-box">${escapeHtml(c.description || '')}</div>
                 </div>
                 <div class="it-notes">
-                    <strong>📝 Σημειώσεις IT:</strong>
+                    <strong>Σημειώσεις IT:</strong>
                     <textarea id="it-notes-input" placeholder="Προσθέστε σημείωση εξέλιξης / λύσης...">${escapeHtml(c.itNotes || '')}</textarea>
                     <div style="text-align:right; margin-top:6px;">
                         <button onclick="saveItNotes()" style="background:#4a90e2; color:white; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;">💾 Αποθήκευση Σημειώσεων</button>
                     </div>
                 </div>
             `;
-
-            // Hide buttons that don't make sense based on status
             const btnProg = document.getElementById('btn-mark-progress');
             const btnRes = document.getElementById('btn-mark-resolved');
             btnProg.style.display = (c.status === 'Σε επεξεργασία') ? 'none' : '';
@@ -777,23 +734,18 @@
 
             document.getElementById('detailModal').style.display = 'block';
         }
-
         function closeDetailModal() {
             document.getElementById('detailModal').style.display = 'none';
             currentDetailId = null;
         }
-
         function updateStatus(newStatus) {
             if (!currentDetailId) return;
             const all = loadAllComplaints();
             const c = all.find(x => x.id === currentDetailId);
             if (!c) return;
-
             c.status = newStatus;
-            // Capture latest IT notes from textarea before saving
             const notesInput = document.getElementById('it-notes-input');
             if (notesInput) c.itNotes = notesInput.value;
-
             if (isSeedComplaint(c.id)) {
                 updateSeedOverride(c.id, { status: newStatus, itNotes: c.itNotes });
             } else {
@@ -802,31 +754,26 @@
             closeDetailModal();
             renderComplaints();
         }
-
         function saveItNotes() {
             if (!currentDetailId) return;
             const notesInput = document.getElementById('it-notes-input');
             if (!notesInput) return;
             const newNotes = notesInput.value;
-
             const all = loadAllComplaints();
             const c = all.find(x => x.id === currentDetailId);
             if (!c) return;
-
             c.itNotes = newNotes;
             if (isSeedComplaint(c.id)) {
                 updateSeedOverride(c.id, { itNotes: newNotes });
             } else {
                 saveUserComplaint(c);
             }
-            // Light feedback
             const btn = event.target;
             const original = btn.innerHTML;
-            btn.innerHTML = '✓ Αποθηκεύτηκε';
+            btn.innerHTML = 'Αποθηκεύτηκε';
             btn.style.background = '#28a745';
             setTimeout(() => { btn.innerHTML = original; btn.style.background = '#4a90e2'; }, 1500);
         }
-
         function deleteComplaint() {
             if (!currentDetailId) return;
             if (!confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την αναφορά;')) return;
@@ -839,11 +786,9 @@
             closeDetailModal();
             renderComplaints();
         }
-
         window.addEventListener('click', e => {
             if (e.target.id === 'detailModal') closeDetailModal();
         });
-
         document.addEventListener('DOMContentLoaded', renderComplaints);
     </script>
 </body>
