@@ -331,7 +331,7 @@
     <h2>IT Dashboard - Διαχείριση Παραπόνων Συστήματος</h2>
 
     <div class="role-header">
-        <div class="role-info">👤 Διεύθυνση Information Technology</div>
+        <div class="role-info">Διεύθυνση Information Technology</div>
         <div style="color:white; font-size:12px; opacity:0.9;">
             Παρακολούθηση και επίλυση τεχνικών προβλημάτων όλων των χρηστών
         </div>
@@ -406,9 +406,9 @@
             </div>
             <div id="detail-content"></div>
             <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
-                <button class="toolbar-btn" id="btn-mark-progress" onclick="updateStatus('Σε επεξεργασία')">⏱ Σε Επεξεργασία</button>
-                <button class="toolbar-btn" id="btn-mark-resolved" onclick="updateStatus('Επιλύθηκε')" style="background:linear-gradient(135deg, #28a745, #1e7e34);">✓ Επιλύθηκε</button>
-                <button class="toolbar-btn danger" onclick="deleteComplaint()">🗑 Διαγραφή</button>
+                <button class="toolbar-btn" id="btn-mark-progress" onclick="updateStatus('Σε επεξεργασία')">Σε Επεξεργασία</button>
+                <button class="toolbar-btn" id="btn-mark-resolved" onclick="updateStatus('Επιλύθηκε')" style="background:linear-gradient(135deg, #28a745, #1e7e34);">Επιλύθηκε</button>
+                <button class="toolbar-btn danger" onclick="deleteComplaint()">Διαγραφή</button>
                 <button onclick="closeDetailModal()" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:8px 16px; border-radius:6px; font-size:13px; cursor:pointer;">Κλείσιμο</button>
             </div>
         </div>
@@ -701,7 +701,7 @@
                     <td class="hide-mobile">${dateStr}</td>
                     <td><span class="badge ${statusBadge}">${c.status}</span></td>
                     <td onclick="event.stopPropagation();">
-                        <button class="action-btn" onclick="openDetail('${c.id}')">📋 Λεπτομέρειες</button>
+                        <button class="action-btn" onclick="openDetail('${c.id}')">Λεπτομέρειες</button>
                     </td>
                 </tr>`;
             }).join('');
@@ -761,7 +761,7 @@
                     <div class="desc-box">${escapeHtml(c.description || '')}</div>
                 </div>
                 <div class="it-notes">
-                    <strong>📝 Σημειώσεις IT:</strong>
+                    <strong>Σημειώσεις IT:</strong>
                     <textarea id="it-notes-input" placeholder="Προσθέστε σημείωση εξέλιξης / λύσης...">${escapeHtml(c.itNotes || '')}</textarea>
                     <div style="text-align:right; margin-top:6px;">
                         <button onclick="saveItNotes()" style="background:#4a90e2; color:white; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;">💾 Αποθήκευση Σημειώσεων</button>

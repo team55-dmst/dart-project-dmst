@@ -2038,7 +2038,7 @@ function submitMassEdit() {
                 <div id="complaint-validation" style="color:#dc3545; font-size:12px; margin-bottom:8px; display:none;"></div>
             </div>
             <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
-                <button onclick="submitComplaint()" class="main-btn" style="background:#fd7e14; color:white; border:none; padding:10px 28px; border-radius:6px; font-size:13px;">📨 Αποστολή στο IT</button>
+                <button onclick="submitComplaint()" class="main-btn" style="background:#fd7e14; color:white; border:none; padding:10px 28px; border-radius:6px; font-size:13px;">Αποστολή στο IT</button>
                 <button onclick="closeComplaintModal()" class="main-btn" style="background:#f8f9fa; color:#555; border:1px solid #ccc; padding:10px 20px; border-radius:6px; font-size:13px;">Ακύρωση</button>
             </div>
         </div>
@@ -2078,17 +2078,17 @@ function submitMassEdit() {
         const actionsEl = document.getElementById('role-actions-container');
         if (!infoEl || !actionsEl) return;
 
-        infoEl.textContent = '👤 ' + (ROLE_LABELS[role] || 'Πωλητής');
+        infoEl.textContent = (ROLE_LABELS[role] || 'Πωλητής');
 
         let buttonsHtml = '';
         if (role === 'sales_analyst') {
-            buttonsHtml += '<button class="role-btn" onclick="openAnalysisModal()">📊 Ανάλυση Πωλήσεων</button>';
+            buttonsHtml += '<button class="role-btn" onclick="openAnalysisModal()">Ανάλυση Πωλήσεων</button>';
         }
         if (role === 'sales_dev') {
-            buttonsHtml += '<button class="role-btn" onclick="openCompetitionModal()">🎯 Σύγκριση με Ανταγωνισμό</button>';
+            buttonsHtml += '<button class="role-btn" onclick="openCompetitionModal()">Σύγκριση με Ανταγωνισμό</button>';
         }
         // Complaint button is shown for ALL roles
-        buttonsHtml += '<button class="role-btn complaint-btn" onclick="openComplaintModal()">⚠️ Υποβολή Παραπόνου</button>';
+        buttonsHtml += '<button class="role-btn complaint-btn" onclick="openComplaintModal()">Υποβολή Παραπόνου</button>';
 
         actionsEl.innerHTML = buttonsHtml;
     }
@@ -2224,7 +2224,7 @@ function submitMassEdit() {
             </div>
         </div>
 
-        <div class="section-title">📍 Κατανομή Τζίρου ανά Περιοχή</div>
+        <div class="section-title">Κατανομή Τζίρου ανά Περιοχή</div>
         <div>`;
         regionList.slice(0, 8).forEach(r => {
             const pct = (r.revenue / maxRegion * 100).toFixed(1);
@@ -2237,7 +2237,7 @@ function submitMassEdit() {
         });
         html += `</div>
 
-        <div class="section-title">🏆 Top Είδη Προϊόντων (ανά πωλούμενη ποσότητα)</div>
+        <div class="section-title">Top Είδη Προϊόντων (ανά πωλούμενη ποσότητα)</div>
         <div>`;
         topProducts.forEach(p => {
             const pct = (p.qty / maxProd * 100).toFixed(1);
@@ -2250,7 +2250,7 @@ function submitMassEdit() {
         });
         html += `</div>
 
-        <div class="section-title">👥 Κατανομή Πελατολογίου</div>
+        <div class="section-title">Κατανομή Πελατολογίου</div>
         <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">`;
         typeList.forEach(t => {
             html += `
@@ -2262,7 +2262,7 @@ function submitMassEdit() {
         });
         html += `</div>
 
-        <div class="section-title">🔮 Πρόβλεψη Πωλήσεων Επόμενου Τριμήνου</div>
+        <div class="section-title">Πρόβλεψη Πωλήσεων Επόμενου Τριμήνου</div>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="label">Προβλεπόμενος Τζίρος</div>
@@ -2282,7 +2282,7 @@ function submitMassEdit() {
         </div>`;
 
         // === Strategic Insights ===
-        html += `<div class="section-title">💡 Στρατηγική Πληροφόρηση</div>`;
+        html += `<div class="section-title">Στρατηγική Πληροφόρηση</div>`;
 
         const topRegion = regionList[0];
         const topProduct = topProducts[0];
@@ -2422,7 +2422,7 @@ function submitMassEdit() {
             </div>
         </div>
 
-        <div class="section-title">⚔️ Συγκριτικός Πίνακας με Ανταγωνισμό</div>
+        <div class="section-title">Συγκριτικός Πίνακας με Ανταγωνισμό</div>
         <div style="overflow-x:auto;">
         <table class="compare-table">
             <thead>
@@ -2456,7 +2456,7 @@ function submitMassEdit() {
 
         html += `</tbody></table></div>
 
-        <div class="section-title">🌍 Ανάλυση Γεωγραφικής Παρουσίας</div>
+        <div class="section-title">Ανάλυση Γεωγραφικής Παρουσίας</div>
         <div class="stats-grid">
             <div class="stat-card green">
                 <div class="label">Καλυπτόμενες Περιοχές</div>
@@ -2482,7 +2482,7 @@ function submitMassEdit() {
         }
 
         // === Strategic Recommendations ===
-        html += `<div class="section-title">🎯 Στρατηγικές Προτάσεις Ανάπτυξης</div>`;
+        html += `<div class="section-title">Στρατηγικές Προτάσεις Ανάπτυξης</div>`;
 
         const winners = compareRows.filter(r => r.verdict === 'better' && (r.marketDemand === 'Υψηλή' || r.marketDemand === 'Πολύ Υψηλή'));
         const losers = compareRows.filter(r => r.verdict === 'worse');
